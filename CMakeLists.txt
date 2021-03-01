@@ -3,4 +3,4 @@ project(LeetCode)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(LeetCode main.cpp Array/26_Remove_Duplicates.h)
+add_executable(LeetCode main.cpp Array/26_Remove_Duplicates.h Array/11_Container_With_Most_Water.h Array/15_3Sum.h)

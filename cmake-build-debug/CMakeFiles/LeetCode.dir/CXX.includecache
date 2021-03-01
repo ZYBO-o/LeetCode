@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/26_Remove_Duplicates.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h
 iostream
 -
 vector
 -
+numeric
+-
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Array/26_Remove_Duplicates.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/26_Remove_Duplicates.h
+Array/15_3Sum.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h
 

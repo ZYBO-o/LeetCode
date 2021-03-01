@@ -61,7 +61,7 @@ public:
 
 void Test()
 {
-    vector<int> nums {1,2,2,3,4,4,4,};
+    vector<int> nums {1,2,2,3,4,4,4};
     Solution solution;
     int len = solution.removeDuplicates(nums);
     for (int i = 0; i < len; i++) {
