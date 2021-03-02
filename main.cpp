@@ -1,7 +1,4 @@
-#include "Array/88_Merge_Sorted_Array.h"
-
-#include <iostream>
-#include <vector>
+#include "Array/75_Sort_Colors.h"
 
 using namespace std;
 

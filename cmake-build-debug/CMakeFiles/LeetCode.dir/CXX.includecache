@@ -6,17 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/75_Sort_Colors.h
 iostream
 -
 vector
 -
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Array/88_Merge_Sorted_Array.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h
-iostream
--
-vector
--
+Array/75_Sort_Colors.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/75_Sort_Colors.h
 
