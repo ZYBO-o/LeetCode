@@ -6,15 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h
 iostream
 -
 vector
 -
-numeric
--
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Array/15_3Sum.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h
+Array/88_Merge_Sorted_Array.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h
+iostream
+-
+vector
+-
 

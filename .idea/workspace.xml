@@ -12,11 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/11_Container_With_Most_Water.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/15_3Sum.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/16_3Sum_Closet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/75_Sort_Colors.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/88_Merge_Sorted_Array.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/26_Remove_Duplicates.h" beforeDir="false" afterPath="$PROJECT_DIR$/Array/26_Remove_Duplicates.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" afterDir="false" />
@@ -81,7 +80,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1614562007566</updated>
-      <workItem from="1614562010890" duration="10906000" />
+      <workItem from="1614562010890" duration="11101000" />
+      <workItem from="1614604378928" duration="763000" />
+      <workItem from="1614614898179" duration="5662000" />
     </task>
     <servers />
   </component>
@@ -89,38 +90,42 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1636" height="276" key="GridCell.Tab.0.bottom" timestamp="1614596576202">
+    <state width="1636" height="315" key="GridCell.Tab.0.bottom" timestamp="1614649631080">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="276" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614596576202" />
-    <state width="1636" height="276" key="GridCell.Tab.0.center" timestamp="1614596576201">
+    <state width="1636" height="315" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631080" />
+    <state width="1636" height="315" key="GridCell.Tab.0.center" timestamp="1614649631078">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="276" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614596576201" />
-    <state width="1636" height="276" key="GridCell.Tab.0.left" timestamp="1614596576200">
+    <state width="1636" height="315" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631078" />
+    <state width="1636" height="315" key="GridCell.Tab.0.left" timestamp="1614649631078">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="276" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614596576200" />
-    <state width="1636" height="276" key="GridCell.Tab.0.right" timestamp="1614596576201">
+    <state width="1636" height="315" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631078" />
+    <state width="1636" height="315" key="GridCell.Tab.0.right" timestamp="1614649631079">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="276" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614596576201" />
-    <state width="605" height="605" key="GridCell.Tab.1.bottom" timestamp="1614595498833">
+    <state width="1636" height="315" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631079" />
+    <state width="1636" height="315" key="GridCell.Tab.1.bottom" timestamp="1614649631081">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="605" height="605" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614595498833" />
-    <state width="605" height="605" key="GridCell.Tab.1.center" timestamp="1614595498831">
+    <state width="1636" height="315" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631081" />
+    <state width="1636" height="315" key="GridCell.Tab.1.center" timestamp="1614649631080">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="605" height="605" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614595498831" />
-    <state width="605" height="605" key="GridCell.Tab.1.left" timestamp="1614595498825">
+    <state width="1636" height="315" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631080" />
+    <state width="1636" height="315" key="GridCell.Tab.1.left" timestamp="1614649631080">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="605" height="605" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614595498825" />
-    <state width="605" height="605" key="GridCell.Tab.1.right" timestamp="1614595498832">
+    <state width="1636" height="315" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631080" />
+    <state width="1636" height="315" key="GridCell.Tab.1.right" timestamp="1614649631081">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="605" height="605" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614595498832" />
+    <state width="1636" height="315" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614649631081" />
+    <state x="451" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1614614898567">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="451" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1614614898567" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1614595744068">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>

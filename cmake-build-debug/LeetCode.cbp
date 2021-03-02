@@ -86,7 +86,16 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/16_3Sum_Closet.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/26_Remove_Duplicates.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/75_Sort_Colors.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">
