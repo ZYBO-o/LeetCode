@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/118_Pascal_Triangle.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/11_Container_With_Most_Water.h">
 			<Option target="LeetCode"/>
 		</Unit>
