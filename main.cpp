@@ -1,6 +1,4 @@
-#include "Array/119_Pascal's_Triangle_II.h"\
-
-using namespace std;
+#include "Array/59_Spiral_Matrix_II.h"
 
 
 int main() {

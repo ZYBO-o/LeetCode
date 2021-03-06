@@ -12,9 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Array/119_Pascal's_Triangle_II.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/18_4Sum.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/209_Minimum_Size_Subarray_Sum.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/121_Best_Time_to_Buy_and_Sell_Stock.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/122_Best_Time_to_Buy_and_Sell_Stock_II.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/31_Next_Permutation.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/54_Spiral_Matrix.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/59_Spiral_Matrix_II.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/80_Remove_Duplicates_from_Sorted_Array_II.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" afterDir="false" />
@@ -48,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RunManager">
     <configuration name="LeetCode" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LeetCode" TARGET_NAME="LeetCode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LeetCode" RUN_TARGET_NAME="LeetCode">
@@ -87,6 +90,9 @@
       <workItem from="1614733167809" duration="1705000" />
       <workItem from="1614740953445" duration="8718000" />
       <workItem from="1614777112382" duration="1896000" />
+      <workItem from="1614868744589" duration="3570000" />
+      <workItem from="1614945408936" duration="7304000" />
+      <workItem from="1614990719921" duration="5574000" />
     </task>
     <servers />
   </component>
@@ -94,45 +100,65 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1636" height="152" key="GridCell.Tab.0.bottom" timestamp="1614788054083">
+    <state width="1636" height="147" key="GridCell.Tab.0.bottom" timestamp="1614998682991">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="152" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614788054083" />
-    <state width="1636" height="152" key="GridCell.Tab.0.center" timestamp="1614788054082">
+    <state width="1636" height="147" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682991" />
+    <state width="1636" height="147" key="GridCell.Tab.0.center" timestamp="1614998682989">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="152" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614788054082" />
-    <state width="1636" height="152" key="GridCell.Tab.0.left" timestamp="1614788054082">
+    <state width="1636" height="147" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682989" />
+    <state width="1636" height="147" key="GridCell.Tab.0.left" timestamp="1614998682989">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="152" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614788054082" />
-    <state width="1636" height="152" key="GridCell.Tab.0.right" timestamp="1614788054083">
+    <state width="1636" height="147" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682989" />
+    <state width="1636" height="147" key="GridCell.Tab.0.right" timestamp="1614998682990">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1636" height="152" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614788054083" />
-    <state width="583" height="922" key="GridCell.Tab.1.bottom" timestamp="1614768527146">
+    <state width="1636" height="147" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682990" />
+    <state width="408" height="646" key="GridCell.Tab.1.bottom" timestamp="1614998669598">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="583" height="922" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614768527146" />
-    <state width="583" height="922" key="GridCell.Tab.1.center" timestamp="1614768527145">
+    <state width="408" height="646" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669598" />
+    <state width="408" height="646" key="GridCell.Tab.1.center" timestamp="1614998669594">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="583" height="922" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614768527145" />
-    <state width="583" height="922" key="GridCell.Tab.1.left" timestamp="1614768527145">
+    <state width="408" height="646" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669594" />
+    <state width="408" height="646" key="GridCell.Tab.1.left" timestamp="1614998669593">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="583" height="922" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614768527145" />
-    <state width="583" height="922" key="GridCell.Tab.1.right" timestamp="1614768527146">
+    <state width="408" height="646" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669593" />
+    <state width="408" height="646" key="GridCell.Tab.1.right" timestamp="1614998669597">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="583" height="922" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614768527146" />
-    <state x="451" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1614777112766">
+    <state width="408" height="646" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669597" />
+    <state x="725" y="285" key="SettingsEditor" timestamp="1614957848292">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="451" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1614777112766" />
+    <state x="725" y="285" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1614957848292" />
+    <state x="451" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1614990721597">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="451" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1614990721597" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1614691253328">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1614691253328" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Array/122_Best_Time_to_Buy_and_Sell_Stock_II.h</url>
+          <line>17</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Array/122_Best_Time_to_Buy_and_Sell_Stock_II.h</url>
+          <line>39</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

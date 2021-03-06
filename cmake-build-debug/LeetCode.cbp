@@ -89,6 +89,12 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/11_Container_With_Most_Water.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/121_Best_Time_to_Buy_and_Sell_Stock.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/122_Best_Time_to_Buy_and_Sell_Stock_II.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/15_3Sum.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -104,7 +110,19 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/26_Remove_Duplicates.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/31_Next_Permutation.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/54_Spiral_Matrix.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/59_Spiral_Matrix_II.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/75_Sort_Colors.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/80_Remove_Duplicates_from_Sorted_Array_II.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/88_Merge_Sorted_Array.h">
