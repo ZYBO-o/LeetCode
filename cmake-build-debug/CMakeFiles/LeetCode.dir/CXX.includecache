@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/59_Spiral_Matrix_II.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/56_Merge_Intervals.h
 iostream
 -
 vector
 -
+algorithm
+-
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Array/59_Spiral_Matrix_II.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/59_Spiral_Matrix_II.h
+Array/56_Merge_Intervals.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/56_Merge_Intervals.h
 

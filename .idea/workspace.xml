@@ -5,27 +5,34 @@
       <config projectName="LeetCode" targetName="LeetCode" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Array/121_Best_Time_to_Buy_and_Sell_Stock.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/122_Best_Time_to_Buy_and_Sell_Stock_II.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/31_Next_Permutation.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/54_Spiral_Matrix.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/59_Spiral_Matrix_II.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/80_Remove_Duplicates_from_Sorted_Array_II.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/228_Summary_Ranges.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/283_Move_Zeroes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/48_Rotate_Image.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/56_Merge_Intervals.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Array/57_Insert_Interval.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/build.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/flags.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/LeetCode" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/LeetCode" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/LeetCode.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/LeetCode.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,23 +47,43 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1p8Pzd21BKFApQatZe1HKAwP8JO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
-    <configuration name="LeetCode" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LeetCode" TARGET_NAME="LeetCode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LeetCode" RUN_TARGET_NAME="LeetCode">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LeetCode" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LeetCode" TARGET_NAME="LeetCode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LeetCode" RUN_TARGET_NAME="LeetCode">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -72,6 +99,7 @@
       </list>
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -92,58 +120,21 @@
       <workItem from="1614777112382" duration="1896000" />
       <workItem from="1614868744589" duration="3570000" />
       <workItem from="1614945408936" duration="7304000" />
-      <workItem from="1614990719921" duration="5574000" />
+      <workItem from="1614990719921" duration="5727000" />
+      <workItem from="1615017451293" duration="419000" />
+      <workItem from="1615085995883" duration="6664000" />
+      <workItem from="1615107654424" duration="129000" />
+      <workItem from="1615109354077" duration="129000" />
+      <workItem from="1615109498998" duration="467000" />
+      <workItem from="1615110007533" duration="382000" />
+      <workItem from="1615110396961" duration="461000" />
+      <workItem from="1615110874324" duration="317000" />
+      <workItem from="1615131432857" duration="7512000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state width="1636" height="147" key="GridCell.Tab.0.bottom" timestamp="1614998682991">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1636" height="147" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682991" />
-    <state width="1636" height="147" key="GridCell.Tab.0.center" timestamp="1614998682989">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1636" height="147" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682989" />
-    <state width="1636" height="147" key="GridCell.Tab.0.left" timestamp="1614998682989">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1636" height="147" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682989" />
-    <state width="1636" height="147" key="GridCell.Tab.0.right" timestamp="1614998682990">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1636" height="147" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614998682990" />
-    <state width="408" height="646" key="GridCell.Tab.1.bottom" timestamp="1614998669598">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="408" height="646" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669598" />
-    <state width="408" height="646" key="GridCell.Tab.1.center" timestamp="1614998669594">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="408" height="646" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669594" />
-    <state width="408" height="646" key="GridCell.Tab.1.left" timestamp="1614998669593">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="408" height="646" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669593" />
-    <state width="408" height="646" key="GridCell.Tab.1.right" timestamp="1614998669597">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="408" height="646" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1614998669597" />
-    <state x="725" y="285" key="SettingsEditor" timestamp="1614957848292">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="725" y="285" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1614957848292" />
-    <state x="451" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1614990721597">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="451" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1614990721597" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1614691253328">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1614691253328" />
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -158,7 +149,16 @@
           <line>39</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Array/283_Move_Zeroes.h</url>
+          <line>17</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
