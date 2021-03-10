@@ -86,6 +86,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/283_Move_Zeroes.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/414_Third_Maximum_Number.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/48_Rotate_Image.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -93,6 +96,21 @@
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/57_Insert_Interval.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/66_plus_one.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/203_Remove_Linked_List_Elements.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/21_Merge-Two_Sorted_Lists.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/707_Design_Linked_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">

@@ -6,15 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/56_Merge_Intervals.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/707_Design_Linked_List.h
 iostream
 -
 vector
 -
-algorithm
--
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Array/56_Merge_Intervals.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/56_Merge_Intervals.h
+List/707_Design_Linked_List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/707_Design_Linked_List.h
 
