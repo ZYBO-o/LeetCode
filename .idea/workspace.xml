@@ -12,17 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Array/414_Third_Maximum_Number.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Array/66_plus_one.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/203_Remove_Linked_List_Elements.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/21_Merge-Two_Sorted_Lists.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/707_Design_Linked_List.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/List.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/206_Reverse_Linked_List.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/328_Odd_Even_Linked_List.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/61_rotate_list.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/48_Rotate_Image.h" beforeDir="false" afterPath="$PROJECT_DIR$/Array/48_Rotate_Image.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/54_Spiral_Matrix.h" beforeDir="false" afterPath="$PROJECT_DIR$/Array/54_Spiral_Matrix.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/57_Insert_Interval.h" beforeDir="false" afterPath="$PROJECT_DIR$/Array/57_Insert_Interval.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Array/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Array/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" afterDir="false" />
@@ -79,9 +72,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -131,7 +124,9 @@
       <workItem from="1615188447411" duration="3031000" />
       <workItem from="1615250082979" duration="4790000" />
       <workItem from="1615289782016" duration="1980000" />
-      <workItem from="1615338527002" duration="6933000" />
+      <workItem from="1615338527002" duration="7179000" />
+      <workItem from="1615387895137" duration="944000" />
+      <workItem from="1615389628172" duration="4839000" />
     </task>
     <servers />
   </component>
