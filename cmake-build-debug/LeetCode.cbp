@@ -80,46 +80,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/228_Summary_Ranges.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/1_Two_Sum.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/283_Move_Zeroes.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/202_Happy_Number.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/414_Third_Maximum_Number.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/242_Valid_Anagram.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/48_Rotate_Image.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/349_Intersection_Of_Two_Arrays.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/56_Merge_Intervals.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/57_Insert_Interval.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/454_4sum_ii.h">
 			<Option target="LeetCode"/>
 		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Array/66_plus_one.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/203_Remove_Linked_List_Elements.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/206_Reverse_Linked_List.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/21_Merge-Two_Sorted_Lists.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/328_Odd_Even_Linked_List.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/61_rotate_list.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/707_Design_Linked_List.h">
-			<Option target="LeetCode"/>
-		</Unit>
-		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h">
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">

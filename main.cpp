@@ -1,12 +1,9 @@
-#include "List/61_rotate_list.h"
-
+#include "Hash/383_Ransom_Note.h"
 
 
 
 int main() {
 
-
-
-        Test();
-        return 0;
+    Test();
+    return 0;
 }

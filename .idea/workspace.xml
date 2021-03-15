@@ -12,11 +12,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/List/206_Reverse_Linked_List.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/328_Odd_Even_Linked_List.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List/61_rotate_list.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/1_Two_Sum.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/202_Happy_Number.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/242_Valid_Anagram.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/349_Intersection_Of_Two_Arrays.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/383_Ransom_Note.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/454_4sum_ii.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash/Hash.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/141_Linked_List_Cycle.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/142_Linked_List_Cycle_ii.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/82_remove_duplicates_from_sorted_list_ii.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/83_remove_duplicates_from_sorted_list.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/86_Partition_List.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/92_Reverse_Linked-List-ii.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/List/Offer18.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/List/61_rotate_list.h" beforeDir="false" afterPath="$PROJECT_DIR$/List/61_rotate_list.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/LeetCode.dir/depend.make" afterDir="false" />
@@ -72,9 +84,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -127,6 +139,14 @@
       <workItem from="1615338527002" duration="7179000" />
       <workItem from="1615387895137" duration="944000" />
       <workItem from="1615389628172" duration="4839000" />
+      <workItem from="1615467792900" duration="318000" />
+      <workItem from="1615562088756" duration="1871000" />
+      <workItem from="1615602508001" duration="588000" />
+      <workItem from="1615645109988" duration="38000" />
+      <workItem from="1615645178199" duration="730000" />
+      <workItem from="1615689963612" duration="6154000" />
+      <workItem from="1615736958092" duration="769000" />
+      <workItem from="1615771496597" duration="4127000" />
     </task>
     <servers />
   </component>
@@ -160,6 +180,36 @@
           <url>file://$PROJECT_DIR$/Array/414_Third_Maximum_Number.h</url>
           <line>17</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/List/82_remove_duplicates_from_sorted_list_ii.h</url>
+          <line>31</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/List/82_remove_duplicates_from_sorted_list_ii.h</url>
+          <line>41</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/List/86_Partition_List.h</url>
+          <line>16</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Hash/202_Happy_Number.h</url>
+          <line>23</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Hash/383_Ransom_Note.h</url>
+          <line>18</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Hash/383_Ransom_Note.h</url>
+          <line>22</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

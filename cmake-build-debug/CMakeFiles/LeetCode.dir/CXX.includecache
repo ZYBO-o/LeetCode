@@ -6,17 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/61_rotate_list.h
-List.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h
+Hash.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
+iostream
+-
 vector
 -
-iostream
+string
+-
+set
+-
+unordered_set
+-
+map
+-
+unordered_map
 -
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-List/61_rotate_list.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/61_rotate_list.h
+Hash/383_Ransom_Note.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h
 

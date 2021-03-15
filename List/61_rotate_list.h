@@ -9,6 +9,7 @@
 
 class Solution {
 public:
+
     ListNode* rotateRight(ListNode* head, int k) {
         if(head == nullptr || k == 0) return head;
         int size = 0;
