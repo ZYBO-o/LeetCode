@@ -166,15 +166,4 @@ public:
 
 ---
 
-### Hash
-
-哈希表是 **根据关键码的值而直接进行访问的数据结构。**
-
-> 哈希表（英文名字为Hash table，国内也有一些算法书籍翻译为散列表，大家看到这两个名称知道都是指hash table就可以了）
-
-其实直白来讲其实数组就是一张哈希表。 **哈希表中关键码就是数组的索引下表，然后通过下表直接访问数组中的元素，** 如下图所示：
-
-<div align="center">  
-  <img src="https://github.com/ZYBO-o/C-plus-plus-Series/blob/main/images/50.png"  width="300"/> 
-</div>
-
++ 

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/49_Group_Anagrams.h
 Hash.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
 
@@ -25,8 +25,10 @@ map
 -
 unordered_map
 -
+algorithm
+-
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Hash/383_Ransom_Note.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h
+Hash/49_Group_Anagrams.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/49_Group_Anagrams.h
 
