@@ -89,6 +89,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/202_Happy_Number.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/205_Isomorphic_Strings.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/217_Contains_Duplicate.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -96,6 +99,9 @@
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/242_Valid_Anagram.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/290_Word_Pattern.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/349_Intersection_Of_Two_Arrays.h">
