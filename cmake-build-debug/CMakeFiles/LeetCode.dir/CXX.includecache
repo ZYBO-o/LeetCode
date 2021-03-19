@@ -6,29 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/49_Group_Anagrams.h
-Hash.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
-
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/1_8_Zero_Matrix.h
 iostream
 -
 vector
 -
-string
--
-set
--
-unordered_set
--
-map
--
 unordered_map
--
-algorithm
 -
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Hash/49_Group_Anagrams.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/49_Group_Anagrams.h
+Interview/1_8_Zero_Matrix.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/1_8_Zero_Matrix.h
 
