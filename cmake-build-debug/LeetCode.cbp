@@ -131,6 +131,12 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/1_8_Zero_Matrix.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_1_Remove_Duplicate_Points.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_2_Kth_Node_From_End_Of_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">
 			<Option target="LeetCode"/>
 		</Unit>
