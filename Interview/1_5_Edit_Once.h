@@ -7,35 +7,37 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <cstdlib>
+#include <algorithm>
+#include <cmath>
+
 
 using namespace std;
 
 class Solution {
 public:
     bool oneEditAway(string first, string second) {
-        unordered_map<char,int>map;
-        for(auto c : first)
-            map[c] ++;
-        for(auto c : second)
-            map[c] --;
-
-        int count = 0;
-        for (auto n : map) {
-            if(n.second > 1 || n.second < -1 )
-                return false;
-            else if(n.second == 1 || n.second == -1)
-                ++ count;
-        }
-        if(count == 1 || count == 0)
-            return true;
-        else
+        int len1 = first.size(), len2 = second.size();
+        if (abs(len1 - len2) >= 2) {
             return false;
+        }
+
+        if (len2 > len1) {  //为了方便保证first更长
+            return oneEditAway(second, first);
+        }
+
+        for (int i = 0; i < len2; ++i) {
+            if (first[i] != second[i]) {
+                return first.substr(i + 1) == second.substr(len1 == len2 ? i+1 : i);
+            }
+        }
+        return true;
     }
 };
 
 void Test() {
-    string first = "a";
-    string second = "b";
+    string first = "bc";
+    string second = "ab";
     Solution solution;
     cout << solution.oneEditAway(first,second) << endl;
 }

@@ -119,6 +119,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/1_1_Is_Unique.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/1_4_Palindrome.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -135,6 +138,15 @@
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_2_Kth_Node_From_End_Of_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_4_Partition_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_5_Sum_Lists.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_6_Palindrome_Linked_List.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">

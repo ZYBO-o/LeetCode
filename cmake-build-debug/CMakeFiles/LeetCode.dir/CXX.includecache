@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_2_Kth_Node_From_End_Of_List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_5_Sum_Lists.h
 ../List/List.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h
 
@@ -17,6 +17,6 @@ iostream
 -
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Interview/2_2_Kth_Node_From_End_Of_List.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_2_Kth_Node_From_End_Of_List.h
+Interview/2_5_Sum_Lists.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_5_Sum_Lists.h
 
