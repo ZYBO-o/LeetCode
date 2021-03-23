@@ -24,7 +24,7 @@ public:
                 return index2; // 返回环的入口
             }
         }
-        return NULL;
+        return nullptr;
     }
 };
 
