@@ -6,15 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Backtracking/8_7_Permutation.h
-string
--
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h
 vector
 -
 iostream
 -
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/147_Insertion_Sort_List.h
+../List/List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/List/List.h
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Backtracking/8_7_Permutation.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Backtracking/8_7_Permutation.h
+Sort/147_Insertion_Sort_List.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/147_Insertion_Sort_List.h
 
