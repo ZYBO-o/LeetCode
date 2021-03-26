@@ -110,6 +110,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/349_Intersection_Of_Two_Arrays.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/350_Intersection_Of_Two_Arrays_ii.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/383_Ransom_Note.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -153,6 +156,9 @@
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/147_Insertion_Sort_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/148_Sort_List.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp">
