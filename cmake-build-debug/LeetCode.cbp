@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Backtracking/22_Generate_Parentheses.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Backtracking/8_7_Permutation.h">
 			<Option target="LeetCode"/>
 		</Unit>
