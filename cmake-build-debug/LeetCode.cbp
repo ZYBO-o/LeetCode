@@ -110,6 +110,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/290_Word_Pattern.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/3-longest-substring-without-repeating-characters.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/349_Intersection_Of_Two_Arrays.h">
 			<Option target="LeetCode"/>
 		</Unit>

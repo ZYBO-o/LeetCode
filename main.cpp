@@ -1,22 +1,26 @@
-#include "Sort/148_Sort_List.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
 
-int compare(int num1,int num2){
-    return to_string(num1)+to_string(num2) > to_string(num2)+to_string(num1);
-}
+using namespace std;
+
 
 int main() {
 
-    vector<int> nums {3,30,34,5,9};
-
-    sort(nums.begin(),nums.end(),compare);
-
-    string ans ;
-    for (int i : nums) {
-        ans.append(to_string(i));
+    map<string, size_t> map;
+    string word;
+    while(cin >> word && word != "stop") {
+        ++ map[word];
     }
 
-    cout << ans << endl;
-    //Test();
+
+    for (auto i : map) {
+        cout << i.first << " " << i.second << endl;
+    }
 
     return 0;
 }
