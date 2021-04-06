@@ -1,26 +1,11 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <map>
-#include <set>
-#include <unordered_map>
-#include <unordered_set>
+#include "Hash/299_Bulls_And_Cows.h"
 
 using namespace std;
 
 
 int main() {
 
-    map<string, size_t> map;
-    string word;
-    while(cin >> word && word != "stop") {
-        ++ map[word];
-    }
-
-
-    for (auto i : map) {
-        cout << i.first << " " << i.second << endl;
-    }
+    Test();
 
     return 0;
 }

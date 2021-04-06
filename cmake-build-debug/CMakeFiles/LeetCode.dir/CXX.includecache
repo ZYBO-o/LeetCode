@@ -6,19 +6,29 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/299_Bulls_And_Cows.h
+Hash.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
+
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
 iostream
 -
 vector
 -
 string
 -
-map
--
 set
--
-unordered_map
 -
 unordered_set
 -
+map
+-
+unordered_map
+-
+algorithm
+-
+
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
+Hash/299_Bulls_And_Cows.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/299_Bulls_And_Cows.h
 
