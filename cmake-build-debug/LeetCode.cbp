@@ -116,6 +116,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/3-longest-substring-without-repeating-characters.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/347_Top_K_Frequent_Elements.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/349_Intersection_Of_Two_Arrays.h">
 			<Option target="LeetCode"/>
 		</Unit>
@@ -162,6 +165,9 @@
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_6_Palindrome_Linked_List.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Recursion/799_Kth_Symbol_In_Grammar.h">
 			<Option target="LeetCode"/>
 		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/147_Insertion_Sort_List.h">
