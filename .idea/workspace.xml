@@ -12,7 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30965831-fbff-4cf4-be55-996fad2e20bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Recursion/Hanota.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Recursion/24_Swap_Nodes_In_Pairs.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/LeetCode.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/LeetCode.cbp" afterDir="false" />
@@ -55,12 +55,12 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Colors" />
   </component>
   <component name="RunManager">
-    <configuration name="LeetCode" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LeetCode" TARGET_NAME="LeetCode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LeetCode" RUN_TARGET_NAME="LeetCode">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="LeetCode" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LeetCode" TARGET_NAME="LeetCode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LeetCode" RUN_TARGET_NAME="LeetCode">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -150,6 +150,10 @@
       <workItem from="1617713487742" duration="15000" />
       <workItem from="1617758269088" duration="2919000" />
       <workItem from="1617893910166" duration="76000" />
+      <workItem from="1617941529941" duration="15000" />
+      <workItem from="1617957787104" duration="165000" />
+      <workItem from="1617959949898" duration="186000" />
+      <workItem from="1617977662978" duration="58000" />
     </task>
     <servers />
   </component>

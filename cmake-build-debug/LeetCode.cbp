@@ -167,6 +167,9 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Interview/2_6_Palindrome_Linked_List.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Recursion/24_Swap_Nodes_In_Pairs.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Recursion/799_Kth_Symbol_In_Grammar.h">
 			<Option target="LeetCode"/>
 		</Unit>
