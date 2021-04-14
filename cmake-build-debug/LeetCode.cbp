@@ -86,6 +86,12 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Backtracking/8_7_Permutation.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Bit operation/136_single_number.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Bit operation/137_single_number_ii.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/136_Single_Number.h">
 			<Option target="LeetCode"/>
 		</Unit>

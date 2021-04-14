@@ -6,29 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/347_Top_K_Frequent_Elements.h
-Hash.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
-
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/Hash.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Bit operation/137_single_number_ii.h
 iostream
 -
 vector
 -
-string
--
-set
--
-unordered_set
--
-map
--
-unordered_map
--
-algorithm
--
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/main.cpp
-Hash/347_Top_K_Frequent_Elements.h
-/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Hash/347_Top_K_Frequent_Elements.h
+Bit operation/137_single_number_ii.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Bit operation/137_single_number_ii.h
+iostream
+-
 
