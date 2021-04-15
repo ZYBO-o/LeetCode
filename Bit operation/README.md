@@ -122,7 +122,7 @@ while(a){
 
 #### [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
 
-给定一个**非空**整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+> 给定一个**非空**整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
 
 ```c++
 class Solution {
@@ -137,7 +137,7 @@ public:
 
 #### [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/)
 
-给你一个整数数组 `nums` ，除某个元素仅出现 **一次** 外，其余每个元素都恰出现 **三次 。**请你找出并返回那个只出现了一次的元素。
+> 给你一个整数数组 `nums` ，除某个元素仅出现 **一次** 外，其余每个元素都恰出现 **三次 。**请你找出并返回那个只出现了一次的元素。
 
 异或用于检测出现奇数次的位：1、3、5 等。
 
@@ -146,7 +146,7 @@ public:
 + 以此类推，只有某个位置的数字出现奇数次时，该位的掩码才不为 0。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/8.png"  width="350"/> 
+  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/8.png"  width="500"/> 
 </div>
 
 因此，可以检测出出现一次的位和出现三次的位，但是要注意区分这两种情况。
@@ -160,7 +160,7 @@ public:
 + 仅当 `seen_once` 未变时，改变 `seen_twice`。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/9.png"  width="350"/> 
+  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/9.png"  width="500"/> 
 </div>
 
 位掩码 `seen_once` 仅保留出现一次的数字，不保留出现三次的数字。
@@ -177,6 +177,112 @@ class Solution {
             seen_twice = ~seen_once & (seen_twice ^ i);
         }
         return seen_once;
+    }
+};
+```
+
+#### [371. 两整数之和](https://leetcode-cn.com/problems/sum-of-two-integers/)
+
+>  **不使用**运算符 `+` 和 `-` ，计算两整数 `a` 、`b` 之和。
+
+**位运算中的加法**
+
+先来观察下位运算中的两数加法，其实来来回回就只有下面这四种：
+
+```c++
+0 + 0 = 0
+0 + 1 = 1
+1 + 0 = 1
+1 + 1 = 0（进位 1）
+```
+
+仔细一看，这可不就是相同位为 0，不同位为 1 的异或运算结果嘛~
+
+**异或和与运算操作**
+
+我们知道，在位运算操作中，异或的一个重要特性是无进位加法。我们来看一个例子
+
+```c++
+a = 5 = 0101
+b = 4 = 0100
+
+a ^ b 如下：
+
+0 1 0 1
+0 1 0 0
+-------
+0 0 0 1
+```
+
+`a ^ b` 得到了一个**无进位加法**结果，如果要得到 `a + b` 的最终值，我们还要找到**进位**的数，把这二者相加。在位运算中，我们可以使用**与**操作获得进位：
+
+```c++
+a = 5 = 0101
+b = 4 = 0100
+
+a & b 如下：
+
+0 1 0 1
+0 1 0 0
+-------
+0 1 0 0
+```
+
+由计算结果可见，0100 并不是我们想要的进位，1 + 1 所获得的进位应该要放置在它的更高位，即左侧位上，因此我们还要把 0100 左移一位，才是我们所要的进位结果。
+
+那么问题就容易了，总结一下：
+
++ `a + b` 的问题拆分为 `(a 和 b 的无进位结果)` + `(a 和 b 的进位结果)`
++ 无进位加法使用 **异或** 运算计算得出
++ 进位结果使用 **与运算** 和 **移位运算** 计算得出
++ 循环此过程，直到进位为 0
+
+```c++
+class Solution {
+public:
+int getSum(int a, int b){
+    // 重复操作，直到进位值为0
+    while(b!=0){
+        //c++需要换成无符号数再进行与操作再左移（计算进位值），否则在leetcode平台会报runtime error: left shift of negative value
+        unsigned int carry = (unsigned int) (a&b) << 1;
+        // 异或操作相当于加
+        a = a^b;
+        b = carry;
+    }
+    return a;
+} 
+};
+```
+
+#### [201. 数字范围按位与](https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/)
+
+> 给你两个整数 `left` 和 `right` ，表示区间 `[left, right]` ，返回此区间内所有数字 **按位与** 的结果（包含 `left` 、`right` 端点）。
+
+目的是求出两个给定数字的二进制字符串的公共前缀，这里给出的第一个方法是采用位移操作。
+
+我们的想法是将两个数字不断向右移动，直到数字相等，即数字被缩减为它们的公共前缀。然后，通过将公共前缀向左移动，将零添加到公共前缀的右边以获得最终结果。
+
+<div align="center">  
+  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/10.png"  width="600"/> 
+</div>
+
+如上述所说，算法由两个步骤组成：
+
++ 我们通过右移，将两个数字压缩为它们的公共前缀。在迭代过程中，我们计算执行的右移操作数。
++ 将得到的公共前缀左移相同的操作数得到结果。
+
+```c++
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int shift = 0;
+        // 找到公共前缀
+        while (m < n) {
+            m >>= 1;
+            n >>= 1;
+            ++shift;
+        }
+        return m << shift;
     }
 };
 ```
