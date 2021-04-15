@@ -116,6 +116,37 @@ while(a){
 }  
 ```
 
+#### 8. 如果要将整数A转换为B，需要改变多少个bit位？
+
+这个应用是上面一个应用的拓展：思考将整数A转换为B，如果A和B在第i（0 <=i < 32）个位上相等，则不需要改变这个BIT位，如果在第i位上不相等，则需要改变这个BIT位。
+
+联想到位运算有一个`异或操作`，相同为0，相异为1，所以问题转变成了计算A异或B之后这个数中1的个数!
+
+```c++
+class Solution {
+    /**
+     *@param a, b: Two integer
+     *return: An integer
+     */
+public:
+    int countOnes(int num) {
+        int count = 0;
+        while (num != 0) {
+            num = num & (num - 1);
+            count++;
+        }
+        return count;
+    }
+
+    int bitSwapRequired(int a, int b) {
+        // write your code here
+        return countOnes(a ^ b);
+    }
+};
+```
+
+
+
 ---
 
 ### 二.题目积累
@@ -180,6 +211,59 @@ class Solution {
     }
 };
 ```
+
+#### [两数只出现一次](http://www.lintcode.com/en/problem/single-number/)
+
+>  数组中，只有两个数出现一次，剩下都出现两次，找出出现一次的这两个数
+
+有了第一题的基本的思路，我们可以将数组分成两个部分，每个部分里只有一个元素出现一次，其余元素都出现两次。那么使用这种方法就可以找出这两个元素了。不妨假设出现一个的两个元素是x，y，那么最终所有的元素异或的结果就是等价于`res = x^y`。
+`并且res！=0`
+
+**为什么呢？ 如果res 等于0，则说明x和y相等了！！！！**
+
+因为res不等于0，那么我们可以**一定**可以找出res二进制表示中的某一位是1。
+
+**对于x和y，一定是其中一个这一位是1，另一个这一位不是1！！！细细琢磨， 因为如果都是0或者都是1，怎么可能异或出1**
+
+对于原来的数组，我们可以根据这个位置是不是1就可以将数组分成两个部分。`x，y一定在不同的两个子集中`。
+
+**而且对于其他成对出现的元素，要么都在x所在的那个集合，要么在y所在的那个集合。对于这两个集合我们分别求出单个出现的x 和 单个出现的y即可。**
+
+```c++
+class SingleNumber {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        //用于记录，区分“两个”数组
+        int diff = 0;
+        for(int i = 0; i < nums.size(); i ++) {
+            diff ^= nums[i];
+        }
+        //取最后一位1
+        //先介绍一下原码，反码和补码
+        //原码，就是其二进制表示（注意，有一位符号位）
+        //反码，正数的反码就是原码，负数的反码是符号位不变，其余位取反
+        //补码，正数的补码就是原码，负数的补码是反码+1
+        //在机器中都是采用补码形式存
+        //diff & (-diff)就是取diff的最后一位1的位置
+        cout << diff << endl;
+        diff &= (-diff);
+        cout << diff << endl;
+        vector<int> rets = {0, 0};
+        for(int i = 0; i < nums.size(); i ++) {
+            //分属两个“不同”的数组
+            if ((nums[i] & diff) == 0) {
+                rets[0] ^= nums[i];
+            }
+            else {
+                rets[1] ^= nums[i];
+            }
+        }
+        return rets;
+    }
+};
+```
+
+
 
 #### [371. 两整数之和](https://leetcode-cn.com/problems/sum-of-two-integers/)
 
