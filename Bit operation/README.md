@@ -537,3 +537,26 @@ public:
 };
 ```
 
+#### [405. 数字转换为十六进制数](https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/)
+
+> 给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 [补码运算](https://baike.baidu.com/item/补码/6854613?fr=aladdin) 方法。
+
+C++ 将num转为unsigned类型，即可进行逻辑右移，此时对于负数而言，进行右移时，左侧添加的是0，而不是int类型的符号位。
+
+```c++
+class Solution {
+public:
+    string toHex(int num) {
+        if(num == 0)    return "0";
+        string ans = "";
+        unsigned num2 = num;
+        string s = "0123456789abcdef";
+        while(num2 != 0){
+            ans = s[num2 & 15] + ans;
+            num2 >>= 4;
+        }
+        return ans;
+    }
+};
+```
+
