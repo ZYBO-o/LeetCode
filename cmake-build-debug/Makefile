@@ -143,6 +143,33 @@ LeetCode/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LeetCode.dir/build.make CMakeFiles/LeetCode.dir/build
 .PHONY : LeetCode/fast
 
+Tree/BTree_LeetCode.o: Tree/BTree_LeetCode.cpp.o
+
+.PHONY : Tree/BTree_LeetCode.o
+
+# target to build an object file
+Tree/BTree_LeetCode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LeetCode.dir/build.make CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.o
+.PHONY : Tree/BTree_LeetCode.cpp.o
+
+Tree/BTree_LeetCode.i: Tree/BTree_LeetCode.cpp.i
+
+.PHONY : Tree/BTree_LeetCode.i
+
+# target to preprocess a source file
+Tree/BTree_LeetCode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LeetCode.dir/build.make CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.i
+.PHONY : Tree/BTree_LeetCode.cpp.i
+
+Tree/BTree_LeetCode.s: Tree/BTree_LeetCode.cpp.s
+
+.PHONY : Tree/BTree_LeetCode.s
+
+# target to generate assembly for a file
+Tree/BTree_LeetCode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LeetCode.dir/build.make CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.s
+.PHONY : Tree/BTree_LeetCode.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -179,6 +206,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... LeetCode"
+	@echo "... Tree/BTree_LeetCode.o"
+	@echo "... Tree/BTree_LeetCode.i"
+	@echo "... Tree/BTree_LeetCode.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
