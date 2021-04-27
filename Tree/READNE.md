@@ -24,9 +24,9 @@
 
 下面这两棵树都是搜索树
 
-<img src="../images/Tree2.png" style="zoom:50%;" />
-
-
+<div align="center">
+  <img src="../images/Tree2.png" width="300px" />
+</div>
 
 ### 4.平衡二叉搜索树
 
@@ -34,7 +34,9 @@
 
 平衡二叉搜索树：又被称为AVL（Adelson-Velsky and Landis）树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。
 
-<img src="../images/Tree3.png" style="zoom:50%;" />
+<div align="center">
+  <img src="../images/Tree3.png" width = "600px" />
+</div>
 
 和红黑树相比，AVL树是**严格的平衡二叉树**，平衡条件必须满足（**所有节点的左右子树高度差的绝对值不超过1**）。不管我们是执行插入还是删除操作，只要不满足上面的条件，就要通过旋转来保持平衡，而旋转是非常**耗时**的，由此我们可以知道 **<font color = red>AVL树适合用于插入与删除次数比较少，但查找多的情况</font>**
 
@@ -66,7 +68,7 @@ R-B Tree，全称是Red-Black Tree，又称为“红黑树”，它一种特殊�
 (01) 特性(3)中的叶子节点，是只为空(NIL或null)的节点。
 (02) 特性(5)，确保没有一条路径会比其他路径长出俩倍。因而，红黑树是相对是接**衡的二叉树。
 
-<img src="../images/tree4.png" style="zoom:40%;" />
+<div align="center"><img src="../images/tree4.png" width="600px" /> </div>
 
 #### 应用
 
@@ -88,7 +90,7 @@ R-B Tree，全称是Red-Black Tree，又称为“红黑树”，它一种特殊�
 
 链式存储如下图所示：
 
-<img src="../images/Tree5.png" style="zoom:40%;" />
+<div align="center"><img src="../images/Tree5.png" width="500px" /></div>
 
 ### 2.创建二叉树
 
@@ -146,13 +148,184 @@ TreeNode* CreatTree()
 
 - > **这里前中后，其实指的就是中间节点的遍历顺序**
 
-- <img src="../images/Tree6.png" style="zoom:50%;" />
+- <div align="center"><img src="../images/Tree6.png" width = "500px"/></div>
 
 - 广度优先遍历
 
 - - 层次遍历（迭代法）
 
+#### 前序遍历
 
+前序遍历是中左右，每次先处理的是中间节点，那么先将跟节点放入栈中，然后将右孩子加入栈，再加入左孩子。
 
+<div align = "center"> <img src="../images/Tree7.png" width="500px" /> </div>
 
++ 递归实现：
 
+  ```c++
+  void PreOrderTraversal(TreeNode* root) {
+      if(root != nullptr) {
+          std::cout << (root->val) << " ";
+          PreOrderTraversal(root->left);
+          PreOrderTraversal(root->right);
+      }
+  }
+  ```
+
++ 迭代实现：
+
+  ```c++
+  void PreOrderTraversal2(TreeNode* root)  {
+  
+      if(!root) return;
+  
+      std::stack<TreeNode*> stack;
+      TreeNode* node = root;
+  
+      //栈为空且结点为空时结束遍历
+      while((!stack.empty()) || (node != nullptr)) {
+          //压栈
+          while(node != nullptr) {
+              std::cout << node->val << " ";
+              stack.emplace(node);
+              //左结点压栈
+              node = node->left;
+          }
+  
+          //出栈
+          node = stack.top();
+          stack.pop();
+          //遍历又结点
+          node = node->right;
+      }
+  }
+  ```
+
+#### 中序遍历
+
+中序遍历是左中右，先访问的是二叉树顶部的节点，然后一层一层向下访问，直到到达树左面的最底部，再开始处理节点（也就是在把节点的数值放进result数组中），这就造成了**「处理顺序和访问顺序是不一致的。」**
+
+<div align = "center"> <img src="../images/Tree8.png" width="500px"/> </div>
+
++ 递归实现
+
+  ```c++
+  void InOrderTraversal(TreeNode* root) {
+      if(root != nullptr) {
+          InOrderTraversal(root->left);
+          std::cout << (root->val) << " ";
+          InOrderTraversal(root->right);
+      }
+  }
+  ```
+
++ 迭代实现
+
+  ```c++
+  void InOrderTraversal2(TreeNode* root) {
+      if(!root) return;
+      std::stack<TreeNode*> stack;
+      TreeNode* node = root;
+      while (!stack.empty() || node != nullptr) {
+          while (node != nullptr) {
+              stack.emplace(node);
+              node = node->left;
+          }
+          std::cout << (stack.top())->val << " ";
+          node =  stack.top();
+          stack.pop();
+          node = node->right;
+      }
+  }
+  ```
+
+#### 后序遍历
+
+按照访问左子树——右子树——根节点的方式遍历这棵树，而在访问左子树或者右子树的时候，我们按照同样的方式遍历，直到遍历完整棵树。
+
+<div align = "center"> <img src="../images/Tree9.png" width = "500px" /></div>
+
++ 递归实现：
+
+  ```c++
+  void PostOrderTraversal(TreeNode* root) {
+      if(root != nullptr) {
+          PostOrderTraversal(root->left);
+          PostOrderTraversal(root->right);
+          std::cout << (root->val) << " ";
+      }
+  }
+  ```
+
++ 迭代实现
+
+  ```c++
+  void PostOrderTraversal2(TreeNode* root) {
+      if(!root) return;
+      std::stack<TreeNode*> stack;
+      TreeNode* node = root;
+      //标记是否访问过
+      TreeNode *prev = nullptr;
+      while (!stack.empty() || node != nullptr) {
+          while (node != nullptr) {
+              //左子树一直入栈
+              stack.emplace(node);
+              node = node->left;
+          }
+          //左子树为空时遍历最左子树的右子树
+          node = stack.top();
+          //弹出栈
+          stack.pop();
+          //如果右子树还为空，或者右子树被访问过
+          if (node->right == nullptr || node->right == prev) {
+              //输出结点
+              std::cout << node->val << " ";
+              //标记已访问过该结点
+              prev = node;
+              node = nullptr;
+          }
+          //如果存在右节点，则再次入栈
+          else {
+              //遍历它的右子树
+              stack.emplace(node);
+              node = node->right;
+          }
+      }
+  }
+  ```
+
+#### 层序遍历
+
+层序遍历一个二叉树。就是从左到右一层一层的去遍历二叉树。
+
+需要借用一个辅助数据结构即队列来实现，**「队列先进先出，符合一层一层遍历的逻辑，而是用栈先进后出适合模拟深度优先遍历也就是递归的逻辑。」**
+
+<div align = "center"><img src="../images/Tree0.png" width = "600px" /></div>
+
++ 实现：
+
+  ```c++
+  vector<vector<int>> levelOrder(TreeNode* root) {
+      vector<vector<int>> result {};
+      if(!root) return result;
+      queue<TreeNode*> queue;
+      queue.push(root);
+          while(!queue.empty()) {
+              int size = queue.size();
+              vector<int> res;
+              for(int i = 0; i < size; ++i) {
+                  TreeNode* node = queue.front();
+                  queue.pop();
+                  res.push_back(node->val);
+                  if(node->left)
+                      queue.push(node->left);
+                  if(node->right)
+                      queue.push(node->right);
+              }
+              result.push_back(res);
+        }
+        return result;
+  }
+  ```
+
+  
