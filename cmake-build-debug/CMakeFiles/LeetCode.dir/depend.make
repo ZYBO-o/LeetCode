@@ -4,6 +4,8 @@
 CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.o: ../Tree/BTree_LeetCode.cpp
 CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.o: ../Tree/BTree_LeetCode.h
 
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/46_Permutations.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/Test_Backtracking.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Tree/BTree_LeetCode.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Tree/Test_BTree_LeetCode.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../main.cpp
