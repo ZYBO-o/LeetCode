@@ -754,5 +754,405 @@ int getMinDepth(TreeNode* root) {
   };
   ```
 
+### 10.左叶子之和
+
+>  计算给定二叉树的所有左叶子之和。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree12.png" width="600px" /></div>
+
++ **思路：**
+
+  +  **首先要注意是判断左叶子，不是二叉树左侧节点，所以不要上来想着层序遍历**
+
+  + 左叶子的明确定义：**「如果左节点不为空，且左节点没有左右孩子，那么这个节点就是左叶子」**
+
+    <div align = center><img src="../images/Tree13.png" width="200px" /></div>
+
+    > 上图中左叶子结点之和为0
+
+  + 所以， **「判断当前节点是不是左叶子是无法判断的，必须要通过节点的父节点来判断其左孩子是不是左叶子。」**
+
+  +  **如果该节点的左节点不为空，该节点的左节点的左节点为空，该节点的左节点的右节点为空，** 则找到了一个左叶子，判断代码如下：
+
+    ```c++
+    if (node->left != NULL && node->left->left == NULL && node->left->right == NULL) {
+        //左叶子节点处理逻辑
+    }
+    ```
+
++ **递归三部曲：**
+
+  + **确定递归函数的参数和返回值**
+
+    > 判断一个树的左叶子节点之和，那么一定要传入树的根节点，递归函数的返回值为数值之和，所以为int
+
+  + **确定终止条件**
+
+    > 依然是：`if (root == NULL) return 0;`
+
+  + **确定单层递归条件**
+
+    > 当遇到左叶子节点的时候，记录数值，然后通过递归求取左子树左叶子之和，和 右子树左叶子之和，相加便是整个树的左叶子之和。
+
+    ```c++
+    int leftValue = sumOfLeftLeaves(root->left);    // 左
+    int rightValue = sumOfLeftLeaves(root->right);  // 右
+                                                    // 中
+    int midValue = 0;
+    if (root->left && !root->left->left && !root->left->right) { 
+        midValue = root->left->val;
+    }
+    int sum = midValue + leftValue + rightValue;
+    return sum;
+    ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      int sumOfLeftLeaves(TreeNode* root) {
+          if (root == NULL) return 0;
+  
+          int leftValue = sumOfLeftLeaves(root->left);    // 左
+          int rightValue = sumOfLeftLeaves(root->right);  // 右
+                                                          // 中
+          int midValue = 0;
+          if (root->left && !root->left->left && !root->left->right) { // 中
+              midValue = root->left->val;
+          }
+          int sum = midValue + leftValue + rightValue;
+          return sum;
+      }
+  };
+  ```
+
+
+
+### 11.找树左下角的值
+
+>  给定一个二叉树，在树的最后一行找到最左边的值。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree14.png" width="600px" /></div>
+
++ **思路：**
+  + 找出树的最后一行找到最左边的值。利用层序遍历是非常简单的了，反而用递归的话会比较难一点。
+
+#### 递归方法
+
++ **思路：**
+
+  + 使用递归法，判断最后一行，其实就是深度最大的叶子节点一定是最后一行。
+  + 找最左边的节点，可以使用前序遍历，这样才先优先左边搜索，然后记录深度最大的叶子节点，此时就是树的最后一行最左边的值。
+
++ **递归三部曲：**
+
+  + **确定递归函数的参数和返回值**
+
+    + 参数必须有要遍历的树的根节点，还有就是一个int型的变量用来记录最长深度。这里就不需要返回值了，所以递归函数的返回类型为void。
+    + 本题还需要类里的两个全局变量，maxLen用来记录最大深度，maxleftValue记录最大深度最左节点的数值。
+
+    ```c++
+    int maxLen = INT_MIN;   // 全局变量 记录最大深度
+    int maxleftValue;       // 全局变量 最大深度最左节点的数值
+    void traversal(TreeNode* root, int leftLen)
+    ```
+
+  + **确定终止条件**
+
+    + 当遇到叶子节点的时候，就需要统计一下最大的深度了，所以需要遇到叶子节点来更新最大深度。
+
+    ```c++
+    if (root->left == NULL && root->right == NULL) {
+        if (leftLen > maxLen) {
+            maxLen = leftLen;           // 更新最大深度
+            maxleftValue = root->val;   // 最大深度最左面的数值 
+        }
+        return;
+    }
+    ```
+
+  + **确定单层递归的逻辑**
+
+    + 在找最大深度的时候，递归的过程中依然要使用回溯，代码如下：
+
+    ```c++
+                      // 中
+    if (root->left) {   // 左
+        leftLen++; // 深度加一     
+        traversal(root->left, leftLen);
+        leftLen--; // 回溯，深度减一
+    }
+    if (root->right) { // 右
+        leftLen++; // 深度加一
+        traversal(root->right, leftLen);
+        leftLen--; // 回溯，深度减一
+    }
+    return;
+    ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      int maxLen = INT_MIN;
+      int maxleftValue;
+      void traversal(TreeNode* root, int leftLen) {
+          if (root->left == NULL && root->right == NULL) {
+              if (leftLen > maxLen) {
+                  maxLen = leftLen;
+                  maxleftValue = root->val;
+              }
+              return;
+          }
+          if (root->left) {
+              leftLen++;
+              traversal(root->left, leftLen);
+              leftLen--; // 回溯
+          }
+          if (root->right) {
+              leftLen++;
+              traversal(root->right, leftLen);
+              leftLen--; // 回溯 
+          }
+          return;
+      }
+      int findBottomLeftValue(TreeNode* root) {
+          traversal(root, 0);
+          return maxleftValue;
+      }
+  };
+  ```
+
++ 递归时是否需要返回值的技巧： **「如果需要遍历整颗树，递归函数就不能有返回值。如果需要遍历某一条固定路线，递归函数就一定要有返回值！」**
+
+#### 层序遍历方法
+
++ **思路：**
+
+  + 利用层序遍历，只需要记录最后一行第一个节点的数值就可以了。
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      int findBottomLeftValue(TreeNode* root) {
+          queue<TreeNode*> que;
+          if (root != NULL) que.push(root);
+          int result = 0;
+          while (!que.empty()) {
+              int size = que.size();
+              for (int i = 0; i < size; i++) {
+                  TreeNode* node = que.front();
+                  que.pop();
+                  if (i == 0) result = node->val; // 记录最后一行第一个元素
+                  if (node->left) que.push(node->left);
+                  if (node->right) que.push(node->right);
+              }
+          }
+          return result;
+      }
+  };
+  ```
+
+
+
+### 12.路径总和
+
+> 给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree15.png" width="400px" /></div>
+
+#### 递归方法
+
++ **思路：**
+
+  + 可以使用深度优先遍历的方式（本题前中后序都可以，无所谓，因为中节点也没有处理逻辑）来遍历二叉树
+
++ **递归三部曲：**
+
+  + **确定递归函数的参数和返回类型**
+
+    + 参数：需要二叉树的根节点，还需要一个计数器，这个计数器用来计算二叉树的一条边之和是否正好是目标和，计数器为int型。
+    + 本题要找一条符合条件的路径，所以递归函数需要返回值，及时返回，那么返回类型可以用bool类型表示。
+
+    <div align = center><img src="../images/Tree16.png" width="500px" /></div>
+
+    + 代码如下：
+
+      ```c++
+      bool traversal(TreeNode* cur, int count)   // 注意函数的返回类型
+      ```
+
+  + **确定终止条件**
+
+    + 不要去累加然后判断是否等于目标和，那么代码比较麻烦，可以用递减，让计数器count初始为目标和，然后每次减去遍历路径节点上的数值。
+    + 如果最后count == 0，同时到了叶子节点的话，说明找到了目标和。
+    + 如果遍历到了叶子节点，count不为0，就是没找到。
+    + 递归终止条件代码如下：
+
+    ```c++
+    if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0
+    if (!cur->left && !cur->right) return false; // 遇到叶子节点而没有找到合适的边，直接返回
+    ```
+
+  + **确定单层递归的逻辑**
+
+    + 因为终止条件是判断叶子节点，所以递归的过程中就不要让空节点进入递归了。
+    + 递归函数是有返回值的，如果递归函数返回true，说明找到了合适的路径，应该立刻返回。
+
+    + 代码如下：
+
+    ```c++
+    if (cur->left) { // 左
+        count -= cur->left->val; // 递归，处理节点;
+        if (traversal(cur->left, count)) return true;
+        count += cur->left->val; // 回溯，撤销处理结果
+    }
+    if (cur->right) { // 右 
+        count -= cur->right->val;
+        if (traversal(cur->right, count - cur->right->val)) return true; 
+        count += cur->right->val;
+    }
+    return false;
+    ```
+
++ 实现代码：
+
+  ```c++
+  class Solution {
+  private:
+      bool traversal(TreeNode* cur, int count) {
+          if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0
+          if (!cur->left && !cur->right) return false; // 遇到叶子节点直接返回
+  
+          if (cur->left) { // 左
+              count -= cur->left->val; // 递归，处理节点;
+              if (traversal(cur->left, count)) return true;
+              count += cur->left->val; // 回溯，撤销处理结果
+          }
+          if (cur->right) { // 右
+              count -= cur->right->val; // 递归，处理节点;
+              if (traversal(cur->right, count)) return true;
+              count += cur->right->val; // 回溯，撤销处理结果
+          }
+          return false;
+      }
+  
+  public:
+      bool hasPathSum(TreeNode* root, int sum) {
+          if (root == NULL) return false;
+          return traversal(root, sum - root->val);
+      }
+  };
+  ```
+
+#### 迭代方法
+
++ **思路：**
+
+  + **「此时栈里一个元素不仅要记录该节点指针，还要记录从头结点到该节点的路径数值总和。」**
+  + C++就我们用pair结构来存放这个栈里的元素。
+  + 定义为：`pair<TreeNode*, int>` pair<节点指针，路径数值>
+  + 这个为栈里的一个元素。
+
++ **如下代码是使用栈模拟的前序遍历，如下：（详细注释）**
+
+  ```c++
+  class Solution {
+  
+  public:
+      bool hasPathSum(TreeNode* root, int sum) {
+          if (root == NULL) return false;
+          // 此时栈里要放的是pair<节点指针，路径数值>
+          stack<pair<TreeNode*, int>> st;
+          st.push(pair<TreeNode*, int>(root, root->val));
+          while (!st.empty()) {
+              pair<TreeNode*, int> node = st.top();
+              st.pop();
+              // 如果该节点是叶子节点了，同时该节点的路径数值等于sum，那么就返回true
+              if (!node.first->left && !node.first->right && sum == node.second) return true;
+  
+              // 右节点，压进去一个节点的时候，将该节点的路径数值也记录下来
+              if (node.first->right) {
+                  st.push(pair<TreeNode*, int>(node.first->right, node.second + node.first->right->val));
+              }
+  
+              // 左节点，压进去一个节点的时候，将该节点的路径数值也记录下来
+              if (node.first->left) {
+                  st.push(pair<TreeNode*, int>(node.first->left, node.second + node.first->left->val));
+              }
+          }
+          return false;
+      }
+  };
+  ```
+
   
 
+### 13.路径总和2
+
+> 给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
+
+<div align = center><img src="../images/Tree17.png" width="450px" /></div>
+
++ **思路：**
+
+  + 路径总和II要遍历整个树，找到所有路径，**「所以递归函数不要返回值！」**
+
+  <div align = center> <img src="../images/Tree18.png" width="450px" />< /div>
+
++ 递归思路与上图一致，代码实现如下：
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      // 递归函数不需要返回值，因为我们要遍历整个树
+      void traversal(TreeNode* cur, int count) {
+          if (!cur->left && !cur->right && count == 0) { // 遇到了叶子节点切找到了和为sum的路径
+              result.push_back(path);
+              return;
+          }
+  
+          if (!cur->left && !cur->right) return ; // 遇到叶子节点而没有找到合适的边，直接返回
+  
+          if (cur->left) { // 左 （空节点不遍历）
+              path.push_back(cur->left->val);
+              count -= cur->left->val;
+              traversal(cur->left, count);    // 递归
+              count += cur->left->val;        // 回溯
+              path.pop_back();                // 回溯
+          }
+          if (cur->right) { // 右 （空节点不遍历）
+              path.push_back(cur->right->val);
+              count -= cur->right->val;
+              traversal(cur->right, count);   // 递归
+              count += cur->right->val;       // 回溯
+              path.pop_back();                // 回溯
+          }
+          return ;
+      }
+  
+  public:
+      vector<vector<int>> pathSum(TreeNode* root, int sum) {
+          result.clear();
+          path.clear();
+          if (root == NULL) return result;
+          path.push_back(root->val); // 把根节点放进路径
+          traversal(root, sum - root->val);
+          return result;
+      }
+  };
+  ```
+
+  
