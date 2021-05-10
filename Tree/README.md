@@ -1155,4 +1155,446 @@ int getMinDepth(TreeNode* root) {
   };
   ```
 
+
+
+### 14. 从中序与后序遍历序列构造二叉树
+
+> 根据一棵树的中序遍历与后序遍历构造二叉树。
+
++ 示例：
+
+  <div align = center ><img src="../images/Tree19.png" width = "500px" /></div>
+
+
+
+
+
+
+
++ 实现代码：
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* traversal(vector<int>& inorder, vector<int>& postorder) {
+          //1.如果数组大小为零的话，说明是空节点了。
+          if(postorder.size() == 0) return nullptr;
   
+          //2.如果不为空，那么取后序数组最后一个元素作为节点元素。
+          int rootValue = postorder[postorder.size() - 1];
+          //构建树结点
+          TreeNode* root = new TreeNode(rootValue);
+          //判断是否为叶子节点
+          if(postorder.size() == 1)
+              return root;
+  
+          //3.找到后序数组最后一个元素在中序数组的位置，作为切割点
+          int delimiterIndex;
+          for(delimiterIndex = 0; delimiterIndex < inorder.size(); ++delimiterIndex) {
+              if(inorder[delimiterIndex] == rootValue)
+                  break;
+          }
+  
+          // 第四步：切割中序数组，得到 中序左数组和中序右数组 
+          vector<int> leftInorder(inorder.begin(), inorder.begin() + delimiterIndex);
+          vector<int> rightInorder(inorder.begin() + delimiterIndex + 1, inorder.end());
+  
+          // 第五步：切割后序数组，得到 后序左数组和后序右数组
+          // postorder 舍弃末尾元素
+          postorder.resize(postorder.size() - 1);
+          vector<int> leftPostorder(postorder.begin(), postorder.begin() + leftInorder.size());
+          vector<int> rightPostorder(postorder.begin() + leftInorder.size(), postorder.end());
+  
+          //第六步：递归处理左区间和右区间
+          root->left = traversal(leftInorder, leftPostorder);
+          root->right = traversal(rightInorder, rightPostorder);
+  
+          return root;
+      }
+  
+      TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+          if(inorder.size() == 0 && postorder.size() == 0)
+              return nullptr;
+          return traversal(inorder, postorder);
+      }
+  };
+  ```
+
+  
+
+### 15.从前序与中序遍历序列构造二叉树
+
+> 根据一棵树的前序遍历与中序遍历构造二叉树。
+
++ 示例：
+
+  <div = align = center><img src="../images/Tree20.png" width="500px" /></div>
+
+
+
+
+
++ 实现代码
+
+  ```c++
+  class Solution {
+  private:
+          TreeNode* traversal (vector<int>& inorder, int inorderBegin, int inorderEnd, vector<int>& preorder, int preorderBegin, int preorderEnd) {
+          if (preorderBegin == preorderEnd) return NULL;
+  
+          int rootValue = preorder[preorderBegin]; // 注意用preorderBegin 不要用0
+          TreeNode* root = new TreeNode(rootValue);
+  
+          if (preorderEnd - preorderBegin == 1) return root;
+  
+          int delimiterIndex;
+          for (delimiterIndex = inorderBegin; delimiterIndex < inorderEnd; delimiterIndex++) {
+              if (inorder[delimiterIndex] == rootValue) break;
+          }
+          // 切割中序数组
+          // 中序左区间，左闭右开[leftInorderBegin, leftInorderEnd)
+          int leftInorderBegin = inorderBegin;
+          int leftInorderEnd = delimiterIndex;
+          // 中序右区间，左闭右开[rightInorderBegin, rightInorderEnd)
+          int rightInorderBegin = delimiterIndex + 1;
+          int rightInorderEnd = inorderEnd;
+          
+          // 切割前序数组
+          // 前序左区间，左闭右开[leftPreorderBegin, leftPreorderEnd)
+          int leftPreorderBegin =  preorderBegin + 1;
+          int leftPreorderEnd = preorderBegin + 1 + delimiterIndex - inorderBegin; // 终止位置是起始位置加上中序左区间的大小size
+          // 前序右区间, 左闭右开[rightPreorderBegin, rightPreorderEnd)
+          int rightPreorderBegin = preorderBegin + 1 + (delimiterIndex - inorderBegin);
+          int rightPreorderEnd = preorderEnd; 
+  
+          root->left = traversal(inorder, leftInorderBegin, leftInorderEnd,  preorder, leftPreorderBegin, leftPreorderEnd);
+          root->right = traversal(inorder, rightInorderBegin, rightInorderEnd, preorder, rightPreorderBegin, rightPreorderEnd);
+  
+          return root;
+      }
+  
+  public:
+      TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+          if (inorder.size() == 0 || preorder.size() == 0) return NULL;
+  
+          // 参数坚持左闭右开的原则
+          return traversal(inorder, 0, inorder.size(), preorder, 0, preorder.size());
+      }
+  };
+  ```
+
+  
+
+### 16.构造最大的二叉树
+
+> 给定一个不含重复元素的整数数组。一个以此数组构建的最大二叉树定义如下：
+>
+> - 二叉树的根是数组中的最大元素。
+> - 左子树是通过数组中最大值左边部分构造出的最大二叉树。
+> - 右子树是通过数组中最大值右边部分构造出的最大二叉树。
+>
+> 通过给定的数组构建最大二叉树，并且输出这个树的根节点。
+>
+> 给定的数组的大小在 [1, 1000] 之间。
+
++ 示例：
+
+  <div align = center><img src="../images/Tree21.png" width="500px" /></div>
+
++ **思路：**
+
+  + 构造树一般采用的是前序遍历，因为先构造中间节点，然后递归构造左子树和右子树。
+    - 确定递归函数的参数和返回值
+  + 参数就是传入的是存放元素的数组，返回该数组构造的二叉树的头结点，返回类型是指向节点的指针。
+
++ **递归三步曲：**
+
+  + **确定终止条件**
+
+    + 题目中说了输入的数组大小一定是大于等于1的，所以我们不用考虑小于1的情况，那么当递归遍历的时候，如果传入的数组大小为1，说明遍历到了叶子节点了。
+    + 那么应该定义一个新的节点，并把这个数组的数值赋给新的节点，然后返回这个节点。这表示一个数组大小是1的时候，构造了一个新的节点，并返回。
+
+    ```c++
+    TreeNode* node = new TreeNode(0);
+    if (nums.size() == 1) {
+        node->val = nums[0];
+        return node;
+    }
+    ```
+
+  + **确定单层递归的逻辑**
+
+    > 这里有三步工作
+
+    + **先要找到数组中最大的值和对应的下表， 最大的值构造根节点，下表用来下一步分割数组。**
+
+      ```c++
+      int maxValue = 0;
+      int maxValueIndex = 0;
+      for (int i = 0; i < nums.size(); i++) {
+          if (nums[i] > maxValue) {
+              maxValue = nums[i];
+              maxValueIndex = i;
+          }
+      }
+      TreeNode* node = new TreeNode(0);
+      node->val = maxValue;
+      ```
+
+    + **最大值所在的下表左区间 构造左子树**
+
+      > 这里要判断maxValueIndex > 0，因为要保证左区间至少有一个数值。
+
+      ```c++
+      if (maxValueIndex > 0) {
+          vector<int> newVec(nums.begin(), nums.begin() + maxValueIndex);
+          node->left = constructMaximumBinaryTree(newVec);
+      }
+      ```
+
+    + **最大值所在的下表右区间 构造右子树**
+
+      >  判断maxValueIndex < (nums.size() - 1)，确保右区间至少有一个数值。
+
+      ```c++
+      if (maxValueIndex < (nums.size() - 1)) {
+          vector<int> newVec(nums.begin() + maxValueIndex + 1, nums.end());
+          node->right = constructMaximumBinaryTree(newVec);
+      }
+      ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+          //结束条件
+          TreeNode* node = new TreeNode(0);
+          if(nums.size() == 1){
+              node->val = nums[0];
+              return node;
+          }
+  
+          //单层递归
+          /*找到最大值与最大值的索引*/
+          int maxValue = 0;
+          int maxValueIndex = 0;
+          for(int i = 0; i < nums.size(); ++i) {
+              if(maxValue < nums[i]) {
+                  maxValue = nums[i];
+                  maxValueIndex = i;
+              }
+          }
+          /*进行分割*/
+          node->val = maxValue;
+          //如果maxValue不是表中第一个元素
+          if(maxValueIndex > 0) {
+              vector<int> leftNums {nums.begin(), nums.begin() + maxValueIndex};
+              node->left = constructMaximumBinaryTree(leftNums);
+          }
+          //如果maxValue不是表中最后一个元素
+          if(maxValueIndex < (nums.size() - 1)) {
+              vector<int> rightNums {nums.begin() + maxValueIndex + 1, nums.end()};
+              node->right = constructMaximumBinaryTree(rightNums);
+          }
+  
+          return node;
+      }
+  };
+  ```
+
++ **代码简化：**
+
+  ```c++
+  class Solution {
+  private:
+      // 在左闭右开区间[left, right)，构造二叉树
+      TreeNode* traversal(vector<int>& nums, int left, int right) {
+          if (left >= right) return nullptr;
+  
+          // 分割点下表：maxValueIndex
+          int maxValueIndex = left;
+          for (int i = left + 1; i < right; ++i) {
+              if (nums[i] > nums[maxValueIndex]) maxValueIndex = i;
+          }
+  
+          TreeNode* root = new TreeNode(nums[maxValueIndex]);
+  
+          // 左闭右开：[left, maxValueIndex)
+          root->left = traversal(nums, left, maxValueIndex);
+  
+          // 左闭右开：[maxValueIndex + 1, right)
+          root->right = traversal(nums, maxValueIndex + 1, right);
+  
+          return root;
+      }
+  public:
+      TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+          return traversal(nums, 0, nums.size());
+      }
+  };
+  ```
+
+
+
+### 17.合并二叉树
+
+> 给定两个二叉树，想象当你将它们中的一个覆盖到另一个上时，两个二叉树的一些节点便会重叠。
+>
+> 你需要将他们合并为一个新的二叉树。合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，否则不为 NULL 的节点将直接作为新二叉树的节点。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree22.png" width="450px" /></div>
+
++ **思路：**
+  + 遍历两个二叉树的操作和遍历一个树逻辑是一样的，只不过传入两个树的节点，同时操作。
+
++ **递归三部曲：**
+
+  + **确定递归函数的参数和返回值：**
+
+    + 首先那么要合入两个二叉树，那么参数至少是要传入两个二叉树的根节点，返回值就是合并之后二叉树的根节点。
+
+      ```c++
+      TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
+      ```
+
+  + **确定终止条件：**
+
+    + 因为是传入了两个树，那么就有两个树遍历的节点t1 和 t2，如果t1 == NULL 了，两个树合并就应该是 t2 了啊（如果t2也为NULL也无所谓，合并之后就是NULL）。
+
+    + 反过来如果t2 == NULL，那么两个数合并就是t1（如果t1也为NULL也无所谓，合并之后就是NULL）。
+
+      ```C++
+      if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2
+      if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1
+      ```
+
+  + **确定单层递归的逻辑：**
+
+    + 单层递归的逻辑就比较好些了，这里我们用重复利用一下t1这个树，t1就是合并之后树的根节点（就是修改了原来树的结构）。
+
+    + 那么单层递归中，就要把两棵树的元素加到一起。
+
+      ```c++
+      t1->val += t2->val;
+      ```
+
+    + 接下来t1 的左子树是：合并 t1左子树 t2左子树之后的左子树。t1 的右子树：是 合并 t1右子树 t2右子树之后的右子树。最终t1就是合并之后的根节点。
+
+      ```C++
+      t1->left = mergeTrees(t1->left, t2->left);
+      t1->right = mergeTrees(t1->right, t2->right);
+      return t1
+      ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
+          if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2
+          if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1
+          // 修改了t1的数值和结构
+          t1->val += t2->val;                             // 中
+          t1->left = mergeTrees(t1->left, t2->left);      // 左
+          t1->right = mergeTrees(t1->right, t2->right);   // 右
+          return t1;
+      }
+  };
+  ```
+
+
+
+### 18.叶子相似的树
+
+> 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 *叶值序列* 。
+>
+> 举个例子，如上图所示，给定一棵叶值序列为 (6, 7, 4, 9, 8) 的树。
+>
+> 如果有两棵二叉树的叶值序列是相同，那么我们就认为它们是 叶相似 的。
+>
+> 如果给定的两个根结点分别为 root1 和 root2 的树是叶相似的，则返回 true；否则返回 false 。
+
++ **示例：**
+
+  <img src="../images/Tree23.png" style="zoom:40%;" />
+
++ **思路：**
+
+  + 利用递归遍历所有叶子结点，将叶子结点值导入vector数组中，最后比较两个vector是否相同。
+
++ **递归三部曲：**
+
+  + **确定递归函数的参数和返回值：**
+
+    + 将二叉树结点和vector数组的引用作为参数，因为遍历的是一整棵树，所以不需要返回值
+
+      ```c++
+       void traversal (TreeNode* node, vector<int>&nums) ;
+      ```
+
+  + **确定终止条件：**
+
+    + 当遍历到叶子结点时，压入到vector数组中，返回。
+
+      ```c++
+      //结束条件
+      if(node->left == nullptr && node->right == nullptr)  {
+      		nums.push_back(node->val);
+      		return;
+      }
+      ```
+
+  + **确定单层递归的逻辑：**
+
+    + 单层递归的逻辑就比较好些了，直接找目前结点的左子树与右子树。
+
+      ```c++
+      //单层递归
+      if(node->left) 
+      		traversal(node->left, nums);
+      if(node->right)
+      		traversal(node->right, nums);
+      return; 
+      ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {   
+  private:
+      void traversal (TreeNode* node, vector<int>&nums) {
+          //结束条件
+          if(node->left == nullptr && node->right == nullptr)  {
+              nums.push_back(node->val);
+              return;
+          }
+          //单层递归
+          if(node->left) 
+              traversal(node->left, nums);
+          if(node->right)
+              traversal(node->right, nums);
+          return; 
+      }
+  public:
+      bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+          vector<int> root1num;  
+          vector<int> root2num;
+          traversal(root1,root1num);
+          traversal(root2,root2num);
+  
+          bool flag = true;
+          if(root1num != root2num)
+              flag = false;
+          return flag;
+          
+      }
+  };
+  ```
+
+
+
