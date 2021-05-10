@@ -1521,7 +1521,7 @@ int getMinDepth(TreeNode* root) {
 
 + **示例：**
 
-  <img src="../images/Tree23.png" style="zoom:40%;" />
+  <div align = center><img src="../images/Tree23.png" width="600px" /></div>
 
 + **思路：**
 
