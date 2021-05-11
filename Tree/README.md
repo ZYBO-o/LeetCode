@@ -1598,3 +1598,363 @@ int getMinDepth(TreeNode* root) {
 
 
 
+---
+
+## 三.二叉搜索树的创建与操作
+
+### 1.二叉搜索树的创建
+
+```c++
+void CreatBSTree(BSTreeNode* &root) {
+    int value;
+    while(std::cin >> value) {
+        //声明临时节点并把数据放进去，注意不能delete
+        auto newNode = new BSTreeNode(value);
+        //树没有根结点的情况
+        if (root == nullptr)
+            root = newNode;
+        //树存在根节点
+        else
+        {
+            //声明移动指针
+            BSTreeNode* pTemp = root;
+            //找到插入的位置才退出
+            while (true)
+            {
+                //输入的数小于该节点的值
+                if (value < pTemp->val) {
+                    //左孩子为空，则新的节点为左孩子
+                    if (pTemp->left == nullptr)
+                    {
+                        pTemp->left = newNode;
+                        break;
+                    }
+                        //左孩子不为空，p指针移动为左孩子
+                    else
+                    {
+                        pTemp = pTemp->left;
+                    }
+                }
+                //输入的数不小于该节点的值
+                else
+                {
+                    //右孩子为空，则新的节点为右孩子
+                    if (pTemp->right == nullptr)
+                    {
+                        pTemp->right = newNode;
+                        break;
+                    }
+                        //右孩子不为空，p指针移动为右孩子
+                    else
+                    {
+                        pTemp = pTemp->right;
+                    }
+                }
+            }
+        }
+        //判断是否输入结束
+        if (std::cin.get() == '\n')
+            break;
+    }
+}
+```
+
+### 2.二插搜索树的遍历
+
+#### 递归进行先序遍历
+
+```c++
+void PreOrderTraversalBSTree(BSTreeNode* root) {
+    if(root != nullptr) {
+        std::cout << (root->val) << " ";
+        PreOrderTraversalBSTree(root->left);
+        PreOrderTraversalBSTree(root->right);
+    }
+}
+```
+
+#### 递归进行中序遍历
+
+```c++
+void InOrderTraversalBSTree(BSTreeNode* root) {
+    if(root != nullptr) {
+        InOrderTraversalBSTree(root->left);
+        std::cout << (root->val) << " ";
+        InOrderTraversalBSTree(root->right);
+    }
+}
+```
+
+#### 递归进行后序遍历
+
+```c++
+void PostOrderTraversalBSTree(BSTreeNode* root) {
+    if(root != nullptr) {
+        PostOrderTraversalBSTree(root->left);
+        PostOrderTraversalBSTree(root->right);
+        std::cout << (root->val) << " ";
+    }
+}
+```
+
+
+
+### 二叉搜索树中的搜索
+
+> 给定二叉搜索树（BST）的根节点和一个值。你需要在BST中找到节点值等于给定值的节点。返回以该节点为根的子树。如果节点不存在，则返回 NULL。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree24.png" width="550px" /></div>
+
++ **思路：**
+  + 本题其实就是在二叉搜索树中搜索一个节点。
+
+#### 递归方案
+
++ **递归三步曲：**
+
+  + **确定递归函数的参数和返回值**
+
+    + 递归函数的参数传入的就是根节点和要搜索的数值，返回的就是以这个搜索数值所在的节点。
+
+    ```c++
+    TreeNode* searchBST(TreeNode* root, int val)
+    ```
+
+  + **确定终止条件**
+
+    + 如果root为空，或者找到这个数值了，就返回root节点。
+
+    ```c++
+    if (root == NULL || root->val == val) return root;
+    ```
+
+  + **确定单层递归的逻辑**
+
+    + 因为二叉搜索树的节点是有序的，所以可以有方向的去搜索。
+    + 如果root->val > val，搜索左子树，如果root->val < val，就搜索右子树，最后如果都没有搜索到，就返回NULL。
+
+    ```c++
+    if (root->val > val) return searchBST(root->left, val); // 注意这里加了return 
+    if (root->val < val) return searchBST(root->right, val);
+    return NULL;
+    ```
+
++ **代码实现**
+
+  ```c++
+  TreeNode* searchBST(TreeNode* root, int val) {
+      if (root == NULL || root->val == val) return root;
+      if (root->val > val) return searchBST(root->left, val);
+      if (root->val < val) return searchBST(root->right, val);
+      return NULL;
+  }
+  ```
+
+#### 迭代方案
+
+提到二叉树遍历的迭代法，可能立刻想起使用栈来模拟深度遍历，使用队列来模拟广度遍历。对于二叉搜索树可就不一样了，因为二叉搜索树的特殊性，也就是节点的有序性，可以不使用辅助栈或者队列就可以写出迭代法。
+
+对于一般二叉树，递归过程中还有回溯的过程，例如走一个左方向的分支走到头了，那么要调头，在走右分支。而**「对于二叉搜索树，不需要回溯的过程，因为节点的有序性就帮我们确定了搜索的方向。」**
+
+例如要搜索元素为3的节点，**「我们不需要搜索其他节点，也不需要做回溯，查找的路径已经规划好了。」**
+
+中间节点如果大于3就向左走，如果小于3就向右走，如图：
+
+<div align = center><img src="../images/Tree25.png" width="400px" /></div>
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* searchBST(TreeNode* root, int val) {
+          while (root != NULL) {
+              if (root->val > val) root = root->left;
+              else if (root->val < val) root = root->right;
+              else return root;
+          }
+          return NULL;
+      }
+  };
+  ```
+
+
+
+### 验证二叉搜索树
+
+> 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
+
++ **示例：**
+
+  <img src="../images/Tree26.png" style="zoom:50%;" />
+
++ **思路：**
+  + 二叉搜索树在中序遍历下，输出的二叉搜索树节点的数值是有序序列。有了这个特性，**「验证二叉搜索树，就相当于变成了判断一个序列是不是递增的了。」**
+
+#### 递归方案
+
++ **递归三步曲：**
+
+  + **确定递归函数，返回值以及参数**
+
+    + 要定义一个longlong的全局变量，用来比较遍历的节点是否有序，因为后台测试数据中有int最小值，所以定义为longlong的类型，初始化为longlong最小值。
+    + 注意递归函数要有bool类型的返回值， 只有寻找某一条边（或者一个节点）的时候，递归函数会有bool类型的返回值。本题是同样的道理，在寻找一个不符合条件的节点，如果没有找到这个节点就遍历了整个树，如果找到不符合的节点了，立刻返回。
+
+    ```c++
+    long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值
+    bool isValidBST(TreeNode* root) 
+    ```
+
+  + **确定终止条件**
+
+    + 如果是空节点也是二叉搜索树
+
+    ```c++
+    if (root == NULL) return true;
+    ```
+
+  + **确定单层递归的逻辑**
+
+    + 中序遍历，一直更新maxVal，一旦发现maxVal >= root->val，就返回false，注意元素相同时候也要返回false。
+
+    ```c++
+    bool left = isValidBST(root->left);         // 左
+    
+    // 中序遍历，验证遍历的元素是不是从小到大
+    if (maxVal < root->val) maxVal = root->val; // 中
+    else return false;
+    
+    bool right = isValidBST(root->right);       // 右
+    return left && right;
+    ```
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值
+      bool isValidBST(TreeNode* root) {
+          if (root == NULL) return true;
+  
+          bool left = isValidBST(root->left);
+          // 中序遍历，验证遍历的元素是不是从小到大
+          if (maxVal < root->val) maxVal = root->val;
+          else return false;
+          bool right = isValidBST(root->right);
+  
+          return left && right;
+      }
+  };
+  ```
+
++ 这道题目比较容易陷入两个陷阱：
+
+  - 陷阱1: **「不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了」**。
+
+    + 写出了类似这样的代码：
+
+    ```
+    if (root->val > root->left->val && root->val < root->right->val) {
+        return true;
+    } else {
+        return false;
+    }
+    ```
+
+    + **我们要比较的是 左子树所有节点小于中间节点，右子树所有节点大于中间节点**。所以以上代码的判断逻辑是错误的。
+
+    + 例如：[10,5,15,null,null,6,20] 这个case：
+
+      <div align = center><img src="../images/Tree27.png" width="300px" /></div>
+
+      >  节点10小于左节点5，大于右节点15，但右子树里出现了一个6 这就不符合了！
+
+  - 陷阱2
+    + 样例中最小节点 可能是int的最小值，如果这样使用最小的int来比较也是不行的。
+    + 此时可以初始化比较元素为longlong的最小值。
+
+#### 递归方案2
+
+可以递归中序遍历将二叉搜索树转变成一个数组，代码如下：
+
+```c++
+vector<int> vec;
+void traversal(TreeNode* root) {
+    if (root == NULL) return;
+    traversal(root->left);
+    vec.push_back(root->val); // 将二叉搜索树转换为有序数组
+    traversal(root->right);
+}
+```
+
+然后只要比较一下，这个数组是否是有序的，**「注意二叉搜索树中不能有重复元素」**。
+
+```c++
+traversal(root);
+for (int i = 1; i < vec.size(); i++) {
+    // 注意要小于等于，搜索树里不能有相同元素
+    if (vec[i] <= vec[i - 1]) return false;
+}
+return true;
+```
+
+整体代码如下：
+
+```c++
+class Solution {
+private:
+    vector<int> vec;
+    void traversal(TreeNode* root) {
+        if (root == NULL) return;
+        traversal(root->left);
+        vec.push_back(root->val); // 将二叉搜索树转换为有序数组
+        traversal(root->right);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        vec.clear(); // 不加这句在leetcode上也可以过，但最好加上
+        traversal(root);
+        for (int i = 1; i < vec.size(); i++) {
+            // 注意要小于等于，搜索树里不能有相同元素
+            if (vec[i] <= vec[i - 1]) return false;
+        }
+        return true;
+    }
+};
+```
+
+#### 迭代方案
+
+可以用迭代法模拟二叉树中序遍历，迭代法中序遍历稍加改动就可以了，代码如下：
+
+```c++
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        stack<TreeNode*> st;
+        TreeNode* cur = root;
+        TreeNode* pre = NULL; // 记录前一个节点
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) {
+                st.push(cur);
+                cur = cur->left;                // 左
+            } else {
+                cur = st.top();                 // 中
+                st.pop();
+                if (pre != NULL && cur->val <= pre->val)
+                return false;
+                pre = cur; //保存前一个访问的结点
+
+                cur = cur->right;               // 右
+            }
+        }
+        return true;
+    }
+};
+```
+
+
+

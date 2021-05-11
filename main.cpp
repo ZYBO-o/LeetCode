@@ -9,7 +9,7 @@ int main() {
 
 
     //Test_Backtracking();
-    //Test_BTree_LeetCode();
+    Test_BTree_LeetCode();
 
     return 0;
 }

@@ -13,8 +13,8 @@ public:
     TreeNode *left;
     TreeNode *right;
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(char value) : val(value), left(nullptr), right(nullptr) {}
-    TreeNode(char value, TreeNode* left, TreeNode* right) : val(value), left(left), right(right) {}
+    TreeNode(int value) : val(value), left(nullptr), right(nullptr) {}
+    TreeNode(int value, TreeNode* left, TreeNode* right) : val(value), left(left), right(right) {}
 };
 
 //按照先序遍历的方式创建二叉树
