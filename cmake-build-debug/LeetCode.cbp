@@ -200,6 +200,18 @@
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/148_Sort_List.h">
 			<Option target="LeetCode"/>
 		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/InsertionSort.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/SelectionSort.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/SortTestHelper.h">
+			<Option target="LeetCode"/>
+		</Unit>
+		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/Test_Sort_LeetCode.h">
+			<Option target="LeetCode"/>
+		</Unit>
 		<Unit filename="/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Tree/BSTree_LeetCode.cpp">
 			<Option target="LeetCode"/>
 		</Unit>

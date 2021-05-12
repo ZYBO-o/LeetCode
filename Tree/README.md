@@ -1596,6 +1596,113 @@ int getMinDepth(TreeNode* root) {
   };
   ```
 
+### 19.公共祖先问题
+
+> 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+>
+> 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree28.png" width="500px" /></center>
+
++ **思路：**
+
+  + 遇到这个题目首先想的是要是能自底向上查找就好了，这样就可以找到公共祖先了。那么二叉树如何可以自底向上查找呢？ **首先应该想到回溯，** 二叉树回溯的过程就是从低到上。而后序遍历就是天然的回溯过程，最先处理的一定是叶子节点。
+  + 接下来就看如何判断一个节点是节点q和节点p的公共公共祖先呢。 **「如果找到一个节点，发现左子树出现结点p，右子树出现节点q，或者 左子树出现结点q，右子树出现节点p，那么该节点就是节点p和q的最近公共祖先。」**
+  + 使用后序遍历，回溯的过程，就是从低向上遍历节点，一旦发现如何这个条件的节点，就是最近公共节点了。
+
++ **递归三步曲：**
+
+  + **确定递归函数返回值以及参数**
+
+    + 需要递归函数返回值，来告诉我们是否找到节点q或者p，那么返回值为bool类型就可以了。
+    + 但我们还要返回最近公共节点，可以利用上题目中返回值是TreeNode * ，那么如果遇到p或者q，就把q或者p返回，返回值不为空，就说明找到了q或者p。
+
+    ```c++
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+    ```
+
+  + 确定终止条件
+
+    + 如果找到了 节点p或者q，或者遇到空节点，就返回。
+
+    ```c++
+    if (root == q || root == p || root == NULL) return root;
+    ```
+
+  + 处理单层递归逻辑
+
+    + 遍历根节点右子树（即使此时已经找到了目标节点了），在后序遍历中，如果想利用left和right做逻辑处理， 不能立刻返回，而是要等left与right逻辑处理完之后才能返回。
+
+    + **「如果left 和 right都不为空，说明此时root就是最近公共节点。这个比较好理解」**
+    + **「如果left为空，right不为空，就返回right，说明目标节点是通过right返回的，反之依然」**。
+
+    ```c++
+    TreeNode* left = lowestCommonAncestor(root->left, p, q);
+    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+    if (left != NULL && right != NULL) 
+    		return root;
+    
+    if (left == NULL && right != NULL) 
+    		return right;
+    else if (left != NULL && right == NULL) 
+    		return left;
+    else  { //  (left == NULL && right == NULL)
+    		return NULL;
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+          if (root == q || root == p || root == NULL) return root;
+          TreeNode* left = lowestCommonAncestor(root->left, p, q);
+          TreeNode* right = lowestCommonAncestor(root->right, p, q);
+          if (left != NULL && right != NULL) return root;
+  
+          if (left == NULL && right != NULL) return right;
+          else if (left != NULL && right == NULL) return left;
+          else  { //  (left == NULL && right == NULL)
+              return NULL;
+          }
+  
+      }
+  };
+  ```
+
+  
+
+### 树的递归总结
+
+值得注意的是 本题函数有返回值，是因为回溯的过程需要递归函数的返回值做判断，但本题我们依然要遍历树的所有节点。
+
+我们在[二叉树：递归函数究竟什么时候需要返回值，什么时候不要返回值？](https://mp.weixin.qq.com/s?__biz=MzUxNjY5NTYxNA==&mid=2247484927&idx=1&sn=476c0cfc2b04d14fe5c32605a2676b9f&scene=21#wechat_redirect)中说了 递归函数有返回值就是要遍历某一条边，但有返回值也要看如何处理返回值！
+
+如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树呢？
+
+搜索一条边的写法：
+
+```c++
+if (递归函数(root->left)) return ;
+if (递归函数(root->right)) return ;
+```
+
+搜索整个树写法：
+
+```c++
+left = 递归函数(root->left);
+right = 递归函数(root->right);
+left与right的逻辑处理;
+```
+
+看出区别了没？
+
+**「在递归函数有返回值的情况下：如果要搜索一条边，递归函数返回值不为空的时候，立刻返回，如果搜索整个树，直接用一个变量left、right接住返回值，这个left、right后序还有逻辑处理的需要，也就是后序遍历中处理中间节点的逻辑（也是回溯）」**。
+
 
 
 ---
@@ -1699,7 +1806,7 @@ void PostOrderTraversalBSTree(BSTreeNode* root) {
 
 
 
-### 二叉搜索树中的搜索
+### 3.二叉搜索树中的搜索
 
 > 给定二叉搜索树（BST）的根节点和一个值。你需要在BST中找到节点值等于给定值的节点。返回以该节点为根的子树。如果节点不存在，则返回 NULL。
 
@@ -1782,7 +1889,7 @@ void PostOrderTraversalBSTree(BSTreeNode* root) {
 
 
 
-### 验证二叉搜索树
+### 4.验证二叉搜索树
 
 > 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
 
@@ -1956,5 +2063,113 @@ public:
 };
 ```
 
+### 5.二叉搜索树中的众数
 
+> 给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。
 
++ 示例：
+
+  <div align = center><img src="../images/Tree29.png" width="600px" /></div>
+
++ **思路：**
+
+  + 首先如果不是二叉搜索树的话，应该怎么解题？如果不是二叉搜索树，最直观的方法一定是把这个树都遍历了，用map统计频率，把频率排个序，最后取前面高频的元素的集合。
+  + **「既然是搜索树，它中序遍历就是有序的」**。遍历有序数组的元素出现频率，从头遍历，那么一定是相邻两个元素作比较，然后就把出现频率最高的元素输出就可以了。
+  + 使用pre指针和cur指针的技巧，定义一个指针指向前一个节点，这样每次cur（当前节点）才能和pre（前一个节点）作比较。而且初始化的时候pre = NULL，这样当pre为NULL时候，我们就知道这是比较的第一个元素。
+  + 遍历一遍数组，找出最大频率（maxCount），然后再重新遍历一遍数组把出现频率为maxCount的元素放进集合。频率count 大于 maxCount的时候，不仅要更新maxCount，而且要清空结果集（以下代码为result数组），因为结果集之前的元素都失效了。
+
++ **递归遍历实现：**
+
+  ```c++
+  class Solution {
+  private:
+      int maxCount; // 最大频率
+      int count; // 统计频率
+      TreeNode* pre;
+      vector<int> result;
+      void searchBST(TreeNode* cur) {
+          if (cur == NULL) return ;
+  
+          searchBST(cur->left);       // 左
+                                      // 中
+          if (pre == NULL) { // 第一个节点
+              count = 1;
+          } else if (pre->val == cur->val) { // 与前一个节点数值相同
+              count++;
+          } else { // 与前一个节点数值不同
+              count = 1;
+          }
+          pre = cur; // 更新上一个节点
+  
+          if (count == maxCount) { // 如果和最大值相同，放进result中
+              result.push_back(cur->val);
+          }
+  
+          if (count > maxCount) { // 如果计数大于最大值频率
+              maxCount = count;   // 更新最大频率
+              result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+              result.push_back(cur->val);
+          }
+  
+          searchBST(cur->right);      // 右
+          return ;
+      }
+  
+  public:
+      vector<int> findMode(TreeNode* root) {
+          count = 0; 
+          maxCount = 0;
+          TreeNode* pre = NULL; // 记录前一个节点
+          result.clear();
+  
+          searchBST(root);
+          return result;
+      }
+  };
+  ```
+
++ **迭代遍历代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      vector<int> findMode(TreeNode* root) {
+          stack<TreeNode*> st;
+          TreeNode* cur = root;
+          TreeNode* pre = NULL;
+          int maxCount = 0; // 最大频率
+          int count = 0; // 统计频率
+          vector<int> result;
+          while (cur != NULL || !st.empty()) {
+              if (cur != NULL) { // 指针来访问节点，访问到最底层
+                  st.push(cur); // 将访问的节点放进栈
+                  cur = cur->left;                // 左
+              } else {
+                  cur = st.top();
+                  st.pop();                       // 中
+                  if (pre == NULL) { // 第一个节点
+                      count = 1;
+                  } else if (pre->val == cur->val) { // 与前一个节点数值相同
+                      count++;
+                  } else { // 与前一个节点数值不同
+                      count = 1;
+                  }
+                  if (count == maxCount) { // 如果和最大值相同，放进result中
+                      result.push_back(cur->val);
+                  }
+  
+                  if (count > maxCount) { // 如果计数大于最大值频率
+                      maxCount = count;   // 更新最大频率
+                      result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+                      result.push_back(cur->val);
+                  }
+                  pre = cur;
+                  cur = cur->right;               // 右
+              }
+          }
+          return result;
+      }
+  };
+  ```
+
+  
