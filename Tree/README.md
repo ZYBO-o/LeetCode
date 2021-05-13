@@ -1678,30 +1678,34 @@ int getMinDepth(TreeNode* root) {
 
 ### 树的递归总结
 
-值得注意的是 本题函数有返回值，是因为回溯的过程需要递归函数的返回值做判断，但本题我们依然要遍历树的所有节点。
++ **有关递归的返回值问题：**
 
-我们在[二叉树：递归函数究竟什么时候需要返回值，什么时候不要返回值？](https://mp.weixin.qq.com/s?__biz=MzUxNjY5NTYxNA==&mid=2247484927&idx=1&sn=476c0cfc2b04d14fe5c32605a2676b9f&scene=21#wechat_redirect)中说了 递归函数有返回值就是要遍历某一条边，但有返回值也要看如何处理返回值！
+  + **「如果需要搜索整颗二叉树，那么递归函数就不要返回值，如果要搜索其中一条符合条件的路径，递归函数就需要返回值，因为遇到符合条件的路径了就要及时返回。」**
 
-如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树呢？
+  + 第19题中遍历整棵树，但还是有返回值。 **是因为回溯的过程需要递归函数的返回值做判断，但本题我们依然要遍历树的所有节点。**
 
-搜索一条边的写法：
+  
 
-```c++
-if (递归函数(root->left)) return ;
-if (递归函数(root->right)) return ;
-```
++ **如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树呢？**
 
-搜索整个树写法：
+  + 搜索一条边的写法：
 
-```c++
-left = 递归函数(root->left);
-right = 递归函数(root->right);
-left与right的逻辑处理;
-```
+    ```c++
+    if (递归函数(root->left)) return ;
+    if (递归函数(root->right)) return ;
+    ```
 
-看出区别了没？
+    搜索整个树写法：
 
-**「在递归函数有返回值的情况下：如果要搜索一条边，递归函数返回值不为空的时候，立刻返回，如果搜索整个树，直接用一个变量left、right接住返回值，这个left、right后序还有逻辑处理的需要，也就是后序遍历中处理中间节点的逻辑（也是回溯）」**。
+    ```c++
+    left = 递归函数(root->left);
+    right = 递归函数(root->right);
+    left与right的逻辑处理;
+    ```
+
+  + **在递归函数有返回值的情况下：**
+    + **「 如果要搜索一条边，递归函数返回值不为空的时候，立刻返回**
+    + **如果搜索整个树，直接用一个变量left、right接住返回值，这个left、right后序还有逻辑处理的需要，也就是后序遍历中处理中间节点的逻辑（也是回溯）」**。
 
 
 
@@ -2172,4 +2176,411 @@ public:
   };
   ```
 
+
+### 6.二叉搜索树的最近公共祖先
+
+> 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+
++ **示例**
+
+  <div align = center><img src="../images/Tree30.png" width="600px" /></div>
+
++ **思路：**
+  + 通过 二叉树：公共祖先问题 利用回溯从底向上搜索，遇到一个节点的左子树里有p，右子树里有q，那么当前节点就是最近公共祖先。而本题是二叉搜索树，二叉搜索树是有序的，那得好好利用一下这个特点。
+  + 在有序树里，如果判断一个节点的左子树里有p，右子树里有q呢？其实只要从上到下遍历的时候，cur节点是数值在[p, q]区间中则说明该节点cur就是最近公共祖先了。
+
+#### 递归思路
+
++ **递归三部曲：**
+
+  + **确定递归函数返回值以及参数**
+
+    + 参数就是 当前节点，以及两个结点 p、q。返回值是要返回最近公共祖先，所以是TreeNode *  。
+
+    ```c++
+    TreeNode* traversal(TreeNode* cur, TreeNode* p, TreeNode* q) 
+    ```
+
+  + **确定终止条件**
+
+    + 遇到空返回就可以了，代码如下：
+
+      ```c++
+      if (cur == NULL) return cur;
+      ```
+
+      其实都不需要这个终止条件，因为题目中说了p、q 为不同节点且均存在于给定的二叉搜索树中。也就是说一定会找到公共祖先的，所以并不存在遇到空的情况。
+
+  + **确定单层递归的逻辑**
+
+    + 在遍历二叉搜索树的时候就是寻找区间[p->val, q->val]（注意这里是左闭又闭）。那么如果 cur->val 大于 p->val，同时 cur->val 大于q->val，那么就应该向左遍历（说明目标区间在左子树上）。**「需要注意的是此时不知道p和q谁大，所以两个都要判断」**
+
+      ```c++
+      if (cur->val > p->val && cur->val > q->val) {
+          TreeNode* left = traversal(cur->left, p, q);
+          if (left != NULL) {
+              return left;
+          }
+      }
+      ```
+
+    + 在二叉树：公共祖先问题中，如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树。
+
+      搜索一条边的写法：
+
+      ```c++
+      if (递归函数(root->left)) return ;
+      
+      if (递归函数(root->right)) return ;
+      ```
+
+      搜索整个树写法：
+
+      ```c++
+      left = 递归函数(root->left);
+      right = 递归函数(root->right);
+      left与right的逻辑处理;
+      ```
+
+      本题就是标准的搜索一条边的写法，遇到递归函数的返回值，如果不为空，立刻返回。
+
+      如果 cur->val 小于 p->val，同时 cur->val 小于 q->val，那么就应该向右遍历（目标区间在右子树）。
+
+      ```c++
+      if (cur->val < p->val && cur->val < q->val) {
+          TreeNode* right = traversal(cur->right, p, q);
+          if (right != NULL) {
+              return right;
+          }
+      }
+      ```
+
+      剩下的情况，就是cur节点在区间（p->val <=  cur->val && cur->val <= q->val）或者 （q->val <=  cur->val && cur->val <= p->val）中，那么cur就是最近公共祖先了，直接返回cur。
+
++ 代码实现：
+
+  ```c++
+  class Solution {
+  private:
+      TreeNode* traversal(TreeNode* cur, TreeNode* p, TreeNode* q) {
+          if (cur == NULL) return cur;
+                                                          // 中
+          if (cur->val > p->val && cur->val > q->val) {   // 左
+              TreeNode* left = traversal(cur->left, p, q);
+              if (left != NULL) {
+                  return left;
+              }
+          }
   
+          if (cur->val < p->val && cur->val < q->val) {   // 右
+              TreeNode* right = traversal(cur->right, p, q);
+              if (right != NULL) {
+                  return right;
+              }
+          }
+          return cur;
+      }
+  public:
+      TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+          return traversal(root, p, q);
+      }
+  };
+  ```
+
+#### 迭代方案
+
++ 实现代码：
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+          while(root) {
+              if (root->val > p->val && root->val > q->val) {
+                  root = root->left;
+              } else if (root->val < p->val && root->val < q->val) {
+                  root = root->right;
+              } else return root;
+          }
+          return NULL;
+      }
+  };
+  ```
+
+  
+
+### 7.二叉搜索树中的插入操作
+
+> 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。返回插入后二叉搜索树的根节点。输入数据保证，新值和原始二叉搜索树中的任意节点值都不同。
+>
+> 注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。你可以返回任意有效的结果。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree31.png" width="600px" /></div>
+
++ **思路：**
+  + 只要按照二叉搜索树的规则去遍历，遇到空节点就插入节点就可以了。
+
+#### 递归方案
+
++ **递归三部曲：**
+
+  + **确定递归函数参数以及返回值**
+
+    + 参数就是根节点指针，以及要插入元素，这里递归函数要不要有返回值呢？
+    + 可以有，也可以没有，但递归函数如果没有返回值的话，实现是比较麻烦的。
+    + **「有返回值的话，可以利用返回值完成新加入的节点与其父节点的赋值操作」**。
+    + 递归函数的返回类型为节点类型TreeNode * 。
+
+    ```c++
+    TreeNode* insertIntoBST(TreeNode* root, int val) 
+    ```
+
+  + **确定终止条件**
+
+    + 终止条件就是找到遍历的节点为null的时候，就是要插入节点的位置了，并把插入的节点返回。
+
+    ```c++
+    if (root == NULL) {
+        TreeNode* node = new TreeNode(val);
+        return node;
+    }
+    ```
+
+    + 这里把添加的节点返回给上一层，就完成了父子节点的赋值操作了，详细再往下看。
+
+  + **确定单层递归的逻辑**
+
+    + 此时要明确，需要遍历整棵树么？别忘了这是搜索树，遍历整颗搜索树简直是对搜索树的侮辱，哈哈。搜索树是有方向了，可以根据插入元素的数值，决定递归方向。
+
+      代码如下：
+
+      ```c++
+      if (root->val > val) root->left = insertIntoBST(root->left, val);
+      if (root->val < val) root->right = insertIntoBST(root->right, val);
+      return root;
+      ```
+
+      **「到这里，大家应该能感受到，如何通过递归函数返回值完成了新加入节点的父子关系赋值操作了，下一层将加入节点返回，本层用root->left或者root->right将其接住」**。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* insertIntoBST(TreeNode* root, int val) {
+          if (root == NULL) {
+              TreeNode* node = new TreeNode(val);
+              return node;
+          }
+          if (root->val > val) root->left = insertIntoBST(root->left, val);
+          if (root->val < val) root->right = insertIntoBST(root->right, val);
+          return root;
+      }
+  };
+  ```
+
+
+
+#### 迭代方案
+
++ 在迭代法遍历的过程中，需要记录一下当前遍历的节点的父节点，这样才能做插入节点的操作。
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  public:
+      TreeNode* insertIntoBST(TreeNode* root, int val) {
+          if (root == NULL) {
+              TreeNode* node = new TreeNode(val);
+              return node;
+          }
+          TreeNode* cur = root;
+          TreeNode* parent = root; // 这个很重要，需要记录上一个节点，否则无法赋值新节点
+          while (cur != NULL) {
+              parent = cur;
+              if (cur->val > val) cur = cur->left;
+              else cur = cur->right;
+          }
+          TreeNode* node = new TreeNode(val);
+          if (val < parent->val) parent->left = node;// 此时是用parent节点的进行赋值
+          else parent->right = node;
+          return root;
+      }
+  };
+  ```
+
+
+
+### 8.删除二叉搜索树中的节点
+
+> 给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。
+>
+> 一般来说，删除节点可分为两个步骤：
+>
+> 首先找到需要删除的节点；如果找到了，删除它。说明：要求算法时间复杂度为 O(h)，h 为树的高度。
+
++ **示例：**
+
+  <div align = center><img src="../images/Tree32.png" width="550px" /></div>
+
++ **思路：**
+  + 搜索树的节点删除要比节点增加复杂的多，有很多情况需要考虑
+
+#### 递归方案
+
++ **递归三部曲：**
+
+  + **确定递归函数参数以及返回值**
+
+    + 说道递归函数的返回值，在二叉树：搜索树中的插入操作中通过递归返回值来加入新节点， 这里也可以通过递归返回值删除节点。
+
+    ```c++
+    TreeNode* deleteNode(TreeNode* root, int key) 
+    ```
+
+  + **确定终止条件**
+
+    + 遇到空返回，其实这也说明没找到删除的节点，遍历到空节点直接返回了
+
+      ```c++
+      if (root == nullptr) return root; 
+      ```
+
+  + **确定单层递归的逻辑**
+
+    + 这里就把平衡二叉树中删除节点遇到的情况都搞清楚。有以下五种情况：
+
+      - 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+
+      - 找到删除的节点
+
+      - - 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+        - 第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点
+        - 第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+        - 第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
+
+      - <div align = center><img src="../images/Tree33.png" width="300px" /> <img src="../images/Tree34.png" width="245px" /></div>
+
+      > 删除元素7， 那么删除节点（元素7）的左孩子就是5，删除节点（元素7）的右子树的最左面节点是元素8。
+      >
+      > 将删除节点（元素7）的左孩子放到删除节点（元素7）的右子树的最左面节点（元素8）的左孩子上，就是把5为根节点的子树移到了8的左孩子的位置。
+      >
+      > 要删除的节点（元素7）的右孩子（元素9）为新的根节点。.
+
+    ```c++
+    if (root->val == key) {
+        // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+        // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
+        if (root->left == nullptr) return root->right; 
+        // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+        else if (root->right == nullptr) return root->left; 
+        // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
+        // 并返回删除节点右孩子为新的根节点。
+        else {  
+            TreeNode* cur = root->right; // 找右子树最左面的节点
+            while(cur->left != nullptr) { 
+                cur = cur->left;
+            }
+            cur->left = root->left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
+            TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+            root = root->right;     // 返回旧root的右孩子作为新root
+            delete tmp;             // 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）
+            return root;
+        }
+    }
+    ```
+
+    > 这里相当于把新的节点返回给上一层，上一层就要用 root->left 或者 root->right接住，代码如下：
+    >
+    > ```c++
+    > if (root->val > key) root->left = deleteNode(root->left, key);
+    > if (root->val < key) root->right = deleteNode(root->right, key);
+    > return root;
+    > ```
+
+    + **实现代码：**
+
+      ```c++
+      class Solution {
+      public:
+          TreeNode* deleteNode(TreeNode* root, int key) {
+              if (root == nullptr) return root; // 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+              if (root->val == key) {
+                  // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+                  // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
+                  if (root->left == nullptr) return root->right; 
+                  // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+                  else if (root->right == nullptr) return root->left; 
+                  // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
+                  // 并返回删除节点右孩子为新的根节点。
+                  else {  
+                      TreeNode* cur = root->right; // 找右子树最左面的节点
+                      while(cur->left != nullptr) { 
+                          cur = cur->left;
+                      }
+                      cur->left = root->left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
+                      TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+                      root = root->right;     // 返回旧root的右孩子作为新root
+                      delete tmp;             // 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）
+                      return root;
+                  }
+              }
+              if (root->val > key) root->left = deleteNode(root->left, key);
+              if (root->val < key) root->right = deleteNode(root->right, key);
+              return root;
+          }
+      };
+      ```
+
+
+#### 迭代实现
+
++ 删除节点的迭代法还是复杂一些的，但其本质我在递归法里都介绍了，最关键就是删除节点的操作
+
++ **代码实现：**
+
+```c++
+class Solution {
+private:
+    // 将目标节点（删除节点）的左子树放到 目标节点的右子树的最左面节点的左孩子位置上
+    // 并返回目标节点右孩子为新的根节点
+    // 是动画里模拟的过程
+    TreeNode* deleteOneNode(TreeNode* target) {
+        if (target == nullptr) return target;
+        if (target->right == nullptr) return target->left;
+        TreeNode* cur = target->right;
+        while (cur->left) {
+            cur = cur->left;
+        }
+        cur->left = target->left;
+        return target->right;
+    }
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == nullptr) return root;
+        TreeNode* cur = root;
+        TreeNode* pre = nullptr; // 记录cur的父节点，用来删除cur
+        while (cur) {
+            if (cur->val == key) break;
+            pre = cur;
+            if (cur->val > key) cur = cur->left;
+            else cur = cur->right;
+        }
+        if (pre == nullptr) { // 如果搜索树只有头结点
+            return deleteOneNode(cur);
+        }
+        // pre 要知道是删左孩子还是右孩子
+        if (pre->left && pre->left->val == key) {
+            pre->left = deleteOneNode(cur);
+        }
+        if (pre->right && pre->right->val == key) {
+            pre->right = deleteOneNode(cur);
+        }
+        return root;
+    }
+};
+```
+
