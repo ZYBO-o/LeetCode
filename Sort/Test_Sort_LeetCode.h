@@ -8,12 +8,14 @@
 #include "SortTestHelper.h"
 #include "SelectionSort.h"
 #include "InsertionSort.h"
+#include "BubbleSort.h"
 
 void Test_Sort_LeetCode () {
     int number = 100;
     std::vector<int> nums = SortTestHelper::generateRandomVector(number, 0 ,number);
     SelectSort(nums);
     InsertSort(nums);
+    BubbleSort(nums);
 }
 
 

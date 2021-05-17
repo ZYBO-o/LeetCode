@@ -9,6 +9,7 @@ CMakeFiles/LeetCode.dir/Tree/BTree_LeetCode.cpp.o: ../Tree/BTree_LeetCode.h
 
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/46_Permutations.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/Test_Backtracking.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/BubbleSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/InsertionSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/SelectionSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/SortTestHelper.h

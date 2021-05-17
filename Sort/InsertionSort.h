@@ -8,7 +8,6 @@
 
 template<typename T>
 void InsertSort(std::vector<T> nums) {
-
     for(int i = 1; i < nums.size(); ++i) {
         T temp = nums[i];
         int index = i;
