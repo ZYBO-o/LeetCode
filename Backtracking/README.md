@@ -215,7 +215,346 @@ void backtracking(参数) {
   };
   ```
 
-  
+#### 剪枝优化
+
+回溯法虽然是暴力搜索，但也有时候可以有点剪枝优化一下的。
+
+在遍历的过程中有如下代码：
+
+```c++
+for (int i = startIndex; i <= n; i++) { 
+    path.push_back(i); 
+    backtracking(n, k, i + 1); 
+    path.pop_back(); 
+}
+```
+
+这个遍历的范围是可以剪枝优化的，怎么优化呢？来举一个例子，n = 4，k = 4的话，那么第一层for循环的时候，从元素2开始的遍历都没有意义了。在第二层for循环，从元素3开始的遍历都没有意义了。
+
+<div align = center><img src="../images/Backtracking5.png" width="600px" /></div>
+
+图中每一个节点（图中为矩形），就代表本层的一个for循环，那么每一层的for循环从第二个数开始遍历的话，都没有意义，都是无效遍历。
+
+**「所以，可以剪枝的地方就在递归中每一层的for循环所选择的起始位置」**。
+
+**「如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了」**。
+
+接下来看一下优化过程如下：
+
+1. **已经选择的元素个数：path.size();**
+2. **还需要的元素个数为: k - path.size();**
+3. **在集合n中至多要从该起始位置 : n - (k - path.size()) + 1，开始遍历**
+
+为什么有个+1呢，因为包括起始位置，我们要是一个左闭的集合。
+
+举个例子，n = 4，k = 3， 目前已经选取的元素为0（path.size为0），n - (k - 0) + 1 即 4 - ( 3 - 0) + 1 = 2。从2开始搜索都是合理的，可以是组合[2, 3, 4]。
+
+所以优化之后的for循环是：
+
+```c++
+for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜索的起始位置
+```
+
+### 2.电话号码的字母组合(17)
+
+> 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+>
+> 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtracking6.png" width="600px" /></div>
+
++ **思路：**
+
+  + 理解本题后，要解决如下三个问题：
+
+    1. 数字和字母如何映射
+    2. 两个字母就两个for循环，三个字符我就三个for循环，以此类推，然后发现代码根本写不出来
+    3. 输入1 * #按键等等异常情况
+
+  + 对于问题1，可以使用map或者定义一个二位数组，例如：string letterMap[10]，来做映射，我这里定义一个二维数组
+
+    ```c++
+    const string letterMap[10] = {
+        "", // 0
+        "", // 1
+        "abc", // 2
+        "def", // 3
+        "ghi", // 4
+        "jkl", // 5
+        "mno", // 6
+        "pqrs", // 7
+        "tuv", // 8
+        "wxyz", // 9
+    };
+    ```
+
+  + 对于问题2，用 回溯法来解决n个for循环的问题。
+
+    <div align = center><img src="../images/Backtracking7.png" width="600px" /></div>
+
+  + 对于问题3，映射确保了输入0,1为空
+
++ **回溯三部曲：**
+
+  + **确定回溯函数参数**
+    + 首先需要一个字符串s来收集叶子节点的结果，然后用一个字符串数组result保存起来，这两个变量定义为全局。
+    + 再来看参数，参数指定是有题目中给的string digits，然后还要有一个参数就是int型的index。
+    + 注意这个index可不是 回溯算法：求组合问题！ 和 回溯算法：求组合总和！中的startIndex了。 **这个index是记录遍历第几个数字了，就是用来遍历digits的（题目中给出数字字符串），同时index也表示树的深度。**
+  + **确定终止条件**
+    + 例如输入用例"23"，两个数字，那么根节点往下递归两层就可以了，叶子节点就是要收集的结果集。那么终止条件就是如果index 等于 输入的数字个数（digits.size）了（本来index就是用来遍历digits的）。
+    + 然后收集结果，结束本层递归。
+  + **确定单层遍历逻辑**
+    + 首先要取index指向的数字，并找到对应的字符集（手机键盘的字符集）。
+    + 然后for循环来处理这个字符集。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      const string letterMap[10] = {
+          "", // 0
+          "", // 1
+          "abc", // 2
+          "def", // 3
+          "ghi", // 4
+          "jkl", // 5
+          "mno", // 6
+          "pqrs", // 7
+          "tuv", // 8
+          "wxyz", // 9
+      };
+  public:
+      vector<string> result;
+      string s;
+      void backtracking(const string& digits, int index) {
+          if (index == digits.size()) {
+              result.push_back(s);
+              return;
+          }
+          int digit = digits[index] - '0';        // 将index指向的数字转为int
+          string letters = letterMap[digit];      // 取数字对应的字符集
+          for (int i = 0; i < letters.size(); i++) {
+              s.push_back(letters[i]);            // 处理
+              backtracking(digits, index + 1);    // 递归，注意index+1，一下层要处理下一个数字了
+              s.pop_back();                       // 回溯
+          }
+      }
+      vector<string> letterCombinations(string digits) {
+          s.clear();
+          result.clear();
+          if (digits.size() == 0) {
+              return result;
+          }
+          backtracking(digits, 0);
+          return result;
+      }
+  };
+  ```
+
+### 3.组合总和III(216)
+
+> 找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
+>
+> 说明：
+>
+> - 所有数字都是正整数。
+> - 解集不能包含重复的组合。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack8.png" width="400px" /></div>
+
++ **思路：**
+
+  + 本题就是在[1,2,3,4,5,6,7,8,9]这个集合中找到和为n的k个数的组合。
+  + 相对于 求组合问题！ ，无非就是多了一个限制，本题是要找到和为n的k个数的组合，而整个集合已经是固定的了[1,...,9]。
+  + 本题k相当于了树的深度，9（因为整个集合就是9个数）就是树的宽度。
+
+  <div align = center><img src="../images/Backtracking8.png" width="700px" /></div>
+
++ **回溯三部曲：**
+
+  + **「确定递归函数参数」**
+
+    + 和 回溯算法：求组合问题！一样，依然需要一维数组path来存放符合条件的结果，二维数组result来存放结果集，定义sum存储求和结果。
+
+    ```c++
+    int sum;
+    vector<int> path;
+    vector<vector<int>> result;
+    void backtracking(int k, int n, int startIndex)
+    ```
+
+  + **确定终止条件**
+
+    + k其实就已经限制树的深度，因为就取k个元素，树再往下深了没有意义。所以如果path.size() 和 k相等了，就终止。
+    + 如果此时path里收集到的元素和（sum） 和 n 相同了，就用result收集当前的结果
+
+    ```c++
+    if(path.size() == k) {
+    		if(sum == n)
+    				result.push_back(path);
+    		return;
+    }
+    ```
+
+  + **「单层搜索过程」**
+
+    + 本题和 求组合问题！ 区别之一就是集合固定的就是9个数[1,...,9]，所以for循环固定i<=9
+
+    <div align = center><img src="../images/Backtracking9.png" width="700px" /></div>
+
+    + 处理过程就是 path收集每次选取的元素，相当于树型结构里的边，sum来统计path里元素的总和。
+
+    ```c++
+    for(int i = startIndex; i <= 9; ++i) {
+    		sum += i;
+    		path.push_back(i);
+    		backtracking(k, n, i + 1);
+    		path.pop_back();
+    		sum -= i;
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      int sum;
+      vector<int> path;
+      vector<vector<int>> result;
+      void backtracking(int k, int n, int startIndex) {
+          //回溯结束条件
+          if(path.size() == k) {
+              if(sum == n)
+                  result.push_back(path);
+              return;
+          }
+          for(int i = startIndex; i <= 9; ++i) {
+              sum += i;
+              path.push_back(i);
+              backtracking(k, n, i + 1);
+              path.pop_back();
+              sum -= i;
+          }
+      }
+  public:
+      vector<vector<int>> combinationSum3(int k, int n) {
+          path.clear();
+          result.clear();
+          sum = 0;
+          backtracking(k, n, 1);
+          return result;
+      }
+  };
+  ```
+
+### 4.组合总和(39)
+
+> 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+>
+> candidates 中的数字可以无限制重复被选取。
+>
+> 说明：
+>
+> - 所有数字（包括 target）都是正整数。
+> - 解集不能包含重复的组合。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtracking10.png" width="450px" /></div>
+
++ **思路：**
+
+  + 本题和 求组合问题！ ，回溯算法：求组合总和！区别是：本题没有数量要求，可以无限重复，但是有总和的限制，所以间接的也是有个数的限制。
+
+    <div align = center><img src="../images/Backtrack11.png" width="700px" /></div>
+
+  + 注意图中叶子节点的返回条件，因为本题没有组合数量要求，仅仅是总和的限制，所以递归没有层数的限制，只要选取的元素总和超过target，就返回！
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+
+    + 这里依然是定义三个全局变量，二维数组result存放结果集，数组path存放符合条件的结果，sum存放求和结果。
+
+    ```c++
+    vector<vector<int>> result;
+    vector<int> path;
+    int sum;
+    void backtracking(vector<int>& candidates, int target, int startIndex);
+    ```
+
+    + **「本题还需要startIndex来控制for循环的起始位置，对于组合问题，什么时候需要startIndex呢？」**
+    + 如果是一个集合来求组合的话，就需要startIndex，例如：求组合问题！，回溯算法：求组合总和！。
+    + 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex，例如：电话号码的字母组合
+
+  + **递归终止条件**
+
+    <div align = center><img src="../images/Backtrack12.png" width="700px" /></div>
+
+    + 从叶子节点可以清晰看到，终止只有两种情况，sum大于target和sum等于target。
+
+    ```c++
+    if(sum == target) {
+    		result.push_back(path);
+    		return;
+    }
+    if(sum > target) 
+    		return;
+    ```
+
+  + 单层搜索的逻辑
+
+    + 单层for循环依然是从startIndex开始，搜索candidates集合。
+    + 如何重复选取呢，看代码，注释部分：
+
+    ```c++
+    for (int i = startIndex; i < candidates.size(); i++) {
+        sum += candidates[i];
+        path.push_back(candidates[i]);
+        backtracking(candidates, target, sum, i); // 关键点:不用i+1了，表示可以重复读取当前的数
+        sum -= candidates[i];   // 回溯
+        path.pop_back();        // 回溯
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      int sum;
+      void backtracking(vector<int>& candidates, int target, int startIndex) {
+          if(sum == target) {
+              result.push_back(path);
+              return;
+          } else if(sum > target) 
+              return;
+          for(int i = startIndex; i < candidates.size(); ++i) {
+              path.push_back(candidates[i]);
+              sum += candidates[i];
+              backtracking(candidates, target, i);
+              sum -= candidates[i];
+              path.pop_back();
+          }
+      }
+  public:
+      vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+          result.clear();
+          path.clear();
+          sum = 0;
+          backtracking(candidates, target , 0);
+          return result;
+      }
+  };
+  ```
 
 
 

@@ -24,9 +24,13 @@ vector
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/InsertionSort.h
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/SelectionSort.h
 iostream
 -
+
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/ShellSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/SortTestHelper.h
 iostream
@@ -47,6 +51,10 @@ InsertionSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/InsertionSort.h
 BubbleSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BubbleSort.h
+ShellSort.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/ShellSort.h
+MergeSort.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Tree/BSTree_LeetCode.h
 vector
