@@ -38,5 +38,8 @@ void InOrderTraversal2(TreeNode* root) ;
 //非递归后序遍历二叉树
 void PostOrderTraversal2(TreeNode* root) ;
 
+//层序遍历
+void levelOrder(TreeNode* root);
+
 
 #endif //LEETCODE_BTREE_LEETCODE_H

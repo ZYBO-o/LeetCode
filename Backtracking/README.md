@@ -556,9 +556,413 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   };
   ```
 
+### 5.组合总和II (40)
+
+> 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+>
+> candidates 中的每个数字在每个组合中只能使用一次。
+>
+> 说明：
+> 所有数字（包括目标数）都是正整数。
+> 解集不能包含重复的组合。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack13.png" width="500px"/></div>
+
++ **思路：**
+
+  + 这道题目和 39.组合总和 如下区别：
+    1. 本题candidates 中的每个数字在每个组合中只能使用一次。
+    2. 本题数组candidates的元素是有重复的，而 39.组合总和 是无重复元素的数组candidates
+  + 最后本题和 39.组合总和 要求一样，解集不能包含重复的组合。
+  + **「本题的难点在于区别2中：集合（数组candidates）有重复元素，但还不能有重复的组合」**。
+  + **「所谓去重，其实就是使用过的元素不能重复选取。」** 组合问题可以抽象为树形结构，那么“使用过”在这个树形结构上是有两个维度的，一个维度是同一树枝上使用过，一个维度是同一树层上使用过。**「没有理解这两个层面上的“使用过” 是造成大家没有彻底理解去重的根本原因。」**
+  + 问题中元素在同一个组合内是可以重复的，怎么重复都没事，但两个组合不能相同。**「所以要去重的是同一树层上的“使用过”，同一树枝上的都是一个组合里的元素，不用去重」**。
+
++ **回溯三部曲：**
+
+  + **「递归函数参数」**
+
+    + 与 39.组合总和 套路相同，此题还需要加一个bool型数组used，用来记录同一树枝上的元素是否使用过。
+    + 这个集合去重的重任就是used来完成的。
+
+    ```c++
+    vector<vector<int>> result; // 存放组合集合
+    vector<int> path;           // 符合条件的组合
+    int sum;										//求和
+    void backtracking(vector<int>& candidates, int target, int startIndex, vector<bool>& used) 
+    ```
+
+  + **「递归终止条件」**
+
+    + 终止条件为 `sum > target` 和 `sum == target`。
+
+    ```c
+    if (sum > target) { // 这个条件其实可以省略 
+        return;
+    }
+    if (sum == target) {
+        result.push_back(path);
+        return;
+    }
+    ```
+
+  + **「单层搜索的逻辑」**
+
+    + 前面提到：要去重的是“同一树层上的使用过”。**「如果`candidates[i] == candidates[i - 1]` 并且 `used[i - 1] == false`，就说明：前一个树枝，使用了candidates[i - 1]，也就是说同一树层使用过candidates[i - 1]」**。
+
+    + 此时for循环里就应该做continue的操作。如图：
+
+      <div align = center><img src="../images/Backtrack14.png"width="700px"/></div>
+
+    + 在图中将used的变化用橘黄色标注上，可以看出在candidates[i] == candidates[i - 1]相同的情况下：
+
+      - used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+      - used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+
+    ```c++
+    for (int i = startIndex; i < candidates.size() && sum + candidates[i] <= target; i++) {
+        // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+        // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+        // 要对同一树层使用过的元素进行跳过
+        if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false) {
+            continue;
+        }
+        sum += candidates[i];
+        path.push_back(candidates[i]);
+        used[i] = true;
+        backtracking(candidates, target, sum, i + 1, used); // 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次
+        used[i] = false;
+        sum -= candidates[i];
+        path.pop_back();
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking(vector<int>& candidates, int target, int sum, int startIndex, vector<bool>& used) {
+          if (sum == target) {
+              result.push_back(path);
+              return;
+          }
+          for (int i = startIndex; i < candidates.size() && sum + candidates[i] <= target; i++) {
+              // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+              // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+              // 要对同一树层使用过的元素进行跳过
+              if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false) {
+                  continue;
+              }
+              sum += candidates[i];
+              path.push_back(candidates[i]);
+              used[i] = true;
+              backtracking(candidates, target, sum, i + 1, used); // 和39.组合总和的区别1，这里是i+1，每个数字在每个组合中只能使用一次
+              used[i] = false;
+              sum -= candidates[i];
+              path.pop_back();
+          }
+      }
+  
+  public:
+      vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+          vector<bool> used(candidates.size(), false);
+          path.clear();
+          result.clear();
+          // 首先把给candidates排序，让其相同的元素都挨在一起。
+          sort(candidates.begin(), candidates.end());
+          backtracking(candidates, target, 0, 0, used);
+          return result;
+      }
+  };
+  ```
+
+### 6.分割回文串(131)
+
+> 给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
+>
+> 返回 s 所有可能的分割方案。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack15.png" width="300x" /></div>
+
++ **思路：**
+
+  + 本题涉及到两个关键问题：
+
+    1. 切割问题，有不同的切割方式
+    2. 判断回文
+
+  + 切割问题，也可以抽象为一颗树形结构，如图：
+
+    <div align = center><img src="../images/Backtrack16.png" width="600px" /></div>
+
+  + 递归用来纵向遍历，for循环用来横向遍历，切割线（就是图中的红线）切割到字符串的结尾位置，说明找到了一个切割方法。此时可以发现，切割问题的回溯搜索的过程和组合问题的回溯搜索的过程是差不多的。
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+
+    + 全局变量数组path存放切割后回文的子串，二维数组result存放结果集。（这两个参数可以放到函数参数里）
+    + 本题递归函数参数还需要startIndex，因为切割过的地方，不能重复切割，和组合问题也是保持一致的。
+
+  + **递归函数终止条件**
+
+    <div align = center><img src="../images/Backtrack17.png" width="600px"/></div>
+
+    + 从树形结构的图中可以看出：切割线切到了字符串最后面，说明找到了一种切割方法，此时就是本层递归的终止终止条件。
+    + **「那么在代码里什么是切割线呢？」**在处理组合问题的时候，递归参数需要传入startIndex，表示下一轮递归遍历的起始位置，这个startIndex就是切割线。
+
+  + **单层搜索的逻辑**
+
+    + **「来看看在递归循环，中如何截取子串呢？」**
+
+    + 在`for (int i = startIndex; i < s.size(); i++)`循环中，定义了起始位置startIndex，那么 [startIndex, i] 就是要截取的子串。
+
+      首先判断这个子串是不是回文，如果是回文，就加入在`vector<string> path`中，path用来记录切割过的回文子串。
+
+    ```c++
+    for (int i = startIndex; i < s.size(); i++) {
+        if (isPalindrome(s, startIndex, i)) { // 是回文子串
+            // 获取[startIndex,i]在s中的子串
+            string str = s.substr(startIndex, i - startIndex + 1);
+            path.push_back(str);
+        } else {                // 如果不是则直接跳过
+            continue;
+        }
+        backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+        path.pop_back();        // 回溯过程，弹出本次已经填在的子串
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<string>> result;
+      vector<string> path; // 放已经回文的子串
+      void backtracking (const string& s, int startIndex) {
+          // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+          if (startIndex >= s.size()) {
+              result.push_back(path);
+              return;
+          }
+          for (int i = startIndex; i < s.size(); i++) {
+              if (isPalindrome(s, startIndex, i)) {   // 是回文子串
+                  // 获取[startIndex,i]在s中的子串
+                  string str = s.substr(startIndex, i - startIndex + 1);
+                  path.push_back(str);
+              } else {                                // 不是回文，跳过
+                  continue;
+              }
+              backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+              path.pop_back(); // 回溯过程，弹出本次已经填在的子串
+          }
+      }
+      bool isPalindrome(const string& s, int start, int end) {
+          for (int i = start, j = end; i < j; i++, j--) {
+              if (s[i] != s[j]) {
+                  return false;
+              }
+          }
+          return true;
+      }
+  public:
+      vector<vector<string>> partition(string s) {
+          result.clear();
+          path.clear();
+          backtracking(s, 0);
+          return result;
+      }
+  };
+  ```
+
+### 7.复原IP地址(93)
+
+> 给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。
+>
+> 有效的 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
+>
+> 例如："0.1.2.201" 和 "192.168.1.1" 是 有效的 IP 地址，但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效的 IP 地址。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack18.png" width="500px" /></div>
+
++ **思路：**
+
+  + **「切割问题就可以使用回溯搜索法把所有可能性搜出来」**，和上一题 分割回文串 就十分类似了。
+
++ **回溯三部曲：**
+
+  + **递归参数**
+    + startIndex一定是需要的，因为不能重复分割，记录下一层递归分割的起始位置。
+    + 本题还需要一个变量pointNum，记录添加逗点的数量。
+
+  + **递归终止条件**
+
+    + 终止条件和 分割回文串 情况就不同了，本题明确要求只会分成4段，所以不能用切割线切到最后作为终止条件，而是分割的段数作为终止条件。
+    + pointNum表示逗点数量，pointNum为3说明字符串分成了4段了。
+    + 然后验证一下第四段是否合法，如果合法就加入到结果集里
+
+    ```c++
+    if (pointNum == 3) { // 逗点数量为3时，分隔结束
+        // 判断第四段子字符串是否合法，如果合法就放进result中
+        if (isValid(s, startIndex, s.size() - 1)) {
+            result.push_back(s);
+        }
+        return;
+    }
+    ```
+
+  + **单层搜索的逻辑**
+
+    + 在`for (int i = startIndex; i < s.size(); i++)`循环中 [startIndex, i]这个区间就是截取的子串，需要判断这个子串是否合法。
+    + 如果合法就在字符串后面加上符号`.`表示已经分割。
+    + 如果不合法就结束本层循环，如图中剪掉的分支：
+
+    <div align = center><img src="../images/Backtrack19.png" width="800px" /></div>
+
+    + 递归调用时，下一层递归的startIndex要从i+2开始（因为需要在字符串中加入了分隔符`.`），同时记录分割符的数量pointNum 要 +1。
+    + 回溯的时候，就将刚刚加入的分隔符`.` 删掉就可以了，pointNum也要-1。
+
+    ```c++
+    for (int i = startIndex; i < s.size(); i++) {
+        if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法
+            s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点
+            pointNum++;
+            backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2
+            pointNum--;                         // 回溯
+            s.erase(s.begin() + i + 1);         // 回溯删掉逗点
+        } else break; // 不合法，直接结束本层循环
+    }
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<string> result;// 记录结果
+      // startIndex: 搜索的起始位置，pointNum:添加逗点的数量
+      void backtracking(string& s, int startIndex, int pointNum) {
+          if (pointNum == 3) { // 逗点数量为3时，分隔结束
+              // 判断第四段子字符串是否合法，如果合法就放进result中
+              if (isValid(s, startIndex, s.size() - 1)) {
+                  result.push_back(s);
+              }
+              return;
+          }
+          for (int i = startIndex; i < s.size(); i++) {
+              if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法
+                  s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点
+                  pointNum++;
+                  backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2
+                  pointNum--;                         // 回溯
+                  s.erase(s.begin() + i + 1);         // 回溯删掉逗点
+              } else break; // 不合法，直接结束本层循环
+          }
+      }
+      // 判断字符串s在左闭又闭区间[start, end]所组成的数字是否合法
+      bool isValid(const string& s, int start, int end) {
+          if (start > end) {
+              return false;
+          }
+          if (s[start] == '0' && start != end) { // 0开头的数字不合法
+                  return false;
+          }
+          int num = 0;
+          for (int i = start; i <= end; i++) {
+              if (s[i] > '9' || s[i] < '0') { // 遇到非数字字符不合法
+                  return false;
+              }
+              num = num * 10 + (s[i] - '0');
+              if (num > 255) { // 如果大于255了不合法
+                  return false;
+              }
+          }
+          return true;
+      }
+  public:
+      vector<string> restoreIpAddresses(string s) {
+          result.clear();
+          backtracking(s, 0, 0);
+          return result;
+      }
+  };
+  
+  ```
 
 
 
+### 8.子集(78)
+
+> 给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+>
+> 说明：解集不能包含重复的子集。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack20.png" width="500px" /></div>
+
++ **思路：**
+
+  + 如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，**「那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！」**
+
+  + 其实子集也是一种组合问题，因为它的集合是无序的，子集{1,2} 和 子集{2,1}是一样的。**「那么既然是无序，取过的元素不会重复取，写回溯算法的时候，for就要从startIndex开始，而不是从0开始！」**
+
+  + 求排列问题的时候，就要从0开始，因为集合是有序的，{1, 2} 和{2, 1}是两个集合。
+
+    <div align = center><img src="../images/Backtrack21.png" width="600px" /></div>
+
+  + 从图中红线部分，可以看出**「遍历这个树的时候，把所有节点都记录下来，就是要求的子集集合」**。
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+    + 全局变量数组path为子集收集元素，二维数组result存放子集组合。（也可以放到递归函数参数里）
+    + 递归函数参数在上面讲到了，需要startIndex。
+  + **递归终止条件**
+    + 剩余集合为空的时候，就是叶子节点。
+    + 剩余集合为空就是startIndex已经大于数组的长度，就终止了，因为没有元素可取了
+  + **单层搜索逻辑**
+    + **「求取子集问题，不需要任何剪枝！因为子集就是要遍历整棵树」**。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking(vector<int>& nums, int startIndex) {
+          result.push_back(path); // 收集子集
+          if (startIndex >= nums.size()) { // 终止条件可以不加
+              return;
+          }
+          for (int i = startIndex; i < nums.size(); i++) {
+              path.push_back(nums[i]);
+              backtracking(nums, i + 1);
+              path.pop_back();
+          }
+      }
+  public:
+      vector<vector<int>> subsets(vector<int>& nums) {
+          result.clear();
+          path.clear();
+          backtracking(nums, 0);
+          return result;
+      }
+  };
+  ```
+
+  
 
 ### .全排列问题
 

@@ -4,6 +4,7 @@
 
 #include "BTree_LeetCode.h"
 #include <stack>
+#include <queue>
 
 TreeNode* CreatTree()
 {
@@ -128,7 +129,27 @@ void PostOrderTraversal2(TreeNode* root) {
     }
 }
 
+void levelOrder(TreeNode* root) {
+    if(!root) return;
 
+    std::queue<TreeNode*> queue;
+    queue.push(root);
+
+    while(!queue.empty()) {
+        for (int i = 0; i < queue.size(); ++i) {
+
+            TreeNode* node = queue.front();
+            std::cout << node->val << " ";
+
+            if(node->left)
+                queue.push(node->left);
+            if(node->right)
+                queue.push(node->right);
+
+            queue.pop();
+        }
+    }
+}
 
 
 

@@ -39,8 +39,12 @@ void Test_BTree_LeetCode() {
     PostOrderTraversal2(root);
     std::cout << std::endl;
 
+    std::cout << "Print the btree by LevelTraversal : " ;
+    levelOrder(root);
+    std::cout << std::endl;
 
 
+    /*
     std::cout << "=============================================" << std::endl;
 
     BSTreeNode *bstree;
@@ -58,6 +62,9 @@ void Test_BTree_LeetCode() {
     std::cout << "Print the btree by PostOrderTraversalBSTree : " ;
     PostOrderTraversalBSTree(bstree);
     std::cout << std::endl;
+     */
+
+
 
 }
 
