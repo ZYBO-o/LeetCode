@@ -962,113 +962,295 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   };
   ```
 
+
+### 9.子集II(90)
+
+> 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+>
+> 说明：解集不能包含重复的子集。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack22.png" width="400px" /></div>
+
++ **思路：**
+
+  + 这道题目和 求子集问题！ 区别就是集合里有重复元素了，而且求取的子集要去重。
+
+    <div align = center><img src="../images/Backtrack23.png" width="700px" /></div>
+
+  + 从图中可以看出，同一树层上重复取2 就要过滤掉，同一树枝上就可以重复取2，因为同一树枝上元素的集合才是唯一子集！
+
+  + 本题就是其实就是 求子集问题！ 的基础上加上了去重
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking(vector<int>& nums, int startIndex, vector<bool>& used) {
+          result.push_back(path);
+          for (int i = startIndex; i < nums.size(); i++) {
+              // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+              // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+              // 而我们要对同一树层使用过的元素进行跳过
+              if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
+                  continue;
+              }
+              path.push_back(nums[i]);
+              used[i] = true;
+              backtracking(nums, i + 1, used);
+              used[i] = false;
+              path.pop_back();
+          }
+      }
   
+  public:
+      vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+          result.clear();
+          path.clear();
+          vector<bool> used(nums.size(), false);
+          sort(nums.begin(), nums.end()); // 去重需要排序
+          backtracking(nums, 0, used);
+          return result;
+      }
+  };
+  ```
 
-### .全排列问题
 
-> **题目描述：**
->
-> 无重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合，字符串每个字符均不相同。
 
-**解题思路：**
+### 10.递增子序列(491)
 
-从0下标开始，依次与自身和后面的元素交换，相当于当前位置因为交换已经固定了，接下来就去对后面元素进行全排列。之后，再回溯到当前位置元素不变。
+> 给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。
 
-<div align = center><img src="../images/7.png" width="700px" /></div>
++ **示例：**
 
-```c++
-class Solution {
-public:
-    vector<string> permutation(string S) {
-        int len = S.size();
-        vector<string> ans;
-        dsf(ans, S, 0, len);
-        return ans;
+  <div align = center><img src="../images/Backtrack24.png" width="600px" /></div>
+
++ **思路：**
+
+  + 在 求子集问题（二 ）中我们是通过排序，再加一个标记数组来达到去重的目的。而本题求自增子序列，是不能对原数组进行排序的，排完序的数组都是自增子序列了。 **「所以不能使用之前的去重逻辑！」**
+
+  + 用[4, 7, 6, 7]这个数组来举例，抽象为树形结构如图：
+
+    <div align = center><img src="../images/Backtrack25.png" width="700px" /></div>
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+
+    + 本题求子序列，很明显一个元素不能重复使用，所以需要startIndex，调整下一层递归的起始位置。
+
+  + **终止条件**
+
+    + 本题其实类似求子集问题，也是要遍历树形结构找每一个节点，所以和 求子集问题！ 一样，可以不加终止条件，startIndex每次都会加1，并不会无限递归。
+    + 但本题收集结果有所不同，题目要求递增子序列大小至少为2。
+
+    ```c++
+    if (path.size() > 1) {
+        result.push_back(path);
+        // 注意这里不要加return，因为要取树上的所有节点
     }
+    ```
 
-    void dsf(vector<string>& ans, string& S, int begin, int end) {
-        if(begin == end) {
-            ans.push_back(S);
-            return;
-        }
-        for(int i = begin; i < end; ++ i) {
-            swap(S[i], S[begin]);
-            dsf(ans, S, begin + 1, end);
-            swap(S[i], S[begin]);
-        }
+  + **单层搜索逻辑**
+
+    + 在图中可以看出，同层上使用过的元素就不能在使用了，**「注意这里和 求子集问题（二） 中去重的区别」**。 
+    +  **「本题只要同层重复使用元素，递增子序列就会重复」**，而 求子集问题（二） 中是排序之后看相邻元素是否重复使用。
+    + 还有一种情况就是如果选取的元素小于子序列最后一个元素，那么就不能是递增的，所以也要pass掉。
+
+    ```c++
+    if ((!path.empty() && nums[i] < path.back())
+            || uset.find(nums[i]) != uset.end()) {
+            continue;
     }
-};
-```
+    ```
+
+    + 判断`nums[i] < path.back()`之前一定要判断path是否为空，所以是`!path.empty() && nums[i] < path.back()`。
+    + `uset.find(nums[i]) != uset.end()`判断nums[i]在本层是否使用过。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking(vector<int>& nums, int startIndex) {
+          if (path.size() > 1) {
+              result.push_back(path);
+              // 注意这里不要加return，要取树上的节点
+          }
+          unordered_set<int> uset; // 使用set对本层元素进行去重
+          for (int i = startIndex; i < nums.size(); i++) {
+              if ((!path.empty() && nums[i] < path.back())
+                      || uset.find(nums[i]) != uset.end()) {
+                      continue;
+              }
+            //unordered_set<int> uset; 是记录本层元素是否重复使用，新的一层uset都会重新定义（清空），所以要知道uset只负责本层！
+              uset.insert(nums[i]); // 记录这个元素在本层用过了，本层后面不能再用了
+              path.push_back(nums[i]);
+              backtracking(nums, i + 1);
+              path.pop_back();
+          }
+      }
+  public:
+      vector<vector<int>> findSubsequences(vector<int>& nums) {
+          result.clear();
+          path.clear();
+          backtracking(nums, 0);
+          return result;
+      }
+  };
+  ```
 
 
 
-### .有重复的全排列
+### 11.全排列(46)
 
-> **题目描述：**
->
-> [面试题 08.08. 有重复字符串的排列组合](https://leetcode-cn.com/problems/permutation-ii-lcci/)
->
-> 有重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合。
+> 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
 
-这个方法不好。
++ **示例：**
 
-```c++
-class Solution {
-public:
-    vector<string> permutation(string S) {
-        int begin = 0;
-        int end = S.size();
-        vector<string> ans;
-        dsf(ans, S, begin, end);
-        return ans;
+  <div align = center><img src="../images/Backtrack26.png" width="500px" /></div>
+
++ **思路：**
+
+  + 以[1,2,3]为例，抽象成树形结构如下：
+
+    <div align = center><img src="../images/Backtrack27.png" width="700px" /></div>
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+
+    + **「首先排列是有序的，也就是说[1,2] 和[2,1] 是两个集合，这和之前分析的子集以及组合所不同的地方」**。
+    + 可以看出元素1在[1,2]中已经使用过了，但是在[2,1]中还要在使用一次1，所以处理排列问题就不用使用startIndex了。但排列问题需要一个used数组，标记已经选择的元素，如图橘黄色部分所示
+
+    ```c++
+    vector<vector<int>> result;
+    vector<int> path;
+    void backtracking (vector<int>& nums, vector<bool>& used)
+    ```
+
+  + **递归终止条件**
+
+    + 当收集元素的数组path的大小达到和nums数组一样大的时候，说明找到了一个全排列，也表示到达了叶子节点。
+
+  + **单层搜索的逻辑**
+
+    + 这里和 组合问题 、 切割问题 和 子集问题 最大的不同就是for循环里不用startIndex了。
+    + 因为排列问题，每次都要从头开始搜索，例如元素1在[1,2]中已经使用过了，但是在[2,1]中还要再使用一次1。
+    + **「而used数组，其实就是记录此时path里都有哪些元素使用了，一个排列里一个元素只能使用一次」**。
+
+    ```c++
+    for (int i = 0; i < nums.size(); i++) {
+        if (used[i] == true) continue; // path里已经收录的元素，直接跳过
+        used[i] = true;
+        path.push_back(nums[i]);
+        backtracking(nums, used);
+        path.pop_back();
+        used[i] = false;
     }
-    void dsf(vector<string>& ans, string S, int begin, int end) {
-        if(begin == end) {
-            if(find(ans.begin(),ans.end(),S) == ans.end())
-                ans.push_back(S);
-            return;
-        }
-        for(int i = begin; i < end; ++i) {
-                swap(S[i], S[begin]);
-                dsf(ans, S, begin + 1, end);
-                swap(S[i], S[begin]);
-        }
-    }
-};
-```
+    ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking (vector<int>& nums, vector<bool>& used) {
+          // 此时说明找到了一组
+          if (path.size() == nums.size()) {
+              result.push_back(path);
+              return;
+          }
+          for (int i = 0; i < nums.size(); i++) {
+              if (used[i] == true) continue; // path里已经收录的元素，直接跳过
+              used[i] = true;
+              path.push_back(nums[i]);
+              backtracking(nums, used);
+              path.pop_back();
+              used[i] = false;
+          }
+      }
+      vector<vector<int>> permute(vector<int>& nums) {
+          result.clear();
+          path.clear();
+          vector<bool> used(nums.size(), false);
+          backtracking(nums, used);
+          return result;
+      }
+  };
+  ```
 
 
 
-### .幂集问题
+### 12.全排列 II(47)
 
-> **题目描述：**
->
-> 幂集。编写一种方法，返回某集合的所有子集。集合中**不包含重复的元素**。
->
-> [多种方法](https://leetcode-cn.com/problems/power-set-lcci/solution/hui-su-wei-yun-suan-deng-gong-4chong-fang-shi-jie-/)
+> 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
 
-```c++
-class Solution {
-public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> ret;
-        vector<int> tmp;
-        dfs(nums, 0, tmp, ret);
-        return ret;
-    }
-    void dfs(vector<int>& nums, int index, vector<int>& tmp,vector<vector<int>>& ret) {
-        if (index >= nums.size()) {
-            ret.push_back(tmp);
-            return;
-        }
-        // 不选择
-        dfs(nums, index + 1, tmp, ret);
-        // 选择
-        tmp.push_back(nums[index]);
-        dfs(nums, index + 1, tmp, ret);
-        // 去除选择
-        tmp.pop_back();
-    }
-};
-```
++ **示例：**
 
+  <div align = center><img src="../images/Backtrack28.png" width="550px" /></div>
+
++ **思路：**
+
+  + 这道题目和 上一题 的区别在于**「给定一个可包含重复数字的序列」**，要返回**「所有不重复的全排列」**。
+
+  + 排列问题其实之前的去重也是一样的套路。 **「还要强调的是去重一定要对元素进行排序，这样我们才方便通过相邻的节点来判断是否重复使用了」**。
+
+  + 以示例中的 [1,1,2]为例 （为了方便举例，已经排序）抽象为一棵树，去重过程如图：
+
+    <div align = center><img src="../images/Backtrack29.png" width="700px" /></div>
+
+  + 图中我们对同一树层，前一位（也就是nums[i-1]）如果使用过，那么就进行去重。
+
+  + **「一般来说：组合问题和排列问题是在树形结构的叶子节点上收集结果，而子集问题就是取树上所有节点的结果」**。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+      vector<vector<int>> result;
+      vector<int> path;
+      void backtracking (vector<int>& nums, vector<bool>& used) {
+          // 此时说明找到了一组
+          if (path.size() == nums.size()) {
+              result.push_back(path);
+              return;
+          }
+          for (int i = 0; i < nums.size(); i++) {
+              // used[i - 1] == true，说明同一树支nums[i - 1]使用过
+              // used[i - 1] == false，说明同一树层nums[i - 1]使用过
+              // 如果同一树层nums[i - 1]使用过则直接跳过
+              if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
+                  continue;
+              }
+              if (used[i] == false) {
+                  used[i] = true;
+                  path.push_back(nums[i]);
+                  backtracking(nums, used);
+                  path.pop_back();
+                  used[i] = false;
+              }
+          }
+      }
+  public:
+      vector<vector<int>> permuteUnique(vector<int>& nums) {
+          result.clear();
+          path.clear();
+          sort(nums.begin(), nums.end()); // 排序
+          vector<bool> used(nums.size(), false);
+          backtracking(nums, used);
+          return result;
+      }
+  };
+  ```
+
+  

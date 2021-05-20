@@ -6,12 +6,14 @@
 #define LEETCODE_TEST_BACKTRACKING_H
 #include <iostream>
 #include <vector>
-#include "46_Permutations.h"
+#include "491_increasing_subsequences.h"
+
+using namespace std;
 
 void Test_Backtracking() {
-    vector<int> nums {1,2,3,4};
-    Permute permute;
-    vector<vector<int>> res = permute.permute(nums);
+    vector<int> nums {4,4, 6};
+    Increasing_subsequences increasingSubsequences;
+    vector<vector<int>> res = increasingSubsequences.findSubsequences(nums);
     for (auto line : res) {
         for (auto  i : line) {
             cout << i << " ";
