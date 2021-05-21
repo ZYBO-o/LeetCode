@@ -1254,3 +1254,145 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   ```
 
   
+
+### 13.重新安排行程(332)
+
+
+
+### 14.N皇后问题(51)
+
+> n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+
++ **示例：**
+
+  <div align = center><img src="../images/Backtrack30.png" width="400px" /></div>
+
++ **思路：**
+
+  + 首先来看一下皇后们的约束条件：
+
+    1. 不能同行
+    2. 不能同列
+    3. 不能同斜线
+
+  + 确定完约束条件，来看看究竟要怎么去搜索皇后们的位置，其实搜索皇后的位置，可以抽象为一棵树：
+
+    <div align = center><img src="../images/Backtrack31.png" width="500px" /></div>
+
+  + 从图中，可以看出，二维矩阵中矩阵的高就是这颗树的高度，矩阵的宽就是树型结构中每一个节点的宽度。
+
+  + 那么我们用皇后们的约束条件，来回溯搜索这颗树，**「只要搜索到了树的叶子节点，说明就找到了皇后们的合理位置了」**。
+
++ **回溯三部曲：**
+
+  + **递归函数参数**
+
+    + 定义全局变量二维数组result来记录最终结果。
+    + 参数n是棋牌的大小，然后用row来记录当前遍历到棋盘的第几层了。
+
+  + **递归终止条件**
+
+    + 当递归到棋盘最底层（也就是叶子节点）的时候，就可以收集结果并返回了。
+
+  + 单层搜索的逻辑
+
+    + **递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。**
+    + 每次都是要从新的一行的起始位置开始搜，所以都是从0开始。
+
+    ```c++
+    for (int col = 0; col < n; col++) {
+        if (isValid(row, col, chessboard, n)) { // 验证合法就可以放
+            chessboard[row][col] = 'Q'; // 放置皇后
+            backtracking(n, row + 1, chessboard);
+            chessboard[row][col] = '.'; // 回溯，撤销皇后
+        }
+    }
+    ```
+
++ **判断是否合法：**
+
+  +  按照如下标准去重：
+    1. 不能同行
+    2. 不能同列
+    3. 不能同斜线 （45度和135度角）
+
+  ```c++
+  bool isValid(int row, int col, vector<string>& chessboard, int n) {
+      int count = 0;
+      // 检查列
+      for (int i = 0; i < row; i++) { // 这是一个剪枝
+          if (chessboard[i][col] == 'Q') {
+              return false;
+          }
+      }
+      // 检查 45度角是否有皇后
+      for (int i = row - 1, j = col - 1; i >=0 && j >= 0; i--, j--) {
+          if (chessboard[i][j] == 'Q') {
+              return false;
+          }
+      }
+      // 检查 135度角是否有皇后
+      for(int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+          if (chessboard[i][j] == 'Q') {
+              return false;
+          }
+      }
+      return true;
+  }
+  ```
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  private:
+  vector<vector<string>> result;
+  // n 为输入的棋盘大小
+  // row 是当前递归到棋牌的第几行了
+  void backtracking(int n, int row, vector<string>& chessboard) {
+      if (row == n) {
+          result.push_back(chessboard);
+          return;
+      }
+      for (int col = 0; col < n; col++) {
+          if (isValid(row, col, chessboard, n)) { // 验证合法就可以放
+              chessboard[row][col] = 'Q'; // 放置皇后
+              backtracking(n, row + 1, chessboard);
+              chessboard[row][col] = '.'; // 回溯，撤销皇后
+          }
+      }
+  }
+  bool isValid(int row, int col, vector<string>& chessboard, int n) {
+      // 检查列
+      for (int i = 0; i < row; i++) { // 这是一个剪枝
+          if (chessboard[i][col] == 'Q') {
+              return false;
+          }
+      }
+      // 检查 45度角是否有皇后
+      for (int i = row - 1, j = col - 1; i >=0 && j >= 0; i--, j--) {
+          if (chessboard[i][j] == 'Q') {
+              return false;
+          }
+      }
+      // 检查 135度角是否有皇后
+      for(int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+          if (chessboard[i][j] == 'Q') {
+              return false;
+          }
+      }
+      return true;
+  }
+  public:
+      vector<vector<string>> solveNQueens(int n) {
+          result.clear();
+          vector<string> chessboard(n, string(n, '.'));
+          backtracking(n, 0, chessboard);
+          return result;
+      }
+  };
+  ```
+
+  
+
+### 15.解数独(37)

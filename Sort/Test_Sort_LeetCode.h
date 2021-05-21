@@ -17,7 +17,7 @@ void Test_Sort_LeetCode () {
     std::vector<int> nums = SortTestHelper::generateRandomVector(number, 0 ,number);
 //    SelectSort(nums);
 //    InsertSort(nums);
-    BubbleSort(nums);
+//    BubbleSort(nums);
     ShellSort(nums);
     MergeSort(nums);
 
