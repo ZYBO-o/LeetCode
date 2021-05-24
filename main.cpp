@@ -3,7 +3,7 @@
 #include "Backtracking/Test_Backtracking.h"
 #include "Sort/Test_Sort_LeetCode.h"
 
-
+#include <list>
 
 int main() {
 
@@ -13,6 +13,8 @@ int main() {
     //Test_BTree_LeetCode();
 
     Test_Sort_LeetCode();
+    list<char> l {'a'};
+    l.assign(2,'c');
 
     return 0;
 }
