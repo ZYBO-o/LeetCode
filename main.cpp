@@ -13,8 +13,7 @@ int main() {
     //Test_BTree_LeetCode();
 
     Test_Sort_LeetCode();
-    list<char> l {'a'};
-    l.assign(2,'c');
+
 
     return 0;
 }
