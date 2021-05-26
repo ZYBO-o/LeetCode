@@ -315,4 +315,191 @@
   };
   ```
 
+
+
+### 7. 加油站(134)
+
+> 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+>
+> 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+>
+> 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+>
+> 说明:
+>
+> - 如果题目有解，该答案即为唯一答案。
+> - 输入数组均为非空数组，且长度相同。
+> - 输入数组中的元素均为非负数。
+
++ **示例：**
+
+  <div align = center><img src="../images/Greedy12.png" width='600px' /></div>
+
++ **思路：**
+
+  + 首先如果总油量减去总消耗大于等于零那么一定可以跑完一圈，说明 各个站点的加油站 剩油量rest[i]相加一定是大于等于零的。
+  + 每个加油站的剩余量rest[i]为gas[i] - cost[i]。
+  + i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i]区间都不能作为起始位置，起始位置从i+1算起，再从0计算curSum。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+          int curSum = 0;
+          int totalSum = 0;
+          int start = 0;
+          for (int i = 0; i < gas.size(); i++) {
+              curSum += gas[i] - cost[i];
+              totalSum += gas[i] - cost[i];
+              if (curSum < 0) {   // 当前累加rest[i]和 curSum一旦小于0
+                  start = i + 1;  // 起始位置更新为i+1
+                  curSum = 0;     // curSum从0开始
+              }
+          }
+          if (totalSum < 0) return -1; // 说明怎么走都不可能跑一圈了
+          return start;
+      }
+  };
+  ```
+
+
+
+### 8.柠檬水找零(860)
+
+> 在柠檬水摊上，每一杯柠檬水的售价为 5 美元。
+>
+> 顾客排队购买你的产品，（按账单 bills 支付的顺序）一次购买一杯。
+>
+> 每位顾客只买一杯柠檬水，然后向你付 5 美元、10 美元或 20 美元。你必须给每个顾客正确找零，也就是说净交易是每位顾客向你支付 5 美元。
+>
+> 注意，一开始你手头没有任何零钱。
+>
+> 如果你能给每位顾客正确找零，返回 true ，否则返回 false 。
+
++ **示例：**
+
+  <div align = center><img src="../images/Greedy13.png" width='600px' /></div>
+
++ **思路：**
+
+  + 有如下三种情况：
+    - 情况一：账单是5，直接收下。
+    - 情况二：账单是10，消耗一个5，增加一个10
+    - 情况三：账单是20，优先消耗一个10和一个5，如果不够，再消耗三个5
+  + **「因为美元10只能给账单20找零，而美元5可以给账单10和账单20找零，美元5更万能！」**
+  + 所以局部最优：遇到账单20，优先消耗美元10，完成本次找零。全局最优：完成全部账单的找零。
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      bool lemonadeChange(vector<int>& bills) {
+          int five = 0, ten = 0, twenty = 0;
+          for (int bill : bills) {
+              // 情况一
+              if (bill == 5) five++;
+              // 情况二
+              if (bill == 10) {
+                  if (five <= 0) return false;
+                  ten++;
+                  five--;
+              }
+              // 情况三
+              if (bill == 20) {
+                  // 优先消耗10美元，因为5美元的找零用处更大，能多留着就多留着
+                  if (five > 0 && ten > 0) {
+                      five--;
+                      ten--;
+                      twenty++; // 其实这行代码可以删了，因为记录20已经没有意义了，不会用20来找零
+                  } else if (five >= 3) {
+                      five -= 3;
+                      twenty++; // 同理，这行代码也可以删了
+                  } else return false;
+              }
+          }
+          return true;
+      }
+  };
+  ```
+
+### 9.分发糖果(135)
+
+> 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+>
+> 你需要按照以下要求，帮助老师给这些孩子分发糖果：
+>
+> - 每个孩子至少分配到 1 个糖果。
+> - 相邻的孩子中，评分高的孩子必须获得更多的糖果。
+>
+> 那么这样下来，老师至少需要准备多少颗糖果呢？
+
++ **示例：**
+
+  <div align = center><img src="../images/Greedy14.png" width='600px' /></div>
+
++ **思路：**
+
+  + 这道题目一定是要确定一边之后，再确定另一边，例如比较每一个孩子的左边，然后再比较右边，**「如果两边一起考虑一定会顾此失彼」**。先确定右边评分大于左边的情况（也就是从前向后遍历）
+
+  + 此时局部最优：只要右边评分比左边大，右边的孩子就多一个糖果，全局最优：相邻的孩子中，评分高的右孩子获得比左边孩子更多的糖果
+
+  + 局部最优可以推出全局最优。
+
+  + 如果ratings[i] > ratings[i - 1] 那么[i]的糖 一定要比[i - 1]的糖多一个，所以贪心：candyVec[i] = candyVec[i - 1] + 1
+
+    <div align = center><img src="../images/Greedy15.png" width='600px' /></div>
+
+  + 再确定左孩子大于右孩子的情况（从后向前遍历）：如果 ratings[i] > ratings[i + 1]，此时candyVec[i]（第i个小孩的糖果数量）就有两个选择了，一个是candyVec[i + 1] + 1（从右边这个加1得到的糖果数量），一个是candyVec[i]（之前比较右孩子大于左孩子得到的糖果数量）。
+
+    <div align = center><img src="../images/Greedy16.png" width='600px' /></div>
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      int candy(vector<int>& ratings) {
+          vector<int> candyVec(ratings.size(), 1);
+          // 从前向后
+          for (int i = 1; i < ratings.size(); i++) {
+              if (ratings[i] > ratings[i - 1]) candyVec[i] = candyVec[i - 1] + 1;
+          }
+          // 从后向前
+          for (int i = ratings.size() - 2; i >= 0; i--) {
+              if (ratings[i] > ratings[i + 1] ) {
+                  candyVec[i] = max(candyVec[i], candyVec[i + 1] + 1);
+              }
+          }
+          // 统计结果
+          int result = 0;
+          for (int i = 0; i < candyVec.size(); i++) result += candyVec[i];
+          return result;
+      }
+  };
+  ```
+
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -28,6 +28,8 @@ vector
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/QuickSort.h
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/SelectionSort.h
 iostream
 -
@@ -57,6 +59,8 @@ ShellSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/ShellSort.h
 MergeSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
+QuickSort.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/QuickSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Tree/BSTree_LeetCode.h
 vector

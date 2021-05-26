@@ -12,6 +12,7 @@ CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/Test_Backtracking.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/BubbleSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/InsertionSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/MergeSort.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/QuickSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/SelectionSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/ShellSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/SortTestHelper.h
