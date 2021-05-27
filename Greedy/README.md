@@ -496,19 +496,110 @@
 
 
 + **思路：**
-  + 本题有两个维度，h和k，<span style="color:red;">  **「看到这种题目一定要想如何确定一个维度，然后在按照另一个维度重新排列。」**</span>
 
+  + 本题有两个维度，h和k，<span style="color:red;">  **「看到这种题目一定要想如何确定一个维度，然后在按照另一个维度重新排列。」**</span> 会发现此题和 贪心算法：分发糖果 有点点的像。
 
+  + 按照身高h来排序，身高一定是从大到小排（身高相同的话则k小的站前面），让高个子在前面。 **「此时我们可以确定一个维度了，就是身高，前面的节点一定都比本节点高！」** 那么只需要按照k为下标重新插入队列就可以了。以图中{5,2} 为例：
 
+    <div align = center><img src="../images/Greedy18.png" width='600px' /></div>
 
+  + 按照身高排序之后，优先按身高高的people的k来插入，后序插入节点也不会影响前面已经插入的节点，最终按照k的规则完成了队列。所以在按照身高从大到小排序后：
 
+    **「局部最优：优先按身高高的people的k来插入。插入操作过后的people满足队列属性」**
 
+    **「全局最优：最后都做完插入操作，整个队列满足题目队列属性」**
 
+  + 局部最优可推出全局最优，找不出反例，那就试试贪心。排序完的people： [[7,0], [7,1], [6,1], [5,0], [5,2]，[4,4]]
 
+    + 插入的过程：插入[7,0]：[[7,0]]
+    + 插入[7,1]：[[7,0],[7,1]]
+    + 插入[6,1]：[[7,0],[6,1],[7,1]]
+    + 插入[5,0]：[[5,0],[7,0],[6,1],[7,1]]
+    + 插入[5,2]：[[5,0],[7,0],[5,2],[6,1],[7,1]]
+    + 插入[4,4]：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
 
+  + 此时就按照题目的要求完成了重新排列。
 
++ **代码实现：**
 
+  ```c++
+  // 版本一
+  class Solution {
+  public:
+      static bool cmp(const vector<int> a, const vector<int> b) {
+          if (a[0] == b[0]) return a[1] < b[1];
+          return a[0] > b[0];
+      }
+      vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+          sort (people.begin(), people.end(), cmp);
+          vector<vector<int>> que;
+          for (int i = 0; i < people.size(); i++) {
+              int position = people[i][1];
+              que.insert(que.begin() + position, people[i]);
+          }
+          return que;
+      }
+  };
+  ```
 
+  
 
+### 11.用最少数量的箭引爆气球(452)
 
+> 在二维空间中有许多球形的气球。对于每个气球，提供的输入是水平方向上，气球直径的开始和结束坐标。
+>
+> 由于它是水平的，所以纵坐标并不重要，因此只要知道开始和结束的横坐标就足够了。开始坐标总是小于结束坐标。
+>
+> 一支弓箭可以沿着 x 轴从不同点完全垂直地射出。在坐标 x 处射出一支箭，若有一个气球的直径的开始和结束坐标为 xstart，xend， 且满足  xstart ≤ x ≤ xend，则该气球会被引爆。
+>
+> 可以射出的弓箭的数量没有限制。弓箭一旦被射出之后，可以无限地前进。我们想找到使得所有气球全部被引爆，所需的弓箭的最小数量。
+>
+> 给你一个数组 points ，其中 points [i] = [xstart,xend] ，返回引爆所有气球所必须射出的最小弓箭数。
+
++ **示例：**
+
+  <div align = center><img src="../images/Greedy19.png" width='700px' /></div>
+
++ **思路：**
+
+  + **局部最优：当气球出现重叠，一起射，所用弓箭最少。全局最优：把所有气球射爆所用弓箭最少。**
+
+  + **「为了让气球尽可能的重叠，需要对数组进行排序」**。按照气球的起始位置排序。
+
+  + **「如果气球重叠了，重叠气球中右边边界的最小值 之前的区间一定需要一个弓箭」**。
+
+  + 以题目示例：[[10,16],[2,8],[1,6],[7,12]]为例，如图：（方便起见，已经排序）
+
+    <div align = center><img src="../images/Greedy20.png" width='600px' /></div>
+
+  + 可以看出首先第一组重叠气球，一定是需要一个箭，气球3，的左边界大于了 第一组重叠气球的最小右边界，所以再需要一支箭来射气球3了。
+
++ **实现代码：**
+
+  ```c++
+  class Solution {
+  private:
+      static bool cmp(const vector<int>& a, const vector<int>& b) {
+          return a[0] < b[0];
+      }
+  public:
+      int findMinArrowShots(vector<vector<int>>& points) {
+          if (points.size() == 0) return 0;
+          sort(points.begin(), points.end(), cmp);
+  
+          int result = 1; // points 不为空至少需要一支箭
+          for (int i = 1; i < points.size(); i++) {
+              if (points[i][0] > points[i - 1][1]) {  // 气球i和气球i-1不挨着，注意这里不是>=
+                  result++; // 需要一支箭
+              }
+              else {  // 气球i和气球i-1挨着
+                  points[i][1] = min(points[i - 1][1], points[i][1]); // 更新重叠气球最小右边界
+              }
+          }
+          return result;
+      }
+  };
+  ```
+
+  
 
