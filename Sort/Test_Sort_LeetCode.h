@@ -12,6 +12,7 @@
 #include "ShellSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "HeapSort.h"
 
 void Test_Sort_LeetCode () {
     int number = 100;
@@ -20,8 +21,10 @@ void Test_Sort_LeetCode () {
 //    InsertSort(nums);
 //    BubbleSort(nums);
 //    ShellSort(nums);
-      MergeSort(nums);
-      QuickSort(nums);
+        MergeSort(nums);
+        QuickSort(nums);
+        HeapSort1(nums);
+
 
 }
 

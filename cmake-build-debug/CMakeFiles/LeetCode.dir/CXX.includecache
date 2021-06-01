@@ -24,6 +24,8 @@ vector
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BubbleSort.h
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/HeapSort.h
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/InsertionSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
@@ -61,6 +63,8 @@ MergeSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/MergeSort.h
 QuickSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/QuickSort.h
+HeapSort.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/HeapSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Tree/BSTree_LeetCode.h
 vector

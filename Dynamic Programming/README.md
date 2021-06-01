@@ -116,4 +116,146 @@
   };
   ```
 
+
+
+### 2. 使用最小花费爬楼梯(746)
+
+> 数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。
+>
+> 每当你爬上一个阶梯你都要花费对应的体力值，一旦支付了相应的体力值，你就可以选择向上爬一个阶梯或者爬两个阶梯。
+>
+> 请你找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。
+>
+> 提示：
+>
+> - cost 的长度范围是 [2, 1000]。
+> - cost[i] 将会是一个整型数据，范围为 [0, 999] 。
+
++ **示例：**
+
+  <div align = center><img src="../images/DP1.png" width="700px" /></div>
+
++ **思路：**
+
+  +  **注意题目描述：每当你爬上一个阶梯你都要花费对应的体力值，一旦支付了相应的体力值，你就可以选择向上爬一个阶梯或者爬两个阶梯。** 所以示例1中只花费一个15 就可以到阶梯顶，最后一步可以理解为 不用花费。
+
+  + **动态规划五部曲：**
+
+    + **确定dp数组以及下标的含义**
+
+      + 使用动态规划，就要有一个数组来记录状态，本题只需要一个一维数组dp[i]就可以了。
+      +  **dp[i]的定义：第i个台阶所花费的最少体力为dp[i]**。
+
+    + **确定递推公式**
+
+      +  **可以有两个途径得到dp[i]，一个是dp[i-1] 一个是dp[i-2]**。
+      +  选dp[i-1]与dp[i-2]中更小的，所以`dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i];`
+      + **注意这里为什么是加cost[i]，而不是cost[i-1],cost[i-2]之类的** ，因为题目中说了：每当你爬上一个阶梯你都要花费对应的体力值
+
+    + **dp数组如何初始化**
+
+      + dp[i]由dp[i-1]，dp[i-2]推出，既然初始化所有的dp[i]是不可能的，那么只初始化dp[0]和dp[1]就够了，其他的最终都是dp[0]dp[1]推出。
+
+    + **确定遍历顺序**
+
+      + 因为是模拟台阶，而且dp[i]又dp[i-1]dp[i-2]推出，所以是从前到后遍历cost数组就可以了。
+
+    + **举例推导dp数组**
+
+      + 拿示例2：cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1] ，来模拟一下dp数组的状态变化，如下：
+
+        <div align = center><img src="../images/DP2.png" width="700px" /></div>
+
++ **代码实现：**
+
+  ```c++
+  // 版本一
+  class Solution {
+  public:
+      int minCostClimbingStairs(vector<int>& cost) {
+          vector<int> dp(cost.size());
+          dp[0] = cost[0];
+          dp[1] = cost[1];
+          for (int i = 2; i < cost.size(); i++) {
+              dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i];
+          }
+          // 注意最后一步可以理解为不用花费，所以取倒数第一步，第二步的最少值
+          return min(dp[cost.size() - 1], dp[cost.size() - 2]);
+      }
+  };
+  // 版本二
+  class Solution {
+  public:
+      int minCostClimbingStairs(vector<int>& cost) {
+          int dp0 = cost[0];
+          int dp1 = cost[1];
+          for (int i = 2; i < cost.size(); i++) {
+              int dpi = min(dp0, dp1) + cost[i];
+              dp0 = dp1; // 记录一下前两位
+              dp1 = dpi;
+          }
+          return min(dp0, dp1);
+      }
+  };
+  ```
+
   
+
+### 3.不同路径(62)
+
+> 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+>
+> 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+>
+> 问总共有多少条不同的路径？
+
++ **示例：**
+
+  <div align = center><img src="../images/DP3.png" width="700px" /></div>
+
++ **动态规划五部曲：**
+
+  + **确定dp数组（dp table）以及下标的含义**
+
+    + dp[i][j] ：表示从（0 ，0）出发，到(i, j) 有dp[i][j]条不同的路径。
+
+  + **确定递推公式**
+
+    + 想要求dp[i][j]，只能有两个方向来推导出来，即dp[ i - 1] [ j] 和 dp[i] [j - 1]。
+    + dp[i - 1] [j] 表示的是从(0, 0)的位置到(i - 1, j)有几条路径，dp[i] [j - 1]同理。
+    + 那么很自然，dp[i] [j] =  dp[i - 1] [j] + dp[i] [j - 1]，因为dp[i] [j]只有这两个方向过来。
+
+  + **dp数组的初始化**
+
+    + 首先dp[i] [0]一定都是1，因为从(0, 0)的位置到(i, 0)的路径只有一条，那么dp[0] [j]也同理。
+
+  + **确定遍历顺序**
+
+    + 这里要看一下递归公式dp[i] [j] =  dp[i - 1] [j] + dp[i] [j - 1]，dp[i] [j]都是从其上方和左方推导而来，那么从左到右一层一层遍历就可以了。
+    + 这样就可以保证推导dp[i] [j]的时候，dp[i - 1] [j] 和 dp[i] [j - 1]一定是有数值的。
+
+  + **举例推导dp数组**
+
+    <div align = center><img src="../images/DP4.png" width="500px" /></div>
+
++ **代码实现：**
+
+  ```c++
+  class Solution {
+  public:
+      int uniquePaths(int m, int n) {
+          vector<vector<int>> dp(m, vector<int>(n, 0));
+          for (int i = 0; i < m; i++) dp[i][0] = 1;
+          for (int j = 0; j < n; j++) dp[0][j] = 1;
+          for (int i = 1; i < m; i++) {
+              for (int j = 1; j < n; j++) {
+                  dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+              }
+          }
+          return dp[m - 1][n - 1];
+      }
+  };
+  ```
+
+  
+
