@@ -14,18 +14,21 @@
 #include "QuickSort.h"
 #include "HeapSort.h"
 #include "CountSort.h"
+#include "BucketSort.h"
 
 void Test_Sort_LeetCode () {
     int number = 100;
-    std::vector<int> nums = SortTestHelper::generateRandomVector(number, 0 ,number);
+    std::vector<int> nums = SortTestHelper::generateRandomVector(number, 1,number);
 //    SelectSort(nums);
 //    InsertSort(nums);
 //    BubbleSort(nums);
 //    ShellSort(nums);
         /*MergeSort(nums);
         QuickSort(nums);*/
-        HeapSort1(nums);
+        //HeapSort1(nums);
         CountSort(nums);
+       BucketSort(nums);
+
 
 
 }

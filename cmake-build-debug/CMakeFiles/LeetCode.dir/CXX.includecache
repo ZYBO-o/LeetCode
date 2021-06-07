@@ -24,6 +24,10 @@ vector
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BubbleSort.h
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BucketSort.h
+cmath
+-
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/CountSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/HeapSort.h
@@ -69,6 +73,8 @@ HeapSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/HeapSort.h
 CountSort.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/CountSort.h
+BucketSort.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BucketSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Tree/BSTree_LeetCode.h
 vector
