@@ -317,7 +317,99 @@ void BucketSort(vector<int>& nums ){
 
 
 
+## 十.基数排序
 
+### 1.基本概念
+
+基数排序是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，所以基数排序也不是只能使用于整数。
+
+### 2.基数排序基本思想及其步骤
+
+<div align = center><img src="../images/Sort14.gif" width="900px" </div>
+
+在上图中，首先将所有待比较树脂统一为统一位数长度，接着从最低位开始，依次进行排序。
+
+1. **按照个位数进行排序。**
+2. **按照十位数进行排序。**
+3. **按照百位数进行排序。**
+
+排序后，数列就变成了一个有序序列。
+
+```c++
+#include<iostream>
+#include<vector>
+ 
+using namespace std;
+ 
+void countSort(vector<int>& vec,int exp)
+{//计数排序
+	vector<int> range(10,0);
+ 
+	int length=vec.size();
+	vector<int> tmpVec(length,0);
+ 
+	for(int i=0;i<length;++i)
+	{
+		range[(vec[i]/exp)%10]++;
+	}
+ 
+	for(int i=1;i<range.size();++i)
+	{
+		range[i]+=range[i-1];//统计本应该出现的位置
+	}
+ 
+	for(int i=length-1;i>=0;--i)
+	{
+		tmpVec[range[(vec[i]/exp)%10]-1]=vec[i];
+		range[(vec[i]/exp)%10]--;
+	}
+	vec=tmpVec;
+}
+ 
+void radixSort(vector<int>& vec)
+{
+	int length=vec.size();
+	int max=-1;
+	for(int i=0;i<length;++i)
+	{//提取出最大值
+		if(vec[i]>max)
+			max=vec[i];
+	}
+	
+	//提取每一位并进行比较，位数不足的高位补0
+	for(int exp=1;max/exp>0;exp*=10)
+		countSort(vec,exp);
+}
+ 
+int main()
+{
+	int a[10]={53,3,542,748,14,214,154,63,616,589};
+ 
+	vector<int> vec(a,a+10);
+	radixSort(vec);
+ 
+	for(int i=0;i<vec.size();++i)
+	{
+		cout<<vec[i]<<"   ";
+	}
+	
+	cout<<endl;
+	return 0;
+
+}
+```
+
+
+
+### 3. 基数排序 vs 计数排序 vs 桶排序
+
+基数排序有两种方法：
+
+这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：
+
+- 基数排序：根据键值的每位数字来分配桶；
+- 计数排序：每个桶只存储单一键值；
+- 桶排序：每个桶存储一定范围的数值；
 
 
 

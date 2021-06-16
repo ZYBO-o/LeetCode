@@ -8,6 +8,8 @@
 
 ## 一.数组
 
+### 1.利用题目
+
 #### [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
 
 > 题目说明尚未被充分使用，即 **在一个长度为 n 的数组 nums 里的所有数字都在 0 ~ n-1 的范围内 。**  此说明含义：数组元素的 **索引 和 值 是 一对多 的关系。**
@@ -96,6 +98,109 @@ public:
 };
 ```
 
+### 2.双指针
+
+#### [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
+
+> 使用双指针，左指针指向当前已经处理好的序列的尾部，右指针指向待处理序列的头部。右指针不断向右移动，每次右指针指向非val数，则将左右指针对应的数交换，同时左指针右移。(这样就把val自然而然的向后面移动了)
+>
+> 注意到以下性质：
+>
+> [0,left)为非val数，
+>
+> [left,right]为val。
+>
+> 因此每次交换，都是将左指针的零与右指针的非val数交换，且非val数的相对顺序并未改变。
+
+```c++
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        int left = 0;
+        int right = 0;
+        while(right < n) {
+          	//如果right指向的不为val,交换
+            if(nums[right] != val) {
+                swap(nums[right], nums[left]);
+                ++ left;
+            }
+          	//如果指向的是val，则向后迭代
+            ++ right;
+        }
+        return left ;
+    }
+};
+```
+
+> [283. 移动零](https://leetcode-cn.com/problems/move-zeroes/)只需要把val改成0即可
+
+#### [977. 有序数组的平方](https://leetcode-cn.com/problems/squares-of-a-sorted-array/)
+
+> 数组其实是有序的， 只不过负数平方之后可能成为最大数了。
+>
+> 那么数组平方的最大值就在数组的两端，不是最左边就是最右边，不可能是中间。
+>
+> 此时可以考虑双指针法了，i指向起始位置，j指向终止位置。
+>
+> 定义一个新数组result，和A数组一样的大小，让k指向result数组终止位置。
+
+```c++
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int size = nums.size() -1;
+        vector<int> result(nums.size(), 0);
+        int i = 0 , j = nums.size() - 1;
+        while(j >= i) {
+            if(nums[j] * nums[j] > nums[i] * nums[i]) {
+                result[size --] =  nums[j] * nums[j];
+                --j;
+            } else {
+                result[size --] =  nums[i] * nums[i];
+                ++ i;
+            }
+        }
+        return result;
+    }
+};
+```
+
+
+
+### 3.二分查找
+
+
+
+### 4.数学分析
+
+#### [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> merge;
+        if(intervals.empty())
+            return merge;
+        //用区间第一个数进行排序
+        sort(intervals.begin(), intervals.end());
+        for(int i = 0; i < intervals.size(); ++i) {
+            int left = intervals[i][0], right = intervals[i][1];
+            //如果merge不为空，或者集合中最后一个元素的右元素小于待导入的左元素
+            if(!merge.size() || merge.back()[1] < left) {
+                merge.push_back({left,right});
+            } else { //如果最后一个元素的右元素大于待导入左元素，则把右元素与待导入的右元素进行比较，替换
+                merge.back()[1] = max(right,  merge.back()[1]);
+            }
+        }
+        return merge;
+    }
+};
+```
+
+
+
 #### [剑指 Offer 29. 顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)
 
 > 有关图形转换，这也是一道数学推导题
@@ -143,6 +248,38 @@ public:
     }
 };
 ```
+
+#### [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/)
+
+> **有关数学推导**
+>
+> 可以看出需要移动四个方位的内容：
+>
+> int temp = matrix [ i ] [ j ];
+> matrix [ i ] [ j ]  = matrix [ n - j - 1 ] [ i ];
+> matrix[ n - j - 1 ] [ i ] = matrix[ n - i - 1 ] [ n - j - 1 ];
+> matrix[ n - i - 1 ] [ n - j - 1 ] = matrix[ j ] [ n - i - 1 ];
+> matrix[ j ] [ n - i - 1 ] = temp;
+
+```c++
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for(int i = 0; i < n/2; ++i) {
+            for(int j = 0; j < (n+1)/2; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+    }
+};
+```
+
+
 
 ## 二.字符串
 
@@ -221,8 +358,6 @@ public:
 
 
 
-
-
 ## 十.贪心
 
 
@@ -237,7 +372,19 @@ public:
 
 
 
+## 十三.二分法
 
+
+
+
+
+## 十四.广度优先遍历
+
+
+
+
+
+## 十五.并查集
 
 
 
