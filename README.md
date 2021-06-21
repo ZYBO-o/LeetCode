@@ -8,7 +8,11 @@
 
 ## 一.数组
 
+🔹 [利用题目意境](https://github.com/ZYBO-o/LeetCode/tree/main/Array#1%E5%88%A9%E7%94%A8%E9%A2%98%E7%9B%AE)
 
+🔸 [双指针](https://github.com/ZYBO-o/LeetCode/tree/main/Array#2%E5%8F%8C%E6%8C%87%E9%92%88)
+
+🔹[数学推导](https://github.com/ZYBO-o/LeetCode/tree/main/Array#3%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90)
 
 ## 二.字符串
 
@@ -65,7 +69,16 @@ public:
 
 ## 五.双指针和滑动窗口
 
+### 1.双指针
+🔹 [快慢指针](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#1%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88)
 
+🔸[左右指针](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#2%E5%B7%A6%E5%8F%B3%E6%8C%87%E9%92%88)
+
+🔹 [额外趣题](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#3%E9%A2%9D%E5%A4%96%E8%B6%A3%E9%A2%98)
+
+
+
+### 2.滑动窗口
 
 
 

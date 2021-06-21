@@ -7,7 +7,7 @@
 > 题目说明尚未被充分使用，即 **在一个长度为 n 的数组 nums 里的所有数字都在 0 ~ n-1 的范围内 。**  此说明含义：数组元素的 **索引 和 值 是 一对多 的关系。**
 > 因此，可遍历数组并通过交换操作，使元素的 索引 与 值 一一对应（即 nums[i]=i ）。因而，就能通过索引映射对应的值，起到与字典等价的作用。
 
-<img src="../../../Github Projects/LeetCode/images/Array1.png" width="500px"/>
+<div align = center><img src="../images/Array1.png" width="500px"/></div>
 
 遍历中，第一次遇到数字 x 时，将其交换至索引 x 处；而当第二次遇到数字 x 时，一定有 nums[x] = x ，此时即可得到一组重复数字。
 
@@ -48,7 +48,7 @@ public:
 
 如下图所示，我们将矩阵逆时针旋转 45° ，并将其转化为图形式，发现其类似于 二叉搜索树 ，即对于每个元素，其左分支元素更小、右分支元素更大。因此，通过从 “根节点” 开始搜索，遇到比 target 大的元素就向左，反之向右，即可找到目标值 target 。
 
-<img src="../../../Github Projects/LeetCode/images/Array2.png" width="500px"/>
+<div align = center><img src="../images/Array2.png"width="500px"/></div>
 
 “根节点” 对应的是矩阵的 “左下角” 和 “右上角” 元素，本文称之为 标志数 ，以 matrix 中的 左下角元素 为标志数 flag ，则有:
 
