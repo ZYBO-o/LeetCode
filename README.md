@@ -6,7 +6,7 @@
 
 
 
-## 一.数组
+## 一.数组​ :a:
 
 🔹 [利用题目意境](https://github.com/ZYBO-o/LeetCode/tree/main/Array#1%E5%88%A9%E7%94%A8%E9%A2%98%E7%9B%AE)
 
@@ -14,19 +14,19 @@
 
 🔹[数学推导](https://github.com/ZYBO-o/LeetCode/tree/main/Array#3%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90)
 
-## 二.字符串
+## 二.字符串 :star2:
 
 
 
 
 
-## 三.链表
+## 三.链表 :shinto_shrine:
 
 
 
 
 
-## 四.哈希表
+## 四.哈希表 :balance_scale:
 
 
 
@@ -67,7 +67,7 @@ public:
 
 
 
-## 五.双指针和滑动窗口
+## 五.双指针和滑动窗口 :dolls:
 
 ### 1.双指针
 🔹 [快慢指针](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#1%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88)
