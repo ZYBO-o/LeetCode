@@ -15,6 +15,7 @@
 #include "HeapSort.h"
 #include "CountSort.h"
 #include "BucketSort.h"
+#include "RadixSort.h"
 
 void Test_Sort_LeetCode () {
     int number = 100;
@@ -26,8 +27,10 @@ void Test_Sort_LeetCode () {
         /*MergeSort(nums);
         QuickSort(nums);*/
         //HeapSort1(nums);
-        CountSort(nums);
+        // CountSort(nums);
        BucketSort(nums);
+       radixSort(nums);
+
 
 
 
