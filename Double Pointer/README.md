@@ -286,3 +286,223 @@ string replaceSpace(string s) {
 
 ## 二.滑动窗口
 
+### 1.框架构建
+
+滑动窗口是一种**双指针技巧**。该算法的思路非常简单，就是维护一个窗口，不断滑动，然后更新答案。该算法的大致逻辑如下：
+
+```c++
+int left = 0, right = 0;
+while (right < s.size()) {
+    // 增大窗口
+    window.add(s[right]);
+    right++;
+    while (window needs shrink) {
+        // 缩小窗口
+        window.remove(s[left]);
+        left++;
+    }
+}
+```
+
+该算法技巧的时间复杂度是 O(N)，比字符串暴力算法要高效得多。
+
+**框架如下：**
+
+```c++
+void slidingWindow(string s, string t) {
+    unordered_map<char, int> need, window;
+    for(char c : t)
+        need[c]++;
+    
+    int left = 0, right = 0;
+    int valid = 0;
+    while (right < s.size()) {
+        // c 是将移入窗口的字符
+        char c = s[right];
+        // 右移窗口
+        right++;
+        // 进行窗口内数据的一系列更新
+        ...
+        /*** debug 输出的位置 ***/
+        printf("window:[%d, %d)\n", left, right);
+        /**********************/
+        
+        //判断左侧窗口是否收缩
+        while (window needs shrink) {
+            // d 是将移除窗口的字符
+            char d = s[left];
+            // 左移窗口
+            left++;
+            // 进行窗口内数据的一系列更新
+            ...
+        }
+    }
+}
+```
+
+**其中两处 ... 表示更新窗口数据的地方，直接填即可。**
+
+### 2.例题解剖
+
+#### [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+
+> 给你一个字符串 `s` 、一个字符串 `t` 。返回 `s` 中涵盖 `t` 所有字符的最小子串。如果 `s` 中不存在涵盖 `t` 所有字符的子串，则返回空字符串 `""` 。
+
+:diamonds: **整体思路：**
+
+1.  我们在字符串 `S`  中使用双指针中的左右指针技巧，初始化`left = right = 0`，把索引**左闭右开**区间 `[left, right)` 称为一个窗口。
+2.  我们先不断地增加 `right` 指针扩大窗口 `[left, right)`，直到窗口中的字符串符合要求 （包含了 `T` 中的所有字符）。
+3.  此时，我们停止增加 `right`，转而不断增加 `left` 指针缩小窗口 `[left, right)`，直到窗口中的字符串不再符合要求（不包含 `T` 中所有字符了）。同时，每次增加 `left` 到达字符串 `s` 的尽头。
+4.  重复第 2 步 和第 3 步，直到 `right` 到达字符串 `S` 的尽头。
+
+整体思路其实不难，**第 2 步相当于在寻找一个可行解，然后第 3 步在优化这个可行解，最终找到最优解，**也就是最短的覆盖子串。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动，这就是滑动窗口名字的来历。
+
+:diamond_shape_with_a_dot_inside: 下面画图理解一下，needs 和 window 相当于计数器，分别记录 T 中字符出现次数和窗口中的相应字符的出现次数。
+
+:small_blue_diamond: **初试状态:**
+
+<div align="center"><img src="../images/Double Pointer5.png" width="500px" /></div>
+
+:small_blue_diamond: **增加 right，直到窗口 [left, right] 包含了 T 中所有字符：**
+
+<div align="center"><img src="../images/Double Pointer6.png" width="500px" /></div>
+
+:small_blue_diamond: **现在开始增加 left，缩小窗口 [left, right]。**
+
+<div align="center"><img src="../images/Double Pointer7.png" width="500px" /></div>
+
+:small_blue_diamond: **直到窗口中的字符串不再符合要求，left 不再继续移动。**
+
+<div align="center"><img src="../images/Double Pointer8.png" width="500px" /></div>
+
+:small_orange_diamond:  **之后重复上述过程，先移动 right，再移动 left…… 直到 right 指针到达字符串 S 的末端，算法结束。**
+
+
+
+```c++
+string minWindow(string s, string t) {
+    //定义need,window两个哈希表，用于记录 需要凑齐的字符 和  窗口中的字符
+    unordered_map<char,int> need,window;
+    for(auto c : t) need[c] ++;
+    //定义双指针变量初始化窗口的两端，区间为左闭右开
+    int left = 0, right = 0;
+    //记录最小覆盖子串的长度及其初始索引
+    int len = INT_MAX, start = 0;
+    //定义valid 变量表示窗口中满足need条件的字符个数，
+    //如果valid和need.size()大小相同，则说明完全覆盖
+    int valid = 0;
+    //开始滑动
+    while(right < s.size()) {
+        //cs是将移入窗口的字符
+        char c = s[right];
+        //右移窗口
+        ++ right;
+        //进行窗口内的一系列更新
+        if(need.count(c)) {
+            //如果在need集合中，则放入窗口中
+            window[c] ++;
+            //如果窗口中字符个数与需凑齐字符的个数一致，则满足覆盖数+1
+            if(window[c] == need[c])
+                ++ valid;
+        }
+
+        //判断左侧窗口是否要收缩
+        while(valid == need.size()) {
+            //更新最小覆盖子串
+            if(right - left < len) {
+                //更新最小长度及其开始的索引
+                len = right - left;
+                start = left;
+            }
+            //d是移除窗口的字符
+            char d = s[left];
+            //左移窗口
+            ++ left;
+            //进行窗口内的一系列更新
+            if(need.count(d)) {
+                //如果在need集合中，则移除窗口
+                if(window[d] == need[d]) 
+                    //如果窗口中字符个数与需凑齐字符的个数一致，则满足覆盖数-1
+                    valid--;
+                //移除窗口
+                window[d]--;
+            }
+        }
+    }
+    return len == INT_MAX ? "" : s.substr(start,len);
+}
+```
+
+#### [438. 找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+
+> 给定一个字符串 **s** 和一个非空字符串 **p**，找到 **s** 中所有是 **p** 的字母异位词的子串，返回这些子串的起始索引。
+
+```c++
+vector<int> findAnagrams(string s, string p) {
+    unordered_map<char,int> need,window;
+    for(auto c : p) need[c]++;
+    vector<int> result;
+    int left = 0, right = 0;
+    int valid = 0;
+    while(right < s.size()) {
+        char c = s[right];
+        ++ right;
+      	//如果在需要凑齐的集合中
+        if(need.count(c)) {	
+          	//录入窗口
+            window[c]++;
+          	//当录入窗口的字符个数与需要的字符个数相同时
+            if(need[c] == window[c])
+              	//窗口中满足need条件的字符个数+1
+                ++ valid;
+        }
+				//缩小窗口的条件
+        while(right - left >= p.size()) {
+          	//窗口中满足need条件的字符个数满足时，输出
+            if(valid == need.size())
+                result.push_back(left);
+            //缩小窗口
+            char d = s[left];
+            ++ left;
+          	//如果是在需要凑齐的集合中
+            if(need.count(d)) {
+              	//当录入窗口的字符个数与需要的字符个数相同时
+                if(need[d] == window[d])
+                  	//窗口中满足need条件的字符个数 -1
+                    --valid;
+              	//窗口减小
+                -- window[d];
+            }
+        }
+    }
+    return result;
+}
+```
+
+#### [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+给定一个字符串，请你找出其中不含有重复字符的 **最长子串** 的长度。
+
+```c++
+int lengthOfLongestSubstring(string s) {
+    unordered_map<char,int> window;
+    int left = 0, right = 0;
+    int maxlen = 0;
+    while(right < s.size()) {
+        char c = s[right];
+        ++right;
+      	//窗口数据更新
+        window[c]++;
+      	//出现重复字符时，进行缩减窗口
+        while(window[c] > 1) {
+            char d = s[left];
+            ++left;
+          	//窗口数据更新
+            window[d]--;
+        }
+        maxlen = max(maxlen, right - left);
+    }
+    return maxlen;
+}
+```
+
