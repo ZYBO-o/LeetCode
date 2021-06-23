@@ -22,7 +22,9 @@
 
 ## 三.链表 :shinto_shrine:
 
+🔹 [链表操作](https://github.com/ZYBO-o/LeetCode/tree/main/List#%E4%B8%80%E5%8D%95%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C)
 
+🔸[例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/List#leetcode%E7%A7%AF%E7%B4%AF)
 
 
 
@@ -112,7 +114,33 @@ public:
 
 
 
-## 十二.排序与查找
+## 十二.排序与查找 :dolls:
+
+### 排序
+
+:one: [冒泡排序]()
+
+:two: [选择排序]() 
+
+:three: [插入排序]()
+
+:four: [希尔]()
+
+:five: [归并]()
+
+:six: [快速排序]()
+
+:seven: [堆排序]()
+
+:eight: [计数排序]()
+
+:nine: [桶排序]()
+
+:keycap_ten: [基数排序]()
+
+### 查找
+
+
 
 
 
