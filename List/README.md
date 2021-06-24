@@ -196,56 +196,40 @@ void clear(ListNode* head) {
 
 其实只需要改变链表的next指针的指向，直接将链表反转 ，而不用重新定义一个新的链表，如图所示:
 
-<img src="../images/List2.png" style="zoom:50%;" />
+<div align = center><img src="../images/List2.png" width="600px" /></div>
 
 + 双指针方法：
 
   ```c++
-  class Solution {
-  public:
-      //双指针方法
-      ListNode* reverseList(ListNode* head) {
-          if(!head) return nullptr;
-        
-          ListNode* current = head;
-          ListNode* p = nullptr;
-  
-          while(current != nullptr) {
-              ListNode* node = current->next;
-              current->next = p;
-              p = current;
-              current = node;
-          }
-          return p;
+  ListNode* reverseList(ListNode* head) {
+      ListNode* pre = nullptr;
+      ListNode* cur = head;
+      ListNode* temp;
+      while(cur != nullptr) {
+          temp = cur->next
+          cur->next = pre;
+          pre = cur;
+          cur = temp;
       }
-  };
+      return pre;
+  }
   ```
-
+  
 + 递归方法：
 
   ```c++
-  class Solution {
-  public:
-      //递归方法
-      ListNode* reverseList(ListNode* head) {
-          // 和双指针法初始化是一样的逻辑
-           ListNode* cur = head;
-           ListNode* p = nullptr;
-          return reverse(p, cur);
-      }
-  
-      ListNode* reverse(ListNode* p,ListNode* cur){
-          //递归结束条件
-          if(cur == nullptr) return p;
-  
-          ListNode* node = cur->next;
-          cur->next = p;
-          // 可以和双指针法的代码进行对比，如下递归的写法，其实就是做了这两步
-          // p = cur;
-          // cur = node;
-          return reverse(cur,node);
-      }
-  };
+  ListNode* reverse(ListNode* pre, ListNode* cur) {
+      if(cur == nullptr) 
+          return pre;
+      ListNode* temp = cur->next;
+      cur->next = pre;
+      pre = cur;
+      cur = temp;
+      return reverse(pre, cur);
+  }
+  ListNode* reverseList(ListNode* head) {
+      return reverse(nullptr, head);
+  }
   ```
 
 #### [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)
@@ -261,24 +245,21 @@ void clear(ListNode* head) {
 + 快慢指针
 
   ```c++
-  class Solution {
-  public:
-      bool hasCycle(ListNode *head) {
-          ListNode *slow = head;
-          ListNode *fast = head;
-          while(fast != nullptr) {
+  bool hasCycle(ListNode *head) {
+      ListNode *slow = head;
+      ListNode *fast = head;
+      while(fast != nullptr) {
+          fast = fast->next;
+          if(fast != nullptr) {
               fast = fast->next;
-              if(fast != nullptr) {
-                  fast = fast->next;
-              }
-              if(fast == slow) {
-                  return true;
-              }
-              slow = slow->next;
           }
-          return false;
+          if(fast == slow) {
+              return true;
+          }
+          slow = slow->next;
       }
-  };
+      return false;
+  }
   ```
 
 #### [142. 环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/)
@@ -294,28 +275,47 @@ void clear(ListNode* head) {
 + 快慢指针
 
 ```c++
-class Solution {
-public:
-    ListNode *detectCycle(ListNode *head) {
-        ListNode* fast = head;
-        ListNode* slow = head;
-        while(fast != NULL && fast->next != NULL) {
-            slow = slow->next;
-            fast = fast->next->next;
-            // 快慢指针相遇，此时从head 和 相遇点，同时查找直至相遇
-            if (slow == fast) {
-                ListNode* index1 = fast;
-                ListNode* index2 = head;
-                while (index1 != index2) {
-                    index1 = index1->next;
-                    index2 = index2->next;
-                }
-                return index2; // 返回环的入口
+ListNode *detectCycle(ListNode *head) {
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        // 快慢指针相遇，此时从head 和 相遇点，同时查找直至相遇
+        if (slow == fast) {
+            ListNode* index1 = fast;
+            ListNode* index2 = head;
+            while (index1 != index2) {
+                index1 = index1->next;
+                index2 = index2->next;
             }
+            return index2; // 返回环的入口
         }
-        return NULL;
     }
-};
+    return NULL;
+}
+```
+
+#### [面试题 02.07. 链表相交](https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/)
+
+> 给定两个（单向）链表，判定它们是否相交并返回交点。请注意相交的定义基于节点的引用，而不是基于节点的值。换句话说，如果一个链表的第k个节点与另一个链表的第j个节点是同一节点（引用完全相同），则这两个链表相交。
+
++ 设长链表A长度为LA，短链表长度LB；
++ 由于速度相同，则在长链表A走完LA长度时，短链表B已经反过头在A上走了LA-LB的长度，剩余要走的长度为LA-(LA-LB) = LB；
++ 之后长链表A要反过头在B上走，剩余要走的长度也是LB；
++ 也就是说目前两个链表“对齐”了。因此，接下来遇到的第一个相同节点便是两个链表的交点。
+
+```c++
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode* list1 = headA;
+    ListNode* list2 = headB;
+
+    while(list1 != list2) {
+        list1 = (list1 != nullptr ? list1->next : headB);
+        list2 = (list2 != nullptr ? list2->next : headA);
+    }
+    return list1;
+}
 ```
 
 #### [19. 删除链表的倒数第 N 个结点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
@@ -327,28 +327,22 @@ public:
 + 快慢指针
 
   ```c++
-  class Solution {
-  public:
-      ListNode* removeNthFromEnd(ListNode* head, int n) {
-          ListNode* dummeryNode = new ListNode(0);
-          dummeryNode->next = head;
-          ListNode* fast = head;
-          //因为用slow进行删除，而且删除的是首元素时会更方便
-          ListNode* slow = dummeryNode;
-          for(int i = 0; i < n; ++i) {
-              fast = fast->next;
-          }
-          while(fast != nullptr) {
-              fast = fast->next;
-              slow = slow->next;
-          }
-          //找到需要删除的结点，进行删除操作
-          ListNode* temp = slow->next;
-          slow->next = temp->next;
-          delete temp;
-          return dummeryNode->next;
+  ListNode* removeNthFromEnd(ListNode* head, int n) {
+      ListNode* dummyHead = new ListNode(0);
+      dummyHead->next = head;
+      ListNode* slow = dummyHead;
+      ListNode* fast = dummyHead;
+      while(n-- && fast != NULL) {
+          fast = fast->next;
       }
-  };
+      fast = fast->next; // fast再提前走一步，因为需要让slow指向删除节点的上一个节点
+      while (fast != NULL) {
+          fast = fast->next;
+          slow = slow->next;
+      }
+      slow->next = slow->next->next;
+      return dummyHead->next;
+  }
   ```
 
 #### [143. 重排链表](https://leetcode-cn.com/problems/reorder-list/)
@@ -425,20 +419,6 @@ public:
     }
 };
 ```
-
-
-
----
-
-#### 1.拉链法
-
-刚刚小李和小王在索引1的位置发生了冲突，发生冲突的元素都被存储在链表中。这样我们就可以通过索引找到小李和小王了
-
-<div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/5.png"  width="400"/> 
-</div>
-
-> （数据规模是dataSize， 哈希表的大小为tableSize）
 
 
 
