@@ -1,12 +1,10 @@
-## 链表
+## 一.单链表操作
 
-### 一.单链表操作
+### 1.单链表结构
 
-#### 1.单链表结构
+<div align = center><img src="../images/List1.png" width="600px" /></div>
 
-![image-20210421173229883](../images/List1.png)
-
-#### 2.单链表创建与实现
+### 2.单链表创建与实现
 
 ```c++
 //List_LeetCode.h
@@ -186,7 +184,7 @@ void clear(ListNode* head) {
 
 ---
 
-### LeetCode积累
+## 二.LeetCode积累
 
 #### [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
 
@@ -206,7 +204,7 @@ void clear(ListNode* head) {
       ListNode* cur = head;
       ListNode* temp;
       while(cur != nullptr) {
-          temp = cur->next
+          temp = cur->next;
           cur->next = pre;
           pre = cur;
           cur = temp;
@@ -231,6 +229,46 @@ void clear(ListNode* head) {
       return reverse(nullptr, head);
   }
   ```
+
+#### [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+
+> 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+>
+
++ 定义leftnode指针和rightnode指针分别指向需要反转链表的两端结点
++ 定义pre,cur,temp指针，将left与right的链表进行反转
++ 最后反转完的链表重新指回leftnode与rightnode
+
+```c++
+ListNode* reverseBetween(ListNode* head, int left, int right) {
+    if(head->next == nullptr) return head;
+    ListNode* dummyNode = new ListNode(0);
+    dummyNode->next = head;
+		//定义左右结点
+    ListNode* leftNode = dummyNode;
+    ListNode* rightNode = head;
+		//指向反转链表的；两端
+    while(--left) 
+        leftNode = leftNode->next;
+    while(right--)
+        rightNode = rightNode->next;
+    
+  	//定义结点进行反转
+  	//最开始的pre指向rightNode
+    ListNode* pre = rightNode ;
+    ListNode* Cur = leftNode->next;
+    ListNode* temp ;
+    while(Cur != rightNode) {
+      temp = Cur->next;
+      Cur->next = pre;
+      pre = Cur;
+      Cur = temp;
+    }
+  	//反转完指回
+    leftNode->next = pre;
+    return dummyNode->next;
+}
+```
 
 #### [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)
 
@@ -293,6 +331,34 @@ ListNode *detectCycle(ListNode *head) {
         }
     }
     return NULL;
+}
+```
+
+#### [328. 奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/)
+
+> 给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
+
++ 定义Even，Odd指针指向第一个奇偶结点，定义EvenNext结点指向第一个Odd，方便之后奇数链表指向
++ 进行遍历
+  + Even指向Odd的next指针，然后Even进行更新
+  + Odd指向Even的next指针，然后Odd进行更新
+  + 知道有一方的next为空
+
+```c++
+ListNode* oddEvenList(ListNode* head) {
+    if(!head) return head;
+    ListNode* even = head;
+    ListNode* odd = head->next;
+    ListNode* evenNext = odd;
+
+    while(even->next != nullptr && odd->next != nullptr) {
+        even->next = odd->next;
+        even = even->next;
+        odd->next = even->next;
+        odd = odd->next;
+    }
+    even->next = evenNext;
+    return head;
 }
 ```
 
@@ -420,7 +486,209 @@ public:
 };
 ```
 
+#### [面试题 02.04. 分割链表](https://leetcode-cn.com/problems/partition-list-lcci/)
+
+> 编写程序以 x 为基准分割链表，使得所有小于 x 的节点排在大于或等于 x 的节点之前。如果链表中包含 x，x 只需出现在小于 x 的元素之后(如下所示)。分割元素 x 只需处于“右半部分”即可，其不需要被置于左右两部分之间。
+
+:diamond_shape_with_a_dot_inside: **利用双指针来解决**
+
+:large_blue_diamond: left指针指向小于 x 的最后一个元素
+
+:large_blue_diamond: right指针不断遍历链表，找到小于 x 的元素，插入至 left 区域
+
+```c++
+ListNode* partition(ListNode* head, int x) {
+    if(!head) return nullptr;
+    ListNode* dummyNode = new ListNode(0);
+    dummyNode->next = head;
+    ListNode* left = dummyNode;
+    ListNode* right = left->next;
+
+    while(left->next != nullptr && left->next->val < x) {
+        //左指针指向最后一个小于x的元素
+        left = left->next;   
+    }     
+    //右指针指向左指针右边
+    right = left->next;
+    while(right != nullptr && right->next != nullptr) {
+        if(right->next->val >= x)
+            right = right->next;
+        else {
+            ListNode* temp = right->next;
+            right->next = temp->next;
+
+            temp->next = left->next;
+            left->next = temp;
+            left = temp;
+        }
+    }
+    return dummyNode->next;
+}
+```
+
+#### [2. 两数相加](https://leetcode-cn.com/problems/add-two-numbers/)
+
+:diamond_shape_with_a_dot_inside: 将长度较短的链表在末尾补零使得两个连表长度相等，再一个一个元素对其相加（考虑进位）
+
+1. 获取两个链表所对应的长度
+2. 在较短的链表末尾补零
+3. 对齐相加考虑进位
+
+```c++
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode *list1 = l1;
+    ListNode *list2 = l2;
+    ListNode *dummyNode = new ListNode(0);
+    dummyNode->next = list2;
+  	//设定前指针是为了方便增加结点的
+    ListNode* pre = dummyNode;
+    int carry = 0;
+    while(list1 || list2 || carry) {
+        int n1 = list1 != nullptr ? list1->val : 0;
+        int n2 = list2 != nullptr ? list2->val : 0;
+        //cout << n1 << n2 << endl;
+        if(list2 == nullptr) {
+            ListNode* node = new ListNode((n1 + n2 + carry) % 10);
+            pre->next = node;
+            node->next = nullptr;
+            pre = node;
+        } else 
+            list2->val = (n1 + n2 + carry) % 10;
+
+        if((n1 + n2 + carry) > 9)
+            carry = 1;
+        else 
+            carry = 0;
+
+        if(list1)
+            list1 = list1->next;
+        if(list2) {
+            list2 = list2->next;
+            pre = pre->next;
+        }
+            
+    }
+    return l2;
+}
+```
+
+#### [21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+:diamond_shape_with_a_dot_inside: 将链表2插入到链表1上
+
++ 定义list1,list2指针指向l1与l2的头结点，pre指向list1的上一个结点(为了好插入)
++ 在遍历结点都不为空的情况下进行比较
+  + 如果list1 <= list2，list1继续迭代
+  + 如果list1 > list2，则将list2结点插入到list1前面
+
++ 遍历结束后，有一个不为空
+  + list1不为空则不用管
+  + list2不为空，将list2后面的结点直接移到list1后面
+
+```c++
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+    ListNode* dummyNode = new ListNode(0);
+    dummyNode->next = l1;
+    ListNode* pre = dummyNode;
+
+    ListNode* list1 = l1;
+    ListNode* list2 = l2;
+
+    while(list1 && list2) {
+        if(list1->val <= list2->val) {
+            list1 = list1->next;
+            pre = pre->next;
+        } else {
+            ListNode* temp = list2;
+            list2 = list2->next;
+
+            pre->next = temp;
+            temp->next = list1;
+            pre = temp;
+        }
+    }
+    if(list2) 
+      	//此时list1已经为空
+        pre->next = list2;
+    return dummyNode->next;
+}
+```
+
+#### :large_orange_diamond: [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+> 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+>
+> **你不能只是单纯的改变节点内部的值**，而是需要实际的进行节点交换。
+
+<div align = center><img src="../images/List3.png" width="800px" /></div>
+
++ 创建哑结点 dummyHead，令 dummyHead.next = head。令 temp 表示当前到达的节点，初始时 temp = dummyHead。每次需要交换 temp 后面的两个节点。
++ 如果 temp 的后面没有节点或者只有一个节点，则没有更多的节点需要交换，因此结束交换。否则，获得 temp 后面的两个节点 node1 和 node2，通过更新节点的指针关系实现两两交换节点。
+
+```c++
+ListNode* swapPairs(ListNode* head) {
+    if(!head) return head;
+    ListNode* dummyNode = new ListNode(0);
+    dummyNode->next = head;
+    ListNode* Pre = dummyNode;
+
+    while(Pre->next != nullptr && Pre->next->next != nullptr) {
+        ListNode* node1 = Pre->next;
+        ListNode* node2 = Pre->next->next;
+				//进行交换 
+        Pre->next = node2;
+        node1->next = node2->next;
+        node2->next = node1;
+        Pre = node1;
+    }
+    return dummyNode->next;
+}
+```
+
+#### :large_orange_diamond: [82. 删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
+
+> 存在一个按升序排列的链表，给你这个链表的头节点 `head` ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 **没有重复出现** 的数字。
+
++ **一边遍历、一边统计相邻节点的值是否相等，如果值相等就继续后移找到值不等的位置，然后删除值相等的这个区间**。
++ 设置 Pre 与 Cur指针，比较Pre->next 与 Cur->next 的值，如果相等，则删除Cur->next的值，这样会出现第一个相等的值删不掉
++ 解决上述问题，可以设置flag标志，只要有相等就让flag=1，这样最后剩下的元素也能被删除，之后再重新设置为0
+
+```c++
+ListNode* deleteDuplicates(ListNode* head) {
+    if(!head) return head;
+    ListNode* dummyNode = new ListNode(0);
+    dummyNode->next = head;
+    ListNode* Cur = head;
+    ListNode* Pre = dummyNode;
+    //设置标志
+    int flag = 0;
+    while(Cur != nullptr && Cur->next != nullptr) {
+        while(Cur->next != nullptr && Pre->next->val == Cur->next->val ) {
+            ListNode* temp = Cur->next;
+            Cur->next = temp->next;
+            delete temp;
+            flag = 1;
+        } 
+            
+        //删除最后一个相等的值
+        if(flag) {
+            ListNode* temp = Cur;
+            Cur = Cur->next;
+            Pre->next = Cur;
+            delete temp;
+            flag = 0;
+        } else {
+            Cur = Cur->next;
+            Pre = Pre->next;
+        }
+    
+    }
+    return dummyNode->next;
+}
+```
 
 
 
+#### :diamond_shape_with_a_dot_inside: [146. LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/)
 
+[题解](https://leetcode-cn.com/problems/lru-cache/solution/lru-ce-lue-xiang-jie-he-shi-xian-by-labuladong/)

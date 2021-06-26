@@ -34,6 +34,24 @@ ListNode* Create(const vector<int>& nums) {
     return newList;
 }
 
+ListNode* deleteNode(ListNode* head, int val) {
+    ListNode* dummyHead = new ListNode(0); // 设置一个虚拟头结点
+    dummyHead->next = head; // 将虚拟头结点指向head，这样方面后面做删除操作
+    ListNode* cur = dummyHead;
+    while (cur->next != nullptr) {
+        if(cur->next->val == val) {
+            ListNode* tmp = cur->next;
+            cur->next = cur->next->next;
+            delete tmp;
+        } else {
+            cur = cur->next;
+        }
+    }
+    head = dummyHead->next;
+    delete dummyHead;
+    return head;
+}
+
 void Print(ListNode* List) {
     if(List == nullptr) return;
     ListNode* p = List;

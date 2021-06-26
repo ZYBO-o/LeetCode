@@ -29,8 +29,5 @@ string removeSpace(string s) {
     return s;
 }
 
-string reverseWords(string s) {
-
-}
 
 #endif //LEETCODE_REVERSE_WORDS_IN_A_STRING_H
