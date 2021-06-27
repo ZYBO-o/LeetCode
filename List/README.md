@@ -233,7 +233,6 @@ void clear(ListNode* head) {
 #### [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
 
 > 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
->
 
 + 定义leftnode指针和rightnode指针分别指向需要反转链表的两端结点
 + 定义pre,cur,temp指针，将left与right的链表进行反转
@@ -334,6 +333,64 @@ ListNode *detectCycle(ListNode *head) {
 }
 ```
 
+#### [234. 回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/)
+
+> 请判断一个链表是否为回文链表。
+
++ 首先找到中心结点，将链表等分为二
++ 右半链表进行反转操作
++ 左链表与反转后的右链表进行比较
+
+```c++
+bool isPalindrome(ListNode* head) {
+    if(!head) return true;
+    
+    int count = 0;
+    bool ret = true;
+    
+    ListNode* firstNode = head;
+    ListNode* secondNode = head;
+    while(firstNode!= nullptr && firstNode->next != nullptr ) {
+        ++ count;
+        firstNode = firstNode->next->next;
+        secondNode = secondNode->next;
+    }
+    if(firstNode) {
+        count++;
+    }
+        
+    //找到右半链表
+    //first链表为需要反转的链表
+    ListNode* secondEnd = secondNode;
+    ListNode* pre = secondNode;
+    ListNode* cur = secondNode->next;
+    ListNode* temp;
+    while(cur != nullptr) {
+        temp = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = temp;
+    }
+    secondEnd->next = nullptr;
+    
+    //比较左半链表与右半链表
+    while(count -- ) {
+        if(pre->val == head->val) {
+            head = head->next;
+            pre = pre->next;
+        } else {
+            ret = false;
+            break;
+        }
+    }
+    return ret;
+}  
+```
+
+
+
+
+
 #### [328. 奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/)
 
 > 给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
@@ -429,59 +486,51 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 + 因为两链表长度相差不超过 1，因此直接合并即可。
 
 ```c++
-//1.找到各自中间结点
- //2.将后半链表进行反转
- //3.合并成新的链表
 class Solution {
 public:
-    //反转链表
-    ListNode* reverse(ListNode* head) {
-        ListNode* current = head;
-        ListNode* p = nullptr;
-        while(current != nullptr) {
-            ListNode* node = current->next;
-            current->next = p;
-            p = current;
-            current = node;
-        }
-        return p;
-    }
-		//找到中间结点
-    ListNode* middleNode(ListNode* head) {
-        ListNode* fast = head;
-        ListNode* slow = head;
-        while(fast->next != nullptr && fast->next->next != nullptr) {
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-        return slow;
-    }
-		//合并链表
-    ListNode* Reorder(ListNode* list1, ListNode* list2) {
-        ListNode* list1_temp = nullptr;
-        ListNode* list2_temp = nullptr;
-        ListNode* reorder_list = list1;
-        while(list1 != nullptr && list2 != nullptr) {
-            //先把list1_temp1指向list1的下一结点
-            list1_temp = list1->next;
-            //list1指向list2
-            list1->next = list2;
-            //list1变为后面的链表
-            list1 = list1_temp;
-            //list2_temp指向list2的下一结点
-            list2_temp = list2->next;
-            //list2指向新的list1
-            list2->next = list1;
-            //list2变为后面的链表
-            list2 = list2_temp;
-        }
-        return reorder_list;
-    }
-    
+    //找到中心节点
+    //分成两个链表
+    //链表合成重排
     void reorderList(ListNode* head) {
-        ListNode* list = head;
-        ListNode* reverselist = reverse(middleNode(head));
-        ListNode* reorder_list = Reorder(list,reverselist);
+        if(!head) return;
+        
+       ListNode* firstNode = head;
+       ListNode* secondNode = head;
+       while(secondNode != nullptr && secondNode->next != nullptr) {
+           firstNode = firstNode->next;
+           secondNode = secondNode->next->next;
+       }
+      // cout << firstNode->val << endl;
+    
+        ListNode* firstEnd = firstNode;
+        ListNode* pre = firstNode;
+        ListNode* cur = firstNode->next;
+        firstNode = nullptr;
+        while(cur) {
+            ListNode* temp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        firstEnd->next = nullptr;
+
+        Merge(head, pre);
+
+    }
+  	//head:1->2->3
+  	//pre: 4->3
+  	//所以head中的3不能使用，等到p->next = null就截止，最后补上nullptr就行
+    void Merge(ListNode* head, ListNode*pre) {
+        ListNode* p = head;
+        while(p->next != nullptr && pre != nullptr) {
+            ListNode* temp = p->next;
+            p->next = pre;
+            pre = pre->next;
+            p = p->next;
+            p->next = temp;
+            p = temp;
+        }
+        p->next = nullptr;
     }
 };
 ```
@@ -684,6 +733,50 @@ ListNode* deleteDuplicates(ListNode* head) {
     
     }
     return dummyNode->next;
+}
+```
+
+#### :diamond_shape_with_a_dot_inside: [138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
+
+> 请实现 copyRandomList 函数，复制一个复杂链表。在复杂链表中，每个节点除了有一个 next 指针指向下一个节点，还有一个 random 指针指向链表中的任意节点或者 null。
+>
+
+<div align = center><img src="../images/List4.png" width="800px" /></div>
+
+:large_orange_diamond: 利用哈希表的查询特点，考虑构建 原链表节点 和 新链表对应节点 的键值对映射关系，再遍历构建新链表各节点的 next 和 random 引用指向即可。
+
+算法流程：
+
+1. 若头节点 head 为空节点，直接返回 null ；
+2. 初始化： 哈希表 dic ， 节点 cur 指向头节点；
+3. 复制链表：
+   + 建立新节点，并向 dic 添加键值对 (原 cur 节点, 新 cur 节点） ；
+   + cur 遍历至原链表下一节点；
+4. 构建新链表的引用指向：
+   + 构建新节点的 next 和 random 引用指向；
+   + cur 遍历至原链表下一节点；
+
+5. 返回值： 新链表的头节点 dic[cur] ；
+
+```c++
+Node* copyRandomList(Node* head) {
+    if(head == nullptr) return nullptr;
+    Node* cur = head;
+    unordered_map<Node*, Node*> map;
+    // 3. 复制各节点，并建立 “原节点 -> 新节点” 的 Map 映射
+    while(cur != nullptr) {
+        map[cur] = new Node(cur->val);
+        cur = cur->next;
+    }
+    cur = head;
+    // 4. 构建新链表的 next 和 random 指向
+    while(cur != nullptr) {
+        map[cur]->next = map[cur->next];
+        map[cur]->random = map[cur->random];
+        cur = cur->next;
+    }
+    // 5. 返回新链表的头节点
+    return map[head];
 }
 ```
 
