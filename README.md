@@ -122,25 +122,25 @@ public:
 
 ### 排序
 
-:one: [冒泡排序]()
+:one: [冒泡排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%B8%80%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F)
 
-:two: [选择排序]() 
+:two: [选择排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%BA%8C%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F) 
 
-:three: [插入排序]()
+:three: [插入排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%B8%89%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
 
-:four: [希尔]()
+:four: [希尔](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E5%9B%9B%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F)
 
-:five: [归并]()
+:five: [归并](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%BA%94%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F)
 
-:six: [快速排序]()
+:six: [快速排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E5%85%AD%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F)
 
-:seven: [堆排序]()
+:seven: [堆排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%B8%83%E5%A0%86%E6%8E%92%E5%BA%8F)
 
-:eight: [计数排序]()
+:eight: [计数排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E5%85%AB%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)
 
-:nine: [桶排序]()
+:nine: [桶排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E4%B9%9D%E6%A1%B6%E6%8E%92%E5%BA%8F)
 
-:keycap_ten: [基数排序]()
+:keycap_ten: [基数排序](https://github.com/ZYBO-o/LeetCode/tree/main/Sort#%E5%8D%81%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F)
 
 ### 查找
 
