@@ -16,11 +16,11 @@
 
 ## 二.字符串 :star2:
 
-🔹 [双指针](https://github.com/ZYBO-o/LeetCode/tree/main/Array#1%E5%88%A9%E7%94%A8%E9%A2%98%E7%9B%AE)
+🔹 [双指针](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#%E4%B8%80%E5%8F%8C%E6%8C%87%E9%92%88)
 
-🔸 [滑动窗口](https://github.com/ZYBO-o/LeetCode/tree/main/Array#2%E5%8F%8C%E6%8C%87%E9%92%88)
+🔸 [滑动窗口](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#%E4%BA%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3)
 
-🔹[KMP算法]()
+🔹[KMP算法](https://github.com/ZYBO-o/LeetCode/tree/main/string#3kmp%E7%AE%97%E6%B3%95)
 
 
 
