@@ -6,7 +6,7 @@
 #include "string/Test_String.h"
 #include <list>
 #include "List/List.h"
-
+#include "string/Test_String.h"
 
 
 int main() {
@@ -16,9 +16,9 @@ int main() {
     //Test_Backtracking();
     //Test_BTree_LeetCode();
 
-    Test_Sort_LeetCode();
+    //Test_Sort_LeetCode();
     //Test_Binary_Search();
-    //Test_String();
+    Test_String();
 
 
 }

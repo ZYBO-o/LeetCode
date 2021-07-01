@@ -28,6 +28,6 @@ CMakeFiles/LeetCode.dir/main.cpp.o: ../Tree/BSTree_LeetCode.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Tree/BTree_LeetCode.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Tree/Test_BTree_LeetCode.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../main.cpp
-CMakeFiles/LeetCode.dir/main.cpp.o: ../string/Reverse_Words_In_A_String.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../string/Offer_48.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../string/Test_String.h
 

@@ -147,13 +147,13 @@ std::vector<int> PMT(std::string p) {
     
     for(int i = 1; i < p.size(); ++i) {
         //非理想情况下
-        while (ll > 0 && p[ll] != p[i]){
+        while (ll > 0 && p[ll] != p[i]) 
             ll = pmt[ll - 1];
-        }
+        
         //理想情况下：直接在前一个共有元素长度上 + 1
-        if(p[ll] == p[i]) {
+        if(p[ll] == p[i]) 
             ++ll;
-        }
+        
         //部分匹配表存储对应长度
         pmt[i] = ll;
     }
@@ -180,25 +180,27 @@ int KMP(const std::string& s, const std::string& p) {
     int ret = -1;
     int s_len = s.size();
     int p_len = p.size();
+  
     //求出子串的部分匹配表
     std::vector<int> pmt = PMT(p);
+  
     //子串长度>0 且 子串长度小于目标串,这样才有查找的意义
     if(0 < p_len && p_len <= s_len) {
         //i 遍历 s, j 遍历 p
         for(int i = 0, j = 0; i < s_len; ++i) {
-            //2.比对不成功
-            while(j > 0 && s[i] != p[j]) {
-                //j的位置进行改变
-                j = pmt[j - 1];
-            }
-            //1.如果比对成功
-            if(s[i] == p[j])
+          
+            while(j > 0 && s[i] != p[j])//2.比对不成功
+                j = pmt[j - 1]; //j的位置进行改变
+            
+            if(s[i] == p[j])//1.如果比对成功
                 ++j;
-            //结束比对的条件
-            if(j == p_len) {
-                //成功查找的位置
-                ret = i - p_len + 1;
+
+            if(j == p_len) //结束比对的条件 
+            {
+              	ret = i - p_len + 1;//成功查找的位置
+              	break;
             }
+                
         }
     }
     return ret;
@@ -209,11 +211,168 @@ int KMP(const std::string& s, const std::string& p) {
 
 
 
+## 四.典型例题分析
+
+#### [剑指 Offer 58 - I. 翻转单词顺序](https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/)
+
+> 输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。例如输入字符串"I am a student. "，则输出"student. a am I"。
+
++ 首先取出多余的空格
++ 其次整体进行反转
++ 最后单个单词进行反转
+
+```c++
+string reverseWords(string s) {
+    for (int i = s.size() - 1; i > 0; i--) {
+        if (s[i] == s[i - 1] && s[i] == ' ') {
+            s.erase(s.begin() + i);
+        }
+    }
+    // 删除字符串最后面的空格
+    if (s.size() > 0 && s[s.size() - 1] == ' ') {
+        s.erase(s.begin() + s.size() - 1);
+    }
+    // 删除字符串最前面的空格
+    if (s.size() > 0 && s[0] == ' ') {
+        s.erase(s.begin());
+    }
+    //2.反转字符串
+    reverse(s.begin(), s.end());
+    //3.单个单词进行反转
+    int j = 0;
+    int i;
+    for(i = 0; i < s.size(); ++i) {
+        if(s[i] == ' ') {
+            reverse(s.begin() + j, s.begin() + i);
+            j = i + 1;
+        }
+    }
+    reverse(s.begin() + j, s.end());
+    return s;
+}
+```
+
+#### [剑指 Offer 48. 最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
+
+> 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
+
++ 哈希表 dic 统计： 指针 j 遍历字符 s ，哈希表统计字符 s[j] 最后一次出现的索引 。
+
++ 更新左指针 i ： 根据上轮左指针 i 和 dic[s[j]] ，每轮更新左边界 i ，保证区间 [i+1,j] 内无重复字符且最大。
+
+  <div align = center>i = max(dic[s[j]], i)</div>
+
++ 更新结果 res ： 取上轮 res 和本轮双指针区间 [i+1,j] 的宽度（即 j−i ）中的最大值。
+
+<div align = center>res = max(res, j − i)</div>
+
+```c++
+int lengthOfLongestSubstring(string s) {
+    unordered_map<char,int> dir;
+    int i = -1, res = 0;
+
+    for(int j = 0;j<s.size();++j){
+        if(dir.count(s[j])){
+            i = max(dir[s[j]],i);
+        }
+        dir[s[j]]=j ;
+        res = max(res, j-i);
+    }
+    return res;
+}
+```
 
 
 
+#### [剑指 Offer 45. 把数组排成最小的数](https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/)
 
+此题求拼接起来的最小数字，本质上是一个排序问题。设数组 nums 中任意两数字的字符串为 xx 和 yy ，则规定 排序判断规则 为：
 
++ 若拼接字符串 x + y > y + x ，则 x “大于” y ；
++ 反之，若 x + y < y + x ，则 x “小于” y ；
 
+> x “小于” y 代表：排序完成后，数组中 x 应在 y 左边；“大于” 则反之。
+>
+>  **这个想法很好，利用了字符串比较大小的规则，可以记下来，很容易不经意间遇到。**
 
+根据以上规则，套用任何排序方法对 nums 执行排序即可。
+
+<div align = center><img src="../images/String7.png" width="500px" /></div>
+
+算法流程：
+
+1. 初始化： 字符串列表 str ，保存各数字的字符串格式；
+2. 列表排序： 应用以上 “排序判断规则” ，对 str 执行排序；
+3. 返回值： 拼接 strs 中的所有字符串，并返回。
+
+```c++
+string minNumber(vector<int>& nums) {
+    string res;
+  	// 字符串列表 str ，保存各数字的字符串格式；
+    vector<string> str;
+    for(auto i : nums) 
+        str.push_back(to_string(i));
+
+  	//应用以上 “排序判断规则” ，对 str 执行排序
+    sort(str.begin(), str.end(), 
+         [](string &str1, string& str2) 
+         { return str1 + str2 < str2 + str1;});
+
+    for(auto i : str)
+        res.append(i);
+    return res;
+}
+```
+
+#### [剑指 Offer 67. 把字符串转换成整数](https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/)
+
+>  写一个函数 StrToInt，实现把字符串转换成整数这个功能。不能使用 atoi 或者其他类似的库函数。
+
++ 首部空格： 删除之即可；
++ 符号位： 三种情况，即 ''+'' , ''−'' , ''无符号" ；新建一个变量保存符号位，返回前判断正负即可。
++ 非数字字符： 遇到首个非数字的字符时，应立即返回。
++ 数字字符：
+  + 字符转数字： “此数字的 ASCII 码” 与 “ 0 的 ASCII 码” 相减即可；
+  + 数字拼接： 若从左向右遍历数字，设当前位字符为 c ，当前位数字为 x ，数字结果为 res ，则数字拼接公式为：
+
+<div align = center>res=10×res+x </div>
+  <div align = center>x=ascii(c)−ascii(′0′)</div>
+
+```c++
+int strToInt(string str) {
+    int flag = 1;
+    int i = 0;
+    int len = str.length();
+  	
+ 		//跳过空格 	
+    while(str[i] == ' '){
+        i++;
+    }
+  	//如果有不满足要求的字符串，直接返回0
+    if(len == i || (!isdigit(str[i]) && str[i] != '+' && str[i] != '-')){
+        return 0;
+    }
+    //处理正负数
+    if(str[i] == '-' || str[i] == '+'){  
+        if(str[i] == '-'){
+            flag = -1;
+        }
+        i++;   
+    }
+  	//将字符转换为数字
+    long num = 0;
+    while(i<len && isdigit(str[i])){
+      	//转换为数字
+        num = num*10+(str[i]-'0');
+        i++;
+      	//如果超过最大值，则返回int最大值
+        if(num > INT_MAX && flag == 1)
+            return INT_MAX;
+      	//如果超过最大值，并且是负数，。则返回int最大值
+        if(num >INT_MAX && flag == -1)
+            return INT_MIN; 
+    }
+    return num*flag;
+}
+```
 

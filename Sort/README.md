@@ -184,11 +184,11 @@ private:
     int count;
     int capacity;
 
-    //向下进行移动
+    //调整堆元素
     void shiftDown(int k) {
-        //只要有左孩子，那就肯定还有孩子
+        //如果下标所对应的元素还有左孩子，那就肯定还有孩子
         while(2 * k <= count) {
-            //在此轮循环中，data[k]和data[j]交换位置
+            //在此轮循环中，判断它是否需要和自己的孩子进行交换位置来调整
             int j = 2 * k;
             //如果有右孩子而且右孩子的值比左孩子大，那就和右孩子进行交换
             if(j + 1 <= count && data[j + 1] > data[j]) 
@@ -204,29 +204,31 @@ private:
 public:
     //初始化构建最大堆
     MaxHeap(vector<T>& nums) {
+      	//初始化元素
         data = new T[nums.size() + 1];
         capacity = nums.size();
-        for(int i = 0; i < nums.size(); ++i) {
+      	count = nums.size();
+        for(int i = 0; i < nums.size(); ++i) 
             data[i + 1] = nums[i];
-        }
-        count = nums.size();
-        //将非叶子结点进行重构，构建最大堆
-        //其中，非叶子结点的下标就是1 - count/2
-        for (int i = count / 2; i >= 1 ; --i) {
+        //构建最大堆：将所有非叶子结点，从左往右，从上往下进行调整
+        for (int i = count / 2; i >= 1 ; --i) 
             shiftDown(i);
-        }
     }
     //取出最大值的元素,然后进行重构
     T extractMax() {
+      	//保证数组的个数大于0
         assert(count > 0);
         T item = data[1];
         //将第一个元素和最后一个元素进行交换
         swap(data[1], data[count]);
+      	//交换完成，最后一个元素不算在堆中
         --count;
         //进行重构最大堆，将第一个元素向下移
         shiftDown(1);
         return item;
     }
+  
+  	//析构函数，释放内存
     ~MaxHeap() {
         delete[] data;
     }
@@ -234,14 +236,12 @@ public:
 
 template<typename T>
 void HeapSort(vector<T>& nums) {
-    //步骤一：无需序列构建成一个最大堆
+    //1.用无需数组创建最大堆
     MaxHeap<T> maxHeap = MaxHeap<T>(nums);
-    //步骤二：
-    //将堆顶元素与末尾元素交换，将最大元素"沉"到数组末端。
-    //重新调整结构，使其满足堆定义，然后继续交换堆顶元素与当前末尾元素
-    //反复执行调整+交换步骤，直到整个序列有序
+    //2.不断将堆顶元素与末尾元素进行交换，将最大元素"沉"到数组末尾
     for (int i = nums.size() - 1; i >= 0 ; --i) 
         nums[i] = maxHeap.extractMax();
+  	//3.输出结果
     for (auto i : nums) 
         cout << i << " ";
     cout << endl;
