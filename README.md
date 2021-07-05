@@ -90,11 +90,9 @@ public:
 
 ## 六.位运算 :wrench:
 
-:large_blue_diamond: [基本操作]()
+:large_blue_diamond: [基本操作](https://github.com/ZYBO-o/LeetCode/tree/main/Bit%20operation#%E4%B8%80%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6%E8%BF%90%E7%AE%97%E4%BB%8B%E7%BB%8D)
 
-:large_orange_diamond: [例题解剖]()
-
-
+:large_orange_diamond: [例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/Bit%20operation#%E4%BA%8C%E9%A2%98%E7%9B%AE%E7%A7%AF%E7%B4%AF)
 
 ## 七.栈和队列
 
