@@ -1,6 +1,4 @@
-## 位运算
-
-### 一.位操作符运算介绍
+## 一.位操作符运算介绍
 
 #### 1. 位操作实现乘除法
 
@@ -135,8 +133,9 @@ x > 0 and x & (x - 1) == 0
 + 有什么区别？在第一种情况下（4 的幂），1 处于偶数位置：第 0 位、第 2 位、第 4 位等；在第二种情况下，1 处于奇数位置。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/15.png"  width="500"/> 
+  <img src="../images/15.png"  width="500"/> 
 </div>
+
 
 + 因此 4 的幂与数字 (101010...10)2向与会得到 0。即 4^a  ^  (101010...10)2 == 0。
 + (101010...10)2用十六进制表示为 ：(aaaaaaaa)16
@@ -189,7 +188,7 @@ public:
 
 ---
 
-### 二.题目积累
+## 二.题目积累
 
 #### [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
 
@@ -217,8 +216,9 @@ public:
 + 以此类推，只有某个位置的数字出现奇数次时，该位的掩码才不为 0。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/8.png"  width="500"/> 
+  <img src="../images/8.png"  width="500"/> 
 </div>
+
 
 因此，可以检测出出现一次的位和出现三次的位，但是要注意区分这两种情况。
 
@@ -231,8 +231,9 @@ public:
 + 仅当 `seen_once` 未变时，改变 `seen_twice`。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/9.png"  width="500"/> 
+  <img src="../images/9.png"  width="500"/> 
 </div>
+
 
 位掩码 `seen_once` 仅保留出现一次的数字，不保留出现三次的数字。
 
@@ -406,8 +407,9 @@ int getSum(int a, int b){
 我们的想法是将两个数字不断向右移动，直到数字相等，即数字被缩减为它们的公共前缀。然后，通过将公共前缀向左移动，将零添加到公共前缀的右边以获得最终结果。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/10.png"  width="600"/> 
+  <img src="../images/10.png"  width="600"/> 
 </div>
+
 
 如上述所说，算法由两个步骤组成：
 
@@ -445,14 +447,16 @@ public:
 总而言之，`−x = ¬x+1`，此操作将 `x` 所有位取反，但是最右边的 1 除外。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/11.png"  width="500"/> 
+  <img src="../images/11.png"  width="500"/> 
 </div>
+
 
 因此，`x`和 `−x` 只有一个共同点：最右边的 1。这说明 `x & (-x)` 将保留最右边的 1。并将其他的位设置为 0。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/12.png"  width="500"/> 
+  <img src="../images/12.png"  width="500"/> 
 </div>
+
 
 **检测是否为 2 的幂：**
 
@@ -484,8 +488,9 @@ public:
 再使用与运算：则 `x` 最右边的 1 和就会被设置为 0，因为` 1 & 0 = 0`。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/13.png"  width="500"/> 
+  <img src="../images/13.png"  width="500"/> 
 </div>
+
 
 **检测是否为 2 的幂：**
 
@@ -493,8 +498,9 @@ public:
 2. `x & (x - 1)` 操作会将 2 的幂设置为 0，因此判断是否为 2 的幂是：判断 `x & (x - 1) == 0`。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/14.png"  width="500"/> 
+  <img src="../images/14.png"  width="500"/> 
 </div>
+
 
 ```c++
 class Solution {
@@ -514,7 +520,6 @@ public:
 > 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
 >
 > 你能否实现线性时间复杂度、仅使用额外常数空间的算法解决此问题?
->
 
 **分析**
 

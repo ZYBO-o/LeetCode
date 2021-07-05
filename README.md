@@ -88,7 +88,11 @@ public:
 
 🔸[例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/Double%20Pointer#2%E4%BE%8B%E9%A2%98%E8%A7%A3%E5%89%96)
 
-## 六.位运算
+## 六.位运算 :wrench:
+
+:large_blue_diamond: [基本操作]()
+
+:large_orange_diamond: [例题解剖]()
 
 
 

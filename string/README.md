@@ -272,6 +272,7 @@ int lengthOfLongestSubstring(string s) {
     int i = -1, res = 0;
 
     for(int j = 0;j<s.size();++j){
+      	// 如果已经存在，则让i指向存在的索引
         if(dir.count(s[j])){
             i = max(dir[s[j]],i);
         }
