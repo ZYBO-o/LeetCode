@@ -190,6 +190,37 @@ public:
 
 ## 二.题目积累
 
+#### [面试题 01.01. 判定字符是否唯一](https://leetcode-cn.com/problems/is-unique-lcci/)
+
+>  实现一个算法，确定一个字符串 `s` 的所有字符是否全都不同。
+
+使用一个int类型的变量（下文用mark表示）来代替长度为26的bool数组。假设这个变量占26个bit，那么可以把它看成000...00(26个0)，这26个bit对应着26个字符，对于一个字符c，检查对应下标的bit值即可判断是否重复。
+
+首先计算出字符char离'a'这个字符的距离，用step表示，那么使用左移运算符1 << step则可以得到对应下标为1，其余下标为0的数，如字符char = 'c'，则得到的数为000...00100，将这个数跟mark做与运算:
+
++ 若出现过则被标记为1，那么与运算的结果就不为0；
++ 若之前没有出现过，则对应位的与运算的结果也是0，那么整个结果也为0。
+
+对于没有出现过的字符，我们用或运算mark | (1 << move_bit)将对应下标位的值置为1。
+
+```c++
+bool isUnique(string astr) {
+    int mask = 0; int step = 0;
+    for(auto c : astr) {
+        step = c - 'a';
+      	//若出现过则被标记为1，那么与运算的结果就不为0；
+        if(mask & (1 << step))
+            return false;
+        mask |= (1 << step);
+    }
+    return true;       
+}
+```
+
+
+
+
+
 #### [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
 
 > 给定一个**非空**整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
@@ -205,7 +236,7 @@ public:
 };
 ```
 
-#### [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/)
+#### :diamond_shape_with_a_dot_inside: [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/)
 
 > 给你一个整数数组 `nums` ，除某个元素仅出现 **一次** 外，其余每个元素都恰出现 **三次 。**请你找出并返回那个只出现了一次的元素。
 
@@ -253,7 +284,7 @@ class Solution {
 };
 ```
 
-#### [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/)
+#### :diamond_shape_with_a_dot_inside: [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/)
 
 >  数组中，只有两个数出现一次，剩下都出现两次，找出出现一次的这两个数
 
@@ -325,7 +356,7 @@ public:
 
 
 
-#### [371. 两整数之和](https://leetcode-cn.com/problems/sum-of-two-integers/)
+#### :diamond_shape_with_a_dot_inside: [371. 两整数之和](https://leetcode-cn.com/problems/sum-of-two-integers/)
 
 >  **不使用**运算符 `+` 和 `-` ，计算两整数 `a` 、`b` 之和。
 
@@ -387,10 +418,11 @@ public:
 int getSum(int a, int b){
     // 重复操作，直到进位值为0
     while(b!=0){
-        //c++需要换成无符号数再进行与操作再左移（计算进位值），否则在leetcode平台会报runtime error: left shift of negative value
+        //c++需要换成无符号数再进行与操作再左移（计算进位值)
         unsigned int carry = (unsigned int) (a&b) << 1;
         // 异或操作相当于加
         a = a^b;
+      
         b = carry;
     }
     return a;
@@ -564,4 +596,83 @@ public:
     }
 };
 ```
+
+#### [剑指 Offer 64. 求1+2+…+n](https://leetcode-cn.com/problems/qiu-12n-lcof/)
+
+> 求 `1+2+...+n` ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
+逻辑运算符的短路效应：
+
+常见的逻辑运算符有三种，即 “与 && ”，“或 || ”，“非 ! ” ；而其有重要的短路效应，如下所示：
+
+```c
+if(A && B)  // 若 A 为 false ，则 B 的判断不会执行（即短路），直接判定 A && B 为 false
+
+if(A || B) // 若 A 为 true ，则 B 的判断不会执行（即短路），直接判定 A || B 为 true
+```
+
+本题需要实现 “当 n = 1n=1 时终止递归” 的需求，可通过短路效应实现。
+
+```c
+n > 1 && sumNums(n - 1) // 当 n = 1 时 n > 1 不成立 ，此时 “短路” ，终止后续递归
+```
+
+```c++
+int res = 0;
+int sumNums(int n) {
+    bool x = (n > 1) && sumNums(n - 1);
+    res += n;
+    return res;
+}
+```
+
+#### [面试题 16.07. 最大数值](https://leetcode-cn.com/problems/maximum-lcci/)
+
+> 编写一个方法，找出两个数字`a`和`b`中最大的那一个。不得使用if-else或其他比较运算符。
+
++ 当int型数据为正数时，补码等于原码，即符号为为0,右移31为就是0.
++ 当int型数据为负数时，补码等于原码取反加一，右移的话高位补1,再变成原码之后就是-1
++ 但是a-b有可能会造成上溢（当b为负数），所以需要将a和b转换为long，防止溢出
++ 所以当int sum =(int) (((long)a-(long)b) >> 63)
+  + k为0,表示a-b为正数
+  + k为1,表示a-b为负数
++ 最后返回(1+k)*a+(-k)*b即可。
+
+```c++
+int maximum(int a, int b) {
+    long c = a, d = b;
+    int sum = (int) ((c - d) >> 63);
+    return (sum + 1) * a + (-sum) * b;
+}
+```
+
+#### [89. 格雷编码](https://leetcode-cn.com/problems/gray-code/)
+
+设 n 阶格雷码集合为 G(n)，则 G(n+1)阶格雷码为：
+
++ 给 G(n)阶格雷码每个元素二进制形式前面添加 0，得到 G'(n)；
++ 设 G(n)集合倒序（镜像）为 R(n)，给 R(n) 每个元素二进制形式前面添加 1，得到 R'(n)；
++ G(n+1) = G'(n) ∪ R'(n)拼接两个集合即可得到下一阶格雷码。
+
+```c++
+vector<int> grayCode(int n) {
+    vector<int> ans={0};
+    for(int i=0; i<n; i++){
+        int num = 1 << i;  
+        int size = ans.size();
+        for(int j = size - 1; j >= 0; j--)  // 反向遍历
+            ans.push_back(ans[j] + num);  // 相当于在前缀加1
+    }
+    return ans;
+}
+```
+
+#### :diamonds: [面试题 05.03. 翻转数位(滑动窗口)](https://leetcode-cn.com/problems/reverse-bits-lcci/)
+
+> 给定一个32位整数 `num`，你可以将一个数位从0变为1。请编写一个程序，找出你能够获得的最长的一串1的长度。
+>
+> ```c
+> 输入: num = 1775(110111011112)
+> 输出: 8
+> ```
 
