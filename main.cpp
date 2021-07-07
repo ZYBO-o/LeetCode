@@ -14,18 +14,6 @@
 
 using namespace std;
 
-vector<int> grayCode(int n) {
-    vector<int> ans={0};
-    for(int i=0; i<n; i++){
-        int num = 1 << i;
-        int size = ans.size();
-        for(int j =size - 1; j>=0; j--){  // 反向遍历
-            ans.push_back(ans[j] + num);  // 相当于在前缀加1
-        }
-    }
-    return ans;
-
-}
 
 int main() {
 
@@ -38,10 +26,13 @@ int main() {
     //Test_Binary_Search();
     //Test_String();
 
-    vector<int> ans = grayCode(4);
-    for(auto i : ans)
-        cout << i << " ";
-    cout << endl;
+   string str;
+   cin >> str;
+   cout << str << endl;
+
+   char buf[BUFSIZ];
+   cin >> buf;
+   cout << buf << endl;
 
 
 }

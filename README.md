@@ -94,9 +94,15 @@ public:
 
 :large_orange_diamond: [例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/Bit%20operation#%E4%BA%8C%E9%A2%98%E7%9B%AE%E7%A7%AF%E7%B4%AF)
 
-## 七.栈和队列
+## 七.栈和队列 :book:
 
 > 遇到反向输出的题目时可以想到栈，比如反向输出链表，将链表遍历存储至栈中。
+
+:large_blue_diamond: [栈的基本操作](https://github.com/ZYBO-o/LeetCode/tree/main/Stack%20and%20Queue#%E4%B8%80%E6%A0%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
+
+:large_blue_diamond: [队列的基本操作](https://github.com/ZYBO-o/LeetCode/tree/main/Stack%20and%20Queue#%E4%BA%8C%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
+
+:large_orange_diamond: [例题解剖]()
 
 
 
