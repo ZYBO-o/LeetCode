@@ -22,15 +22,11 @@
 
 🔹[KMP算法](https://github.com/ZYBO-o/LeetCode/tree/main/string#3kmp%E7%AE%97%E6%B3%95)
 
-
-
 ## 三.链表 :shinto_shrine:
 
 🔹 [链表操作](https://github.com/ZYBO-o/LeetCode/tree/main/List#%E4%B8%80%E5%8D%95%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C)
 
 🔸[例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/List#leetcode%E7%A7%AF%E7%B4%AF)
-
-
 
 ## 四.哈希表 :balance_scale:
 
@@ -102,9 +98,7 @@ public:
 
 :large_blue_diamond: [队列的基本操作](https://github.com/ZYBO-o/LeetCode/tree/main/Stack%20and%20Queue#%E4%BA%8C%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
 
-:large_orange_diamond: [例题解剖]()
-
-
+:large_orange_diamond: [例题解剖](https://github.com/ZYBO-o/LeetCode/tree/main/Stack%20and%20Queue#%E4%B8%89%E4%BE%8B%E9%A2%98%E8%A7%A3%E5%89%96)
 
 ## 八.二叉树
 
