@@ -140,5 +140,7 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 + [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
 
+#### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
 
+哈希表根据 key排序，根据value排序，输出key,输出value
 
