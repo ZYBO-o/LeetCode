@@ -1,6 +1,6 @@
-## Hash
+## 一.哈希表算法
 
-### 一.哈希表
+### 1.哈希表
 
 哈希表是 **根据关键码的值而直接进行访问的数据结构。**
 
@@ -9,8 +9,9 @@
 其实直白来讲其实数组就是一张哈希表。 **哈希表中关键码就是数组的索引下表，然后通过下表直接访问数组中的元素，** 如下图所示：
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/1.png"  width="350"/> 
+  <img src="../images/1.png"  width="350"/> 
 </div>
+
 
 那么哈希表能解决什么问题呢，**<font color = red>「一般哈希表都是用来快速判断一个元素是否出现集合里。」</font>**
 
@@ -20,15 +21,16 @@
 
 将学生姓名映射到哈希表上就涉及到了**「hash function ，也就是哈希函数」**。
 
-### 二.哈希函数
+### 2.哈希函数
 
 哈希函数，把学生的姓名直接映射为哈希表上的索引，然后就 **可以通过查询索引下表快速知道这位同学是否在这所学校里了。**
 
 哈希函数如下图所示，通过hashCode把名字转化为数值，一般hashcode是通过特定编码方式，可以将其他数据格式转化为不同的数值，这样就把学生名字映射为哈希表上的索引数字了。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/2.png"  width="400"/> 
+  <img src="../images/2.png"  width="400"/> 
 </div>
+
 
 如果hashCode得到的数值大于 哈希表的大小了，也就是大于tableSize了，怎么办呢？
 
@@ -40,41 +42,44 @@
 
 接下来**「哈希碰撞」**登场
 
-### 三.哈希碰撞
+### 3.哈希碰撞
 
 如图所示，小李和小王都映射到了索引下表 1的位置，**「这一现象叫做哈希碰撞」**。
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/4.png"  width="400"/> 
+  <img src="../images/4.png"  width="400"/> 
 </div>
+
 
 一般哈希碰撞有两种解决方法， 拉链法和线性探测法。
 
-#### 1.拉链法
+#### (1).拉链法
 
 刚刚小李和小王在索引1的位置发生了冲突，发生冲突的元素都被存储在链表中。这样我们就可以通过索引找到小李和小王了
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/5.png"  width="400"/> 
+  <img src="../images/5.png"  width="400"/> 
 </div>
+
 
 > （数据规模是dataSize， 哈希表的大小为tableSize）
 
 其实拉链法就是要选择适当的哈希表的大小，这样既不会因为数组空值而浪费大量内存，也不会因为链表太长而在查找上浪费太多时间。
 
-#### 2.线性探测法
+#### (2).线性探测法
 
 使用线性探测法，一定要保证tableSize大于dataSize。我们需要依靠哈希表中的空位来解决碰撞问题。
 
 例如冲突的位置，放了小李，那么就向下找一个空位放置小王的信息。所以要求tableSize一定要大于dataSize ，要不然哈希表上就没有空置的位置来存放 冲突的数据了。如图所示：
 
 <div align="center">  
-  <img src="https://github.com/ZYBO-o/LeetCode/blob/main/images/5.png"  width="300"/> 
+  <img src="../images/5.png"  width="300"/> 
 </div>
 
 
 
-### 四.常见的哈希结构
+
+### 4.常见的哈希结构
 
 当我们想使用哈希法来解决问题的时候，我们一般会选择如下三种数据结构。
 
@@ -108,9 +113,9 @@
 
 那么再来看一下map ，在map 是一个key value 的数据结构，map中，对key是有限制，对value没有限制的，因为key的存储方式使用红黑树实现的。
 
-### 五.关联容器的方法
+### 5.关联容器的方法
 
-#### 1.map
+#### (1).map
 
 map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped value (映射值) 组合形成的元素。
 
@@ -128,7 +133,7 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 
 
-### 六.总结
+### 6.总结
 
 总结一下，**<font color = red>当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法</font>**。
 
@@ -136,7 +141,7 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 ---
 
-## 题集
+## 二.例题解剖
 
 + [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
 
