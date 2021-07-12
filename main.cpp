@@ -16,35 +16,27 @@
 using namespace std;
 
 
-bool cmp(const  unordered_map<int, int>::iterator &p1,const  unordered_map<int, int>::iterator &p2)//要用常数，不然编译错误
-{
-    return p1->second < p2->second;
+bool canConstruct(string ransomNote, string magazine) {
+    unordered_map<char,int> map;
+    for(auto c : ransomNote)
+        map[c]++;
+    for(auto c : magazine) {
+        if(map.count(c) > 0)
+            map[c]--;
+    }
+    for(auto iter = map.begin(); iter != map.end(); iter ++) {
+        cout << iter->first << ":" << iter->second << endl;
+    }
+    for(auto iter = map.begin(); iter != map.end(); iter ++) {
+        if(iter->second != 0)
+            return false;
+    }
+    return true;
 }
 
-
 int main() {
-    unordered_map<int, int>map ;
-    vector<int> nums  {1,1,1,2,2,3};
 
-    for(auto num : nums)
-        map[num]++;
-
-    vector<pair<int, int>> vtMap;
-
-    for (auto it = map.begin(); it != map.end(); it++)
-        vtMap.push_back(make_pair(it->first, it->second));
-
-
-
-    sort(vtMap.begin(), vtMap.end(),
-         [](const pair<int, int> &x, const pair<int, int> &y) -> int {
-             return x.second > y.second;
-         });
-
-    for (auto it = vtMap.begin(); it != vtMap.end(); it++)
-        cout << it->first << ':' << it->second << '\n';
-    return 0;
-
+    cout << canConstruct("ab", "aa") << endl;
     //Test_Backtracking();
     //Test_BTree_LeetCode();
 

@@ -9,7 +9,7 @@
 其实直白来讲其实数组就是一张哈希表。 **哈希表中关键码就是数组的索引下表，然后通过下表直接访问数组中的元素，** 如下图所示：
 
 <div align="center">  
-  <img src="../images/1.png"  width="350"/> 
+  <img src="../images/1.png"  width="400"/> 
 </div>
 
 
@@ -17,9 +17,7 @@
 
 例如要查询一个名字是否在这所学校里。要枚举的话时间复杂度是O(n)，但如果使用哈希表的话， 只需要O(1) 就可以做到。
 
-我们只需要初始化把这所学校里学生的名字都存在哈希表里，在查询的时候通过索引直接就可以知道这位同学在不在这所学校里了。
-
-将学生姓名映射到哈希表上就涉及到了**「hash function ，也就是哈希函数」**。
+我们只需要初始化把这所学校里学生的名字都存在哈希表里，在查询的时候通过索引直接就可以知道这位同学在不在这所学校里了。将学生姓名映射到哈希表上就涉及到了**「hash function ，也就是哈希函数」**。
 
 ### 2.哈希函数
 
@@ -28,19 +26,15 @@
 哈希函数如下图所示，通过hashCode把名字转化为数值，一般hashcode是通过特定编码方式，可以将其他数据格式转化为不同的数值，这样就把学生名字映射为哈希表上的索引数字了。
 
 <div align="center">  
-  <img src="../images/2.png"  width="400"/> 
+  <img src="../images/2.png"  width="500"/> 
 </div>
 
 
-如果hashCode得到的数值大于 哈希表的大小了，也就是大于tableSize了，怎么办呢？
+如果hashCode得到的数值大于哈希表的大小了，也就是大于tableSize了，怎么办呢？
 
-**此时为了保证映射出来的索引数值都落在哈希表上，我们会在再次对数值做一个取模的操作，就要我们就保证了学生姓名一定可以映射到哈希表上了。**
+**<font color = red>此时为了保证映射出来的索引数值都落在哈希表上，我们会在再次对数值做一个取模的操作，就要我们就保证了学生姓名一定可以映射到哈希表上了。</font>**
 
-此时问题又来了，哈希表我们刚刚说过，就是一个数组。
-
-如果学生的数量大于哈希表的大小怎么办，此时就算哈希函数计算的再均匀，也避免不了会有几位学生的名字同时映射到哈希表 同一个索引下表的位置。
-
-接下来**「哈希碰撞」**登场
+此时问题又来了，如果元素数量大于哈希表的大小，避免不了会有元素同时映射到同一个索引下表的位置。这就涉及到**「哈希碰撞」**。
 
 ### 3.哈希碰撞
 
@@ -68,12 +62,12 @@
 
 #### (2).线性探测法
 
-使用线性探测法，一定要保证tableSize大于dataSize。我们需要依靠哈希表中的空位来解决碰撞问题。
+**使用线性探测法，<font color=red>一定要保证tableSize大于dataSize</font>。我们需要依靠哈希表中的空位来解决碰撞问题。**
 
 例如冲突的位置，放了小李，那么就向下找一个空位放置小王的信息。所以要求tableSize一定要大于dataSize ，要不然哈希表上就没有空置的位置来存放 冲突的数据了。如图所示：
 
 <div align="center">  
-  <img src="../images/5.png"  width="300"/> 
+  <img src="../images/6.png"  width="300"/> 
 </div>
 
 
@@ -87,7 +81,7 @@
 - set（集合）
 - map（映射）
 
-这里数组就没啥可说的了，我们来看一下set和map，在C++语言中，实现在C++中，set 和 map 分别提供了以下三种数据结构，其底层实现以及优劣如下表所示：
+实现在C++中，set 和 map 分别提供了以下三种数据结构，其底层实现以及优劣如下表所示：
 
 | 集合                 | 底层实现 | 是否有序 | 数值是否可以重复 | 能否更改数值 | 查询效率   | 增删效率   |
 | -------------------- | -------- | -------- | ---------------- | ------------ | ---------- | ---------- |
@@ -95,9 +89,7 @@
 | `std::multiset`      | 红黑树   | 有序     | 是               | 否           | $O(log_n)$ | $O(log_n)$ |
 | `std::unordered_set` | 哈希表   | 无序     | 否               | 否           | $O(1)$     | $O(1)$     |
 
-`std::unordered_set`底层实现为哈希表，`std::set` 和`std::multiset` 的底层实现是红黑树，红黑树是一种平衡二叉搜索树，所以key值是有序的，但key不可以修改，改动key值会导致整棵树的错乱，所以只能删除和增加。
-
-
+`std::unordered_set`底层实现为哈希表，`std::set` 和`std::multiset` 的底层实现是红黑树， **<font color = red>红黑树是一种平衡二叉搜索树，所以key值是有序的，但key不可以修改，改动key值会导致整棵树的错乱，所以只能删除和增加。</font>**
 
 | 映射                 | 底层实现 | 是否有序 | 数值是否可以重复 | 能否更改数值 | 查询效率   | 增删效率   |
 | -------------------- | -------- | -------- | ---------------- | ------------ | ---------- | ---------- |
@@ -106,8 +98,6 @@
 | `std::unordered_map` | 哈希表   | Key无序  | key不可重复      | key不可修改  | $O(1)$     | $O(1)$     |
 
 `std::unordered_map` 底层实现为哈希表，`std::map` 和`std::multimap` 的底层实现是红黑树。同理，`std::map` 和`std::multimap` 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解）。
-
-
 
 当我们要使用集合来解决哈希问题的时候，优先使用unordered_set，因为它的查询和增删效率是最优的，如果需要集合是有序的，那么就用set，如果要求不仅有序还要有重复数据的话，那么就用multiset。
 
@@ -131,8 +121,6 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 | upper_bound | 返回一个非递减序列 `[first, last)`（参数）中第一个大于 val（参数）的位置的迭代器 |
 | equal_range | 获取相同元素的范围，返回包含容器中所有具有与 k（参数）等价的键的元素的范围边界（`pair< map<char,int>::iterator, map<char,int>::iterator >`） |
 
-
-
 ### 6.总结
 
 总结一下，**<font color = red>当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法</font>**。
@@ -143,10 +131,109 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 ## 二.例题解剖
 
+#### 遍历关联容器
+
+```c++
+unordered_map<char,int>::iterator iter = map.begin();
+for(auto it = iter; it != map.end(); ++it) {
+		cout << it->first << ":" << it->second << endl;
+}
+```
+
+#### [1002. 查找常用字符](https://leetcode-cn.com/problems/find-common-characters/)
+
+> 给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
+>
+
++ 如果字符 c 在所有字符串中均出现了 k 次及以上，那么最终答案中需要包含 k 个 c。因此，我们可以使用 minfreq[c] 存储字符 c 在所有字符串中出现次数的最小值。
+
++ 依次遍历每一个字符串。当遍历到字符串 s 时，使用 freq[c] 统计 s 中每一个字符 c 出现的次数。在统计完成之后，再将每一个 minfreq[c] 更新为其本身与 freq[c] 的较小值。这样一来，当遍历完所有字符串后，minfreq[c] 就存储了字符 c 在所有字符串中出现次数的最小值。
+
+
+```c++
+vector<string> commonChars(vector<string>& words) {
+    vector<int> minfreq(26, INT_MAX);
+    vector<int> freq(26);
+    for(auto word : words) {
+      	//遍历之前都让freq重新赋为0
+        fill(freq.begin(), freq.end(), 0);
+        for(auto c : word) 
+            freq[c - 'a']++;
+        for(int i = 0; i< 26; ++i) 
+          	//每次遍历都更新minfreq，保证结束后是每个字符串中都存在的字符
+            minfreq[i] = min(freq[i], minfreq[i] );
+    }
+    vector<string> res;
+  	//将结果转换为字符串
+    for(int i = 0; i < 26; ++i) {
+        for(int j = 0; j < minfreq[i]; ++j) 
+            res.emplace_back(1,'a' + i);
+    }
+    return res;
+}
+```
+
+#### :large_orange_diamond:set[349. 两个数组的交集](https://leetcode-cn.com/problems/intersection-of-two-arrays/)
+
+> 给定两个数组，编写一个函数来计算它们的交集。
+
++ 注意题目特意说明：**输出结果中的每个元素一定是唯一的，也就是说输出的结果的去重的， 同时可以不考虑输出结果的顺序**
++ `std::set`和`std::multiset`底层实现都是红黑树，`std::unordered_set`的底层实现是哈希表， 使用`unordered_set `读写效率是最高的，并不需要对数据进行排序，而且还不要让数据重复，所以选择`unordered_set`。
+
+```c++
+vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    unordered_set<int> res_set;
+    //将数组1中的元素导入nums_set中
+    unordered_set<int> nums_set (nums1.begin(), nums1.end());
+    //将nums2中的每个元素在nums_set中进行查找，如果存在，则导入res_set中
+    for(auto num : nums2) {
+        if(nums_set.find(num) != nums_set.end())
+            res_set.insert(num);
+    }
+    return vector<int> (res_set.begin(), res_set.end());
+}
+```
+
+#### :large_orange_diamond: [202. 快乐数](https://leetcode-cn.com/problems/happy-number/)
+
+> 编写一个算法来判断一个数 n 是不是快乐数。
+>
+> + 对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。
+> + 然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。
+> + 如果 可以变为  1，那么这个数就是快乐数。
+
++ **当遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法了。**
++ 所以这道题目使用哈希法，来判断这个sum是否重复出现，如果重复了就是return false， 否则一直找到sum为1为止。
++ 判断sum是否重复出现就可以使用unordered_set。
+
+```c++
+int getsum(int n) {
+    int sum = 0;
+    while(n) {
+        sum += (n%10) * (n%10);
+        n = n / 10;
+    }
+    return sum;
+}
+bool isHappy(int n) {
+    unordered_set<int> set;
+    int sum;
+    while(1) {
+        sum = getsum(n);
+        if(sum == 1) 
+            return true;
+        if(set.find(sum) != set.end()) 
+            return false;
+        else
+            set.insert(sum);
+        n = sum;
+    }
+}
+```
+
 #### [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
 
 +  **算法流程**
-
    1. 初始化： 新建无序哈希表maps ；
 
    2. 遍历数组 nums 中的每个数字 num ：
@@ -176,9 +263,31 @@ public:
 };
 ```
 
+#### [454. 四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)
 
+> 给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
 
-+ [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
+1. 首先定义 一个unordered_map，key放a和b两数之和，value 放a和b两数之和出现的次数。
+2. 遍历大A和大B数组，统计两个数组元素之和，和出现的次数，放到map中。
+3. 定义int变量count，用来统计a+b+c+d = 0 出现的次数。
+4. 在遍历大C和大D数组，找到如果 0-(c+d) 在map中出现过的话，就用count把map中key对应的value也就是出现次数统计出来。
+5. 最后返回统计值 count 就可以了
+
+```c++
+int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+    unordered_map<int,int> map;
+    for(auto a : nums1) 
+        for(auto b : nums2) 
+            map[a+b]++;
+  
+    int count = 0;
+    for(auto c : nums3)
+        for(auto d : nums4) 
+            if(map.find(0-c-d) != map.end())
+                count += map[0-c-d];
+    return count;
+}
+```
 
 #### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
 
