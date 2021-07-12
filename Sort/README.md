@@ -72,13 +72,81 @@ void SelectSort(std::vector<int> nums) {
 
 ## 三.插入排序
 
+### 1.基本概念
 
+插入排序是一种最简单直观的排序算法，它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。
 
+### 2.基本思想及其实现步骤
 
+1. 将第一待排序序列第一个元素看做一个有序序列，把第二个元素到最后一个元素当成是未排序序列。
+2. 从头到尾依次扫描未排序序列，将扫描到的每个元素插入有序序列的适当位置。（如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。）
+
+<div align = center><img src="../images/Sort17.gif" width="800px" /></div>
+
+```c++
+void InsertSort(std::vector<int> nums) {
+    for(int i = 1; i < nums.size(); i++) {
+        int temp = nums[i];
+        int index = i;
+        for(int j = i - 1; j >= 0; j--) {
+            if(temp < nums[j]) {
+                nums[j + 1] = nums[j];
+                index = j;
+            }
+        }
+        if(index != i) 
+            nums[index] = temp;
+    }
+    for(int i = 0; i < nums.size(); ++i ) 
+        std::cout << nums[i] << " ";
+    std::cout << std::endl;
+}
+```
 
 ## 四.希尔排序
 
+### 1.基本概念
 
+希尔排序，也称递减增量排序算法，是插入排序的一种更高效的改进版本。但希尔排序是非稳定排序算法。
+
+希尔排序是基于插入排序的以下两点性质而提出改进方法的：
+
+- 插入排序在对几乎已经排好序的数据操作时，效率高，即可以达到线性排序的效率；
+- 但插入排序一般来说是低效的，因为插入排序每次只能将数据移动一位；
+
+希尔排序的基本思想是：先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录"基本有序"时，再对全体记录进行依次直接插入排序。
+
+### 2.基本思想及其实现步骤
+
+1. 选择一个增量序列 t1，t2，……，tk，其中 ti > tj, tk = 1；
+2. 按增量序列个数 k，对序列进行 k 趟排序；
+3. 每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。
+
+<div align = center><img src="../images/Sort18.gif" width="500px" height = "300px"/></div>
+
+```c++
+void ShellSort(std::vector<int>& nums) {
+    int d = nums.size();
+    do {
+        d= d/3 + 1;
+        for(int i = d; i < nums.size(); i += d) {
+            int temp = nums[i];
+            int index = i;
+            for(int j = i - d; j >= 0; j -= d) {
+                if(temp < nums[j]) {
+                    nums[j + d] = nums[j];
+                    index = j;
+                }
+                if(index != i) 
+                    nums[index] = temp;
+            }
+        }
+    }while(d > 1);
+    for(int i = 0; i < nums.size(); ++i ) 
+        std::cout << nums[i] << " ";
+    std::cout << std::endl;
+}
+```
 
 ## 五.归并排序
 
