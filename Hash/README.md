@@ -143,6 +143,41 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 ## 二.例题解剖
 
+#### [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+
++  **算法流程**
+
+   1. 初始化： 新建无序哈希表maps ；
+
+   2. 遍历数组 nums 中的每个数字 num ：
+      + 当 num 在 maps 中，说明重复，直接返回 num ；
+      + 不在 maps ，则将 num 添加至 maps 中；
+
+   3. 返回 -1 。本题中一定有重复数字，因此这里返回多少都可以。
+
++  **复杂度分析：**
+
+   + 时间复杂度 O(N) ： 遍历数组使用 O(N) ，maps 添加与查找元素皆为 O(1) 。
+   + 空间复杂度 O(N) ： maps 占用 O(N) 大小的额外空间。
+
+```c++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        unordered_map<int, int> maps;
+        for(auto num : nums) {
+            if(maps[num] < 1)
+                maps[num] ++;
+            else
+                return num;
+        }
+        return -1;
+    }
+};
+```
+
+
+
 + [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
 
 #### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
