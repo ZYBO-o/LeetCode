@@ -129,7 +129,108 @@ map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped 
 
 ---
 
-## 二.例题解剖
+## 二.Boyer-Moore 投票算法
+
+Boyer-Moore 算法的详细步骤：
+
++ 我们维护一个候选众数 candidate 和它出现的次数 count。初始时 candidate 可以为任意值，count 为 0；
+
++ 我们遍历数组 nums 中的所有元素，对于每个元素 x，在判断 x 之前，如果 count 的值为 0，我们先将 x 的值赋予 candidate，随后我们判断 x：
+  + 如果 x 与 candidate 相等，那么计数器 count 的值增加 1；
+  + 如果 x 与 candidate 不等，那么计数器 count 的值减少 1。
+
+在遍历完成后，candidate 即为整个数组的众数。
+
+#### [169. 多数元素](https://leetcode-cn.com/problems/majority-element/)
+
+> 给定一个大小为 *n* 的数组，找到其中的多数元素。多数元素是指在数组中出现次数 **大于** `⌊ n/2 ⌋` 的元素。
+
+```c++
+int majorityElement(vector<int>& nums) {
+    int count = 0;
+    int candidate = -1;
+    for(auto num : nums) {
+        if(candidate == num)
+            ++count;
+        else if(--count < 0) {
+            candidate = num;
+            count = 1;
+        }
+    }
+    return candidate;
+}
+```
+
+
+
+超过n/3的数最多只能有两个。先选出两个候选人A,B。 遍历数组，分三种情况：
+
++ 如果投A（当前元素等于A），则A的票数++;
+
++ 如果投B（当前元素等于B），B的票数++；
++ 如果A,B都不投（即当前与A，B都不相等）,那么检查此时A或B的票数是否减为0：
+  + 如果为0,则当前元素成为新的候选人；
+  + 如果A,B两个人的票数都不为0，那么A,B两个候选人的票数均减一；
+
+遍历结束后选出了两个候选人，但是这两个候选人是否满足>n/3，还需要再遍历一遍
+
+```c++
+vector<int> majorityElement(vector<int>& nums) {
+    vector<int> res;
+    //初始化：定义两个候选人及其对应的票数
+    int countA = 0;
+    int countB = 0;
+    int candidateA = nums[0];
+    int candidateB = nums[0];
+    //遍历数组
+    for(auto num : nums) {
+        //投A
+        if(candidateA == num) {
+            countA ++;
+            continue;
+        }
+        //投B
+        if(candidateB == num) {
+            countB ++;
+            continue;
+        }
+        if(countA == 0) {
+            countA = 1;
+            candidateA = num;
+            continue;
+        }
+        if(countB == 0) {
+            countB = 1;
+            candidateB = num;
+            continue;
+        }
+        countA --;
+        countB --;   
+    }
+    //上一轮遍历找出了两个候选人，但是这两个候选人是否均满足票数大于N/3仍然没法确定，需要重新遍历，确定票数
+    countA = 0;
+    countB = 0;
+    for(auto num : nums) {
+        if(num == candidateA)
+            ++countA;
+        if(num == candidateB)
+            ++countB;
+    }
+    if(countA > nums.size() / 3)
+        res.push_back(candidateA);
+    if(candidateA != candidateB && countB > nums.size() / 3)
+        res.push_back(candidateB);
+    return res;
+}
+```
+
+
+
+
+
+---
+
+## 三.例题解剖
 
 #### 遍历关联容器
 
@@ -293,3 +394,10 @@ int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vec
 
 哈希表根据 key排序，根据value排序，输出key,输出value
 
+
+
+
+
+#### [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/)
+
+#### [面试题 17.05.  字母与数字](https://leetcode-cn.com/problems/find-longest-subarray-lcci/)

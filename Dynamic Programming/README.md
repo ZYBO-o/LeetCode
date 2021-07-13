@@ -513,5 +513,8 @@ public:
 
 
 
+## 八.例题解剖
 
+#### [面试题 17.13. 恢复空格](https://leetcode-cn.com/problems/re-space-lcci/)
 
+#### [剑指 Offer 49. 丑数](https://leetcode-cn.com/problems/chou-shu-lcof/)
