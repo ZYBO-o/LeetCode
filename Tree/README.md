@@ -308,10 +308,30 @@ TreeNode* CreatTree()
 + 实现：
 
   ```c++
-  vector<vector<int>> levelOrder(TreeNode* root) {    vector<vector<int>> result {};    if(!root) return result;    queue<TreeNode*> queue;    queue.push(root);        while(!queue.empty()) {            int size = queue.size();            vector<int> res;            for(int i = 0; i < size; ++i) {                TreeNode* node = queue.front();                queue.pop();                res.push_back(node->val);                if(node->left)                    queue.push(node->left);                if(node->right)                    queue.push(node->right);            }            result.push_back(res);      }      return result;}
+  vector<vector<int>> levelOrder(TreeNode* root) {
+      vector<vector<int>> result {};    
+      if(!root) return result;    
+      queue<TreeNode*> queue;    
+      queue.push(root);        
+      while(!queue.empty()) {
+          int size = queue.size();
+          vector<int> res;
+          for(int i = 0; i < size; ++i) {
+              TreeNode* node = queue.front();
+              queue.pop();
+              res.push_back(node->val);
+              if(node->left)
+                	queue.push(node->left);
+              if(node->right)
+                	queue.push(node->right);
+          }            
+          result.push_back(res);      
+      }      
+      return result;
+  }
   ```
 
-### 4.对称二叉树
+### [4. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/)
 
 >  给定一个二叉树，检查它是否是镜像对称的。
 
@@ -330,7 +350,28 @@ TreeNode* CreatTree()
 + 实现：
 
   ```c++
-  bool isSymmetric(TreeNode* root) {     return isMirror(root,root);}bool isMirror(TreeNode* lt, TreeNode* rt) {  	if(!lt && !rt)    		return true;  	if(!lt || !rt)    		return false;  	return (lt->val == rt->val) && (isMirror(lt->left,rt->right) && (isMirror(lt->right, rt->left)));}
+  bool isMirror(TreeNode* left, TreeNode* right) {
+      //返回情况
+      //先判断空节点的情况
+      if(left == nullptr && right != nullptr)
+          return false;
+      else if(left != nullptr && right == nullptr)
+          return false;
+      else if(left == nullptr && right == nullptr)
+          return true;
+      //再排除数值不想同的情况
+      else if(left->val != right->val)
+          return false; 
+      // 此时就是：左右节点都不为空，且数值相同的情况
+      // 此时才做递归，做下一层的判断
+      bool compareoutside = isMirror(left->left, right->right);
+      bool compareinside = isMirror(left->right, right->left);
+      return compareinside && compareoutside;
+  }
+  bool isSymmetric(TreeNode* root) {
+      if(!root) return true;
+      return isMirror(root->left, root->right);
+  }
   ```
 
 #### 迭代实现
@@ -345,30 +386,34 @@ TreeNode* CreatTree()
   ```c++
   bool isSymmetric(TreeNode* root) {
       queue<TreeNode*> queue;
+    	// 将左子树头结点加入队列
       queue.push(root->left);
+    	// 将右子树头结点加入队列
       queue.push(root->right);
+    	// 接下来就要判断这这两个树是否相互翻转
       while(!queue.empty()) {
           TreeNode* ltree = queue.front();
           queue.pop();
           TreeNode* rtree = queue.front();
           queue.pop();
-          
+          // 左节点为空、右节点为空，此时说明是对称的,进行下一轮
           if(ltree==nullptr && rtree==nullptr)
               continue;
           if(ltree==nullptr || rtree==nullptr)
               return false;
           if(ltree->val != rtree->val)
               return false;
-          queue.push(ltree->left);
-          queue.push(rtree->right);
-          queue.push(ltree->right);
-          queue.push(rtree->left);
+        	
+          queue.push(ltree->left);// 加入左节点左孩子
+          queue.push(rtree->right);// 加入右节点右孩子	
+          queue.push(ltree->right);// 加入左节点右孩子
+          queue.push(rtree->left);// 加入右节点左孩子
       }
       return true;
   }   
   ```
 
-### 5.二叉树的最大深度
+### [5. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
 
 >  给定一个二叉树，找出其最大深度。
 
@@ -402,14 +447,34 @@ TreeNode* CreatTree()
 + 实现
 
   ```c++
-  int maxDepth(TreeNode* root) {    int Depth = 0;    if(!root) return Depth;    queue<TreeNode*> queue;    queue.push(root);    while(!queue.empty()) {        int size = queue.size();        ++Depth;        for(int i = 0; i < size; ++ i) {            TreeNode* node = queue.front();            queue.pop();            if(node->left)                queue.push(node->left);            if(node->right)                queue.push(node->right);            }                }    return Depth;}
+  int maxDepth(TreeNode* root) {
+      if(!root) return 0;
+      queue<TreeNode*> queue;
+      queue.push(root);
+      int count = 0;
+      while(!queue.empty()) {
+          int size = queue.size();
+          for(int i = 0; i < size; ++i) {
+              TreeNode* node = queue.front();
+              queue.pop();
+              if(node->left)
+                  queue.push(node->left);
+              if(node->right)
+                  queue.push(node->right);
+          }
+          ++ count;
+      }
+      return count;
+  }
   ```
 
-### 6.二叉树的最小深度
+### [6. 二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
 
 > 给定一个二叉树，找出其最小深度。
 
-+ 注意事项：**「最小深度是从根节点到最近叶子节点的最短路径上的节点数量。」**，注意是**「叶子节点」**。什么是叶子节点，左右孩子都为空的节点才是叶子节点！
++ 注意事项：**「最小深度是从根节点到最近叶子节点的最短路径上的节点数量。」**，注意是 **「叶子节点」** 。什么是叶子节点，左右孩子都为空的节点才是叶子节点！
+
+<div align = "center"><img src="../images/Tree40.png" width="300px" /></div>
 
 #### 递归
 
@@ -422,7 +487,21 @@ TreeNode* CreatTree()
 + 实现：
 
 ```c++
-int minDepth(TreeNode* root) {    return  getMinDepth(root);}int getMinDepth(TreeNode* root) {    if(!root) return 0;    int leftDepth = getMinDepth(root->left);    int rightDepth = getMinDepth(root->right);    if(root->left == nullptr && root->right != nullptr)         return 1 + rightDepth;    if(root->right == nullptr && root->left != nullptr)         return 1 + leftDepth;    return 1 + min(rightDepth, leftDepth);}
+int getDepth(TreeNode* node) {
+    if(node == nullptr) return 0;
+    int leftDepth = getDepth(node->left);    // 左
+    int rightDepth = getDepth(node->right);  // 右
+        // 当一个左子树为空，右不为空，这时并不是最低点
+    if(node->left == nullptr && node->right != nullptr)
+        return 1 + rightDepth;
+    // 当一个右子树为空，左不为空，这时并不是最低点
+    if(node->left != nullptr && node->right == nullptr)
+        return 1 + leftDepth;
+    return 1 + min(leftDepth, rightDepth);
+}
+int minDepth(TreeNode* root) {
+    return getDepth(root);
+}
 ```
 
 #### 迭代
@@ -434,7 +513,31 @@ int minDepth(TreeNode* root) {    return  getMinDepth(root);}int getMinDepth(Tre
 + 实现：
 
   ```c++
-  int minDepth(TreeNode* root) {    int Depth = 0;    if(!root) return Depth;    queue<TreeNode*> queue;    queue.push(root);    while(!queue.empty()) {        int size = queue.size();        ++ Depth;        int flag = 0;        for(int i = 0; i <size; ++i) {            TreeNode* node = queue.front();            queue.pop();            if(node->left != nullptr)                queue.push(node->left);            if(node->right != nullptr)                queue.push(node->right);          	//左右子树皆为空时则找到最小深度的层，结束循环            if(node->left == nullptr && node->right == nullptr) {                flag = 1;                break;            }        }        if(flag)            break;    }    return Depth;}
+  int minDepth(TreeNode* root) {
+      if(root == nullptr) return 0;
+      queue<TreeNode*> queue;
+      queue.push(root);
+      int depth = 0;
+      int flag = 1;
+      while(!queue.empty() && flag) {
+          int size = queue.size();
+          for(int i = 0; i < size; i++) {
+              TreeNode* node = queue.front();
+              queue.pop();
+            	//左右子树都为空，则已经到达最底层
+              if(node->left == nullptr && node->right == nullptr) {
+                  flag = 0;
+                  break;
+              }
+              if(node->left)
+                  queue.push(node->left);
+              if(node->right)
+                  queue.push(node->right);
+          }
+          ++ depth;
+      }
+      return depth;
+  }
   ```
 
 
@@ -1898,7 +2001,6 @@ class Solution {private:    // 将目标节点（删除节点）的左子树放�
     ```
     
     + 此时节点3的右孩子就变成了节点2，将节点0从二叉树中移除了。
-  
 
 
 
