@@ -241,10 +241,44 @@ for(auto it = iter; it != map.end(); ++it) {
 }
 ```
 
+#### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+
+> 给你一个整数数组 `nums` 和一个整数 `k` ，请你返回其中出现频率前 `k` 高的元素。你可以按 **任意顺序** 返回答案。
+
++ 利用unordered_map进行遍历统计，创建vector存储
++ 然后将根据map的value_type将vector进行排序
++ 输出前K个key_value值
+
+```c++
+vector<int> topKFrequent(vector<int>& nums, int k) {
+    unordered_map<int,int> map;
+    for(auto num : nums) 
+        map[num]++;
+    
+    vector<pair<int, int>> vtMap;
+    for (auto it = map.begin(); it != map.end(); it++)
+        vtMap.push_back(make_pair(it->first, it->second));
+  
+    sort(vtMap.begin(), vtMap.end(),
+        [](const pair<int, int> &x, const pair<int, int> &y) -> int {
+            return x.second > y.second;
+        });
+
+    vector<int> res;
+    for(int i = 0; i < k; ++i) {
+        auto it = (vtMap.begin() + i);
+        res.push_back(it->first);
+    }
+
+    return res;
+}
+```
+
+
+
 #### [1002. 查找常用字符](https://leetcode-cn.com/problems/find-common-characters/)
 
 > 给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
->
 
 + 如果字符 c 在所有字符串中均出现了 k 次及以上，那么最终答案中需要包含 k 个 c。因此，我们可以使用 minfreq[c] 存储字符 c 在所有字符串中出现次数的最小值。
 
@@ -390,14 +424,47 @@ int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vec
 }
 ```
 
-#### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+#### :diamond_shape_with_a_dot_inside: [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/)
 
-哈希表根据 key排序，根据value排序，输出key,输出value
+> 给定一个 `m * n` 的矩阵，如果一个元素为 **0** ，则将其所在行和列的所有元素都设为 **0** 。请使用 原地 算法**。**
 
++ 只使用一个标记变量记录第一列是否原本存在 0。
++ 这样，第一列的第一个元素即可以标记第一行是否出现 0。
++ 但为了防止每一列的第一个元素被提前更新，我们需要从最后一行开始，倒序地处理矩阵元素。
 
-
-
-
-#### [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/)
+```c++
+void setZeroes(vector<vector<int>>& matrix) {
+    int m = matrix.size();
+    int n = matrix[0].size();
+    int flag_col0 = false;
+    //遍历行数
+    for (int i = 0; i < m; i++) {
+        //如果第一列没有0，则flag_col0为真
+        if (!matrix[i][0]) {
+            flag_col0 = true;
+        }
+        //从第二列开始，如果出现0，则对应的行与列都为0
+        for (int j = 1; j < n; j++) {
+            if (!matrix[i][j]) {
+                matrix[i][0] = matrix[0][j] = 0;
+            }
+        }
+    }
+    //从最后一行开始遍历
+    for (int i = m - 1; i >= 0; i--) {
+        //还是从第一列开始遍历
+        for (int j = 1; j < n; j++) {
+            //如果出现 行首 或者 列首 出现0，该行和列每个成员都为0
+            if (!matrix[i][0] || !matrix[0][j]) {
+                matrix[i][j] = 0;
+            }
+        }
+        //如果第一列出现0，则该列都为0
+        if (flag_col0) {
+            matrix[i][0] = 0;
+        }
+    }
+}
+```
 
 #### [面试题 17.05.  字母与数字](https://leetcode-cn.com/problems/find-longest-subarray-lcci/)

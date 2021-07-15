@@ -67,19 +67,36 @@
 
 ## 八.二叉树
 
+### :large_blue_diamond: [二叉树的种类](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#%E4%B8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%A7%8D%E7%B1%BB)
+
++ [满二叉树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#1%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91)
++ [完全二叉树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#2%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91)
++ [二叉搜索树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#3%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
++ [平衡二插搜索树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#4%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
++ [红黑树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#5%E7%BA%A2%E9%BB%91%E6%A0%91)
+
+### :large_orange_diamond: [二叉树的创建与操作](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#%E4%BA%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E6%93%8D%E4%BD%9C)
+
++ [二叉树的存储方式](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#1%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F)
++ [创建二叉树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#2%E5%88%9B%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91)
++ [二叉树的遍历方式](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#3%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F)
++ [对称二叉树](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#4%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91)
++ [二叉树的最大深度](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#5%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6)
++ [二叉树的最小深度](https://github.com/ZYBO-o/LeetCode/tree/main/Tree#6%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6)
+
+## 九.堆
 
 
 
-
-## 九.递归与回溯
-
-
-
-## 十.贪心
+## 十.递归与回溯
 
 
 
-## 十一.动态规划
+## 十一.贪心
+
+
+
+## 十二.动态规划
 
 
 
@@ -286,13 +303,21 @@ int right_bound(std::vector<int>& nums, int target) {
 
 
 
-## 十四.广度优先遍历
+## 十四.单调栈
+
+
+
+## 十五.优先队列
+
+
+
+## 十六.广度优先遍历
 
 
 
 
 
-## 十五.并查集
+## 十七.并查集
 
 
 
