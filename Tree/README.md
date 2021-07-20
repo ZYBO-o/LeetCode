@@ -984,7 +984,8 @@ int minDepth(TreeNode* root) {
     + 递归终止条件代码如下：
 
     ```c++
-    if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0if (!cur->left && !cur->right) return false; // 遇到叶子节点而没有找到合适的边，直接返回
+    if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0
+    if (!cur->left && !cur->right) return false; // 遇到叶子节点而没有找到合适的边，直接返回
     ```
 
   + **确定单层递归的逻辑**
@@ -995,13 +996,42 @@ int minDepth(TreeNode* root) {
     + 代码如下：
 
     ```c++
-    if (cur->left) { // 左    count -= cur->left->val; // 递归，处理节点;    if (traversal(cur->left, count)) return true;    count += cur->left->val; // 回溯，撤销处理结果}if (cur->right) { // 右     count -= cur->right->val;    if (traversal(cur->right, count - cur->right->val)) return true;     count += cur->right->val;}return false;
+    if (cur->left) { // 左    
+        count -= cur->left->val; // 递归，处理节点;    
+        if (traversal(cur->left, count)) return true;    
+        count += cur->left->val; // 回溯，撤销处理结果
+    }
+    if (cur->right) { // 右     
+      	count -= cur->right->val;    
+      	if (traversal(cur->right, count - cur->right->val)) return true;     
+      	count += cur->right->val;
+    }
+    return false;
     ```
 
 + 实现代码：
 
   ```c++
-  class Solution {private:    bool traversal(TreeNode* cur, int count) {        if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0        if (!cur->left && !cur->right) return false; // 遇到叶子节点直接返回        if (cur->left) { // 左            count -= cur->left->val; // 递归，处理节点;            if (traversal(cur->left, count)) return true;            count += cur->left->val; // 回溯，撤销处理结果        }        if (cur->right) { // 右            count -= cur->right->val; // 递归，处理节点;            if (traversal(cur->right, count)) return true;            count += cur->right->val; // 回溯，撤销处理结果        }        return false;    }public:    bool hasPathSum(TreeNode* root, int sum) {        if (root == NULL) return false;        return traversal(root, sum - root->val);    }};
+  bool traversal(TreeNode* cur, int count) {        
+      if (!cur->left && !cur->right && count == 0) return true; // 遇到叶子节点，并且计数为0        
+      if (!cur->left && !cur->right) return false; // 遇到叶子节点直接返回        
+      if (cur->left) { // 左            
+          count -= cur->left->val; // 递归，处理节点;            
+          if (traversal(cur->left, count)) return true;            
+          count += cur->left->val; // 回溯，撤销处理结果        
+      }        
+      if (cur->right) { // 右            
+          count -= cur->right->val; // 递归，处理节点;            
+          if (traversal(cur->right, count)) return true;            
+          count += cur->right->val; // 回溯，撤销处理结果        
+      }        
+      return false;    
+  }    
+  bool hasPathSum(TreeNode* root, int sum) {        
+      if (root == NULL) 
+        	return false;        
+      return traversal(root, sum - root->val);    
+  }
   ```
 
 #### 迭代方法
@@ -1016,9 +1046,28 @@ int minDepth(TreeNode* root) {
 + **如下代码是使用栈模拟的前序遍历，如下：（详细注释）**
 
   ```c++
-  class Solution {public:    bool hasPathSum(TreeNode* root, int sum) {        if (root == NULL) return false;        // 此时栈里要放的是pair<节点指针，路径数值>        stack<pair<TreeNode*, int>> st;        st.push(pair<TreeNode*, int>(root, root->val));        while (!st.empty()) {            pair<TreeNode*, int> node = st.top();            st.pop();            // 如果该节点是叶子节点了，同时该节点的路径数值等于sum，那么就返回true            if (!node.first->left && !node.first->right && sum == node.second) return true;            // 右节点，压进去一个节点的时候，将该节点的路径数值也记录下来            if (node.first->right) {                st.push(pair<TreeNode*, int>(node.first->right, node.second + node.first->right->val));            }            // 左节点，压进去一个节点的时候，将该节点的路径数值也记录下来            if (node.first->left) {                st.push(pair<TreeNode*, int>(node.first->left, node.second + node.first->left->val));            }        }        return false;    }};
+  bool hasPathSum(TreeNode* root, int sum) {        
+      if (root == NULL) return false;        // 此时栈里要放的是pair<节点指针，路径数值>       
+      stack<pair<TreeNode*, int>> st;        
+      st.push(pair<TreeNode*, int>(root, root->val));        
+      while (!st.empty()) {            
+        	pair<TreeNode*, int> node = st.top();            
+        	st.pop();            
+        	// 如果该节点是叶子节点了，同时该节点的路径数值等于sum，那么就返回true            
+        	if (!node.first->left && !node.first->right && sum == node.second) 
+          		return true;            
+        	// 右节点，压进去一个节点的时候，将该节点的路径数值也记录下来            
+        	if (node.first->right) {                
+          		st.push(pair<TreeNode*, int>(node.first->right, node.second + node.first->right->val));            
+        	}            
+        	// 左节点，压进去一个节点的时候，将该节点的路径数值也记录下来            
+        	if (node.first->left) {                
+          		st.push(pair<TreeNode*, int>(node.first->left, node.second + node.first->left->val));            
+        	}        
+      }        
+      return false;    
+   
   ```
-
   
 
 ### 13.路径总和2
@@ -1036,12 +1085,45 @@ int minDepth(TreeNode* root) {
 + 递归思路与上图一致，代码实现如下：
 
   ```c++
-  class Solution {private:    vector<vector<int>> result;    vector<int> path;    // 递归函数不需要返回值，因为我们要遍历整个树    void traversal(TreeNode* cur, int count) {        if (!cur->left && !cur->right && count == 0) { // 遇到了叶子节点切找到了和为sum的路径            result.push_back(path);            return;        }        if (!cur->left && !cur->right) return ; // 遇到叶子节点而没有找到合适的边，直接返回        if (cur->left) { // 左 （空节点不遍历）            path.push_back(cur->left->val);            count -= cur->left->val;            traversal(cur->left, count);    // 递归            count += cur->left->val;        // 回溯            path.pop_back();                // 回溯        }        if (cur->right) { // 右 （空节点不遍历）            path.push_back(cur->right->val);            count -= cur->right->val;            traversal(cur->right, count);   // 递归            count += cur->right->val;       // 回溯            path.pop_back();                // 回溯        }        return ;    }public:    vector<vector<int>> pathSum(TreeNode* root, int sum) {        result.clear();        path.clear();        if (root == NULL) return result;        path.push_back(root->val); // 把根节点放进路径        traversal(root, sum - root->val);        return result;    }};
+  vector<vector<int>> result;    
+  vector<int> path;    
+  // 递归函数不需要返回值，因为我们要遍历整个树    
+  void traversal(TreeNode* cur, int count) {        
+    	if (!cur->left && !cur->right && count == 0) { 
+        // 遇到了叶子节点切找到了和为sum的路径            
+        result.push_back(path);            
+        return;       
+    	}        
+      if (!cur->left && !cur->right) 
+        	return ; 
+      // 遇到叶子节点而没有找到合适的边，直接返回        
+      if (cur->left) { // 左 （空节点不遍历）            
+          path.push_back(cur->left->val);            
+          count -= cur->left->val;            
+          traversal(cur->left, count);    // 递归            
+          count += cur->left->val;        // 回溯            
+          path.pop_back();                // 回溯        
+      }        
+      if (cur->right) { // 右 （空节点不遍历）            
+          path.push_back(cur->right->val);            
+          count -= cur->right->val;            
+          traversal(cur->right, count);   // 递归            
+          count += cur->right->val;       // 回溯            
+          path.pop_back();                // 回溯        
+      }        
+      	return ;    
+  }
+  vector<vector<int>> pathSum(TreeNode* root, int sum) {        
+      result.clear();        
+      path.clear();        
+      if (root == NULL) return result;       
+      path.push_back(root->val); // 把根节点放进路径        
+      traversal(root, sum - root->val);        
+      return result;    
+  
   ```
 
-
-
-### 14. 从中序与后序遍历序列构造二叉树
+###  :diamond_shape_with_a_dot_inside: 14. 从中序与后序遍历序列构造二叉树
 
 > 根据一棵树的中序遍历与后序遍历构造二叉树。
 
@@ -1049,21 +1131,85 @@ int minDepth(TreeNode* root) {
 
   <div align = center ><img src="../images/Tree19.png" width = "500px" /></div>
 
++ **思路：**
 
+  + 以 后序数组的最后一个元素为切割点，先切中序数组，根据中序数组，反过来在切后序数组。一层一层切下去，每次后序数组最后一个元素就是节点元素。
 
+    <div align = center ><img src="../images/Tree41.png" width = "500px" /></div>
 
+  + 说到一层一层切割，就应该想到了递归。
 
+    - 第一步：如果数组大小为零的话，说明是空节点了。
+    - 第二步：如果不为空，那么取后序数组最后一个元素作为节点元素。
+    - 第三步：找到后序数组最后一个元素在中序数组的位置，作为切割点
+    - 第四步：切割中序数组，切成中序左数组和中序右数组 （顺序别搞反了，一定是先切中序数组）
+    - 第五步：切割后序数组，切成后序左数组和后序右数组
+    - 第六步：递归处理左区间和右区间
 
+  + 代码
+
+    ```c++
+    TreeNode* traversal (vector<int>& inorder, vector<int>& postorder) {
+        // 第一步
+        if (postorder.size() == 0) return NULL;
+        // 第二步：后序遍历数组最后一个元素，就是当前的中间节点
+        int rootValue = postorder[postorder.size() - 1];
+        TreeNode* root = new TreeNode(rootValue);
+        // 叶子节点
+        if (postorder.size() == 1) return root;
+        // 第三步：找切割点
+        int delimiterIndex;
+        for (delimiterIndex = 0; delimiterIndex < inorder.size(); delimiterIndex++) {
+          	if (inorder[delimiterIndex] == rootValue) break;
+        }
+        // 第四步：切割中序数组，得到 中序左数组和中序右数组 
+        // 第五步：切割后序数组，得到 后序左数组和后序右数组
+        // 第六步
+        root->left = traversal(中序左数组, 后序左数组);
+        root->right = traversal(中序右数组, 后序右数组);
+        return root;
+    }
+    ```
 
 + 实现代码：
 
   ```c++
-  class Solution {public:    TreeNode* traversal(vector<int>& inorder, vector<int>& postorder) {        //1.如果数组大小为零的话，说明是空节点了。        if(postorder.size() == 0) return nullptr;        //2.如果不为空，那么取后序数组最后一个元素作为节点元素。        int rootValue = postorder[postorder.size() - 1];        //构建树结点        TreeNode* root = new TreeNode(rootValue);        //判断是否为叶子节点        if(postorder.size() == 1)            return root;        //3.找到后序数组最后一个元素在中序数组的位置，作为切割点        int delimiterIndex;        for(delimiterIndex = 0; delimiterIndex < inorder.size(); ++delimiterIndex) {            if(inorder[delimiterIndex] == rootValue)                break;        }        // 第四步：切割中序数组，得到 中序左数组和中序右数组         vector<int> leftInorder(inorder.begin(), inorder.begin() + delimiterIndex);        vector<int> rightInorder(inorder.begin() + delimiterIndex + 1, inorder.end());        // 第五步：切割后序数组，得到 后序左数组和后序右数组        // postorder 舍弃末尾元素        postorder.resize(postorder.size() - 1);        vector<int> leftPostorder(postorder.begin(), postorder.begin() + leftInorder.size());        vector<int> rightPostorder(postorder.begin() + leftInorder.size(), postorder.end());        //第六步：递归处理左区间和右区间        root->left = traversal(leftInorder, leftPostorder);        root->right = traversal(rightInorder, rightPostorder);        return root;    }    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {        if(inorder.size() == 0 && postorder.size() == 0)            return nullptr;        return traversal(inorder, postorder);    }};
+  TreeNode* traversal(vector<int>& inorder, vector<int>& postorder) {
+      //第一步，如果后序遍历的长度为0，直接返回空
+      if(postorder.size() == 0)
+          return nullptr;
+      //第二步，将后序数组中的最后一个数组作为切割点
+      int rootValue = postorder[postorder.size() - 1];
+      TreeNode* root = new TreeNode(rootValue);
+      //叶子结点
+      if(postorder.size() == 1) return root;
+      //第三步，找到切割点
+      int delimiterIndex;
+      for(delimiterIndex = 0; delimiterIndex < inorder.size(); ++delimiterIndex)
+          if(inorder[delimiterIndex] == rootValue)
+              break;
+      //第四步：切割中序数组，得到 中序左数组和中序右数组 
+      vector<int> leftInorder(inorder.begin(), inorder.begin() + delimiterIndex);
+      vector<int> rightInorder(inorder.begin() + delimiterIndex + 1, inorder.end());
+      //第五步：切割后序数组，得到 后序左数组和后序右数组
+      // postorder 舍弃末尾元素，因为这个元素就是中间节点，已经用过了
+      postorder.resize(postorder.size() - 1);
+      vector<int> leftPost(postorder.begin(), postorder.begin() + leftInorder.size());
+      vector<int> rightPost(postorder.begin() + leftInorder.size(), postorder.end());
+      //第六步：递归处理左区间和右区间
+      root->left = traversal(leftInorder, leftPost);
+      root->right = traversal(rightInorder, rightPost);
+      return root;
+  }
+  TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+      if(inorder.size() == 0 || postorder.size() == 0)
+          return nullptr;
+      return traversal(inorder, postorder);
+  }
   ```
-
   
 
-### 15.从前序与中序遍历序列构造二叉树
+###  :diamond_shape_with_a_dot_inside: 15.从前序与中序遍历序列构造二叉树
 
 > 根据一棵树的前序遍历与中序遍历构造二叉树。
 
@@ -1071,59 +1217,42 @@ int minDepth(TreeNode* root) {
 
   <div = align = center><img src="../images/Tree20.png" width="500px" /></div>
 
-
-
-
-
 + 实现代码
 
   ```c++
-  class Solution {
-  private:
-          TreeNode* traversal (vector<int>& inorder, int inorderBegin, int inorderEnd, vector<int>& preorder, int preorderBegin, int preorderEnd) {
-          if (preorderBegin == preorderEnd) return NULL;
-  
-          int rootValue = preorder[preorderBegin]; // 注意用preorderBegin 不要用0
-          TreeNode* root = new TreeNode(rootValue);
-  
-          if (preorderEnd - preorderBegin == 1) return root;
-  
-          int delimiterIndex;
-          for (delimiterIndex = inorderBegin; delimiterIndex < inorderEnd; delimiterIndex++) {
-              if (inorder[delimiterIndex] == rootValue) break;
-          }
-          // 切割中序数组
-          // 中序左区间，左闭右开[leftInorderBegin, leftInorderEnd)
-          int leftInorderBegin = inorderBegin;
-          int leftInorderEnd = delimiterIndex;
-          // 中序右区间，左闭右开[rightInorderBegin, rightInorderEnd)
-          int rightInorderBegin = delimiterIndex + 1;
-          int rightInorderEnd = inorderEnd;
-          
-          // 切割前序数组
-          // 前序左区间，左闭右开[leftPreorderBegin, leftPreorderEnd)
-          int leftPreorderBegin =  preorderBegin + 1;
-          int leftPreorderEnd = preorderBegin + 1 + delimiterIndex - inorderBegin; // 终止位置是起始位置加上中序左区间的大小size
-          // 前序右区间, 左闭右开[rightPreorderBegin, rightPreorderEnd)
-          int rightPreorderBegin = preorderBegin + 1 + (delimiterIndex - inorderBegin);
-          int rightPreorderEnd = preorderEnd; 
-  
-          root->left = traversal(inorder, leftInorderBegin, leftInorderEnd,  preorder, leftPreorderBegin, leftPreorderEnd);
-          root->right = traversal(inorder, rightInorderBegin, rightInorderEnd, preorder, rightPreorderBegin, rightPreorderEnd);
-  
-          return root;
-      }
-  
-  public:
-      TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-          if (inorder.size() == 0 || preorder.size() == 0) return NULL;
-  
-          // 参数坚持左闭右开的原则
-          return traversal(inorder, 0, inorder.size(), preorder, 0, preorder.size());
-      }
-  };
+  TreeNode* traversal(vector<int>& preorder, vector<int>& inorder) {
+      //第一步，如果先序遍历的长度为0，直接返回空
+      if(preorder.size() == 0)
+          return nullptr;
+      //第二步：将先序遍历的第一个元素作为切割点
+      int rootValue = preorder[0];
+      TreeNode* root = new TreeNode(rootValue);
+      //如果是元素为1，直接作为叶子结点
+      if(preorder.size() == 1) return root;
+      //第三步： 找到在中序数组中切割点的位置
+      int delimitIndex;
+      for(delimitIndex = 0; delimitIndex < inorder.size(); ++delimitIndex) 
+          if(inorder[delimitIndex] == rootValue)
+              break;
+      //第四步：切割中序数组，得到中序左数组与中序右数组
+      vector<int> leftInder(inorder.begin(), inorder.begin() + delimitIndex);
+      vector<int> rightInder(inorder.begin() + delimitIndex + 1, inorder.end());
+      //第五步：切割先序数组，得到先序左数组与先序右数组
+      preorder.erase(preorder.begin(), preorder.begin() + 1);
+      vector<int> leftPreorder(preorder.begin(), preorder.begin() + leftInder.size());
+      vector<int> rightPreorder(preorder.begin() + leftInder.size(), preorder.end());
+      //第六步：递归处理左区间和右区间
+      root->left = traversal(leftPreorder, leftInder);
+      root->right = traversal(rightPreorder, rightInder);
+      return root;
+  }
+  TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+      if(preorder.size() == 0 || inorder.size() == 0)
+          return nullptr;
+      return traversal(preorder, inorder);
+  }
   ```
-
+  
   
 
 ### 16.构造最大的二叉树
