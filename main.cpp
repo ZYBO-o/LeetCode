@@ -8,7 +8,7 @@
 #include "List/List.h"
 #include "string/Test_String.h"
 #include <numeric>
-
+#include "Monotonic Stack/Test_MonotonicStack.h"
 
 #include <list>
 #include <forward_list>
@@ -22,9 +22,7 @@ using namespace std;
 int main() {
 
 
-    vector<int> vec;                    //空vector
-    fill_n(vec.begin(),10,0);           //错，算法不可向空vector写值
-
+    Test_MonotonicStack();
 
     //Test_Backtracking();
     //Test_BTree_LeetCode();

@@ -38,6 +38,18 @@ vector
 iostream
 -
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/Test_MonotonicStack.h
+nextGreaterElement.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/nextGreaterElement.h
+
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/nextGreaterElement.h
+iostream
+-
+vector
+-
+stack
+-
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BubbleSort.h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Sort/BucketSort.h
@@ -135,6 +147,8 @@ string/Test_String.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/string/Test_String.h
 numeric
 -
+Monotonic Stack/Test_MonotonicStack.h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/Test_MonotonicStack.h
 list
 -
 forward_list

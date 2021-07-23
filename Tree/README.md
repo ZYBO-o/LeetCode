@@ -263,38 +263,29 @@ TreeNode* CreatTree()
 + 迭代实现
 
   ```c++
-  void PostOrderTraversal2(TreeNode* root) {
-      if(!root) return;
-      std::stack<TreeNode*> stack;
-      TreeNode* node = root;
-      //标记是否访问过
-      TreeNode *prev = nullptr;
-      while (!stack.empty() || node != nullptr) {
-          while (node != nullptr) {
-              //左子树一直入栈
-              stack.emplace(node);
-              node = node->left;
+  vector<int> postorderTraversal(TreeNode* root) {
+          vector<int> result;
+          stack<TreeNode*> st;
+          if (root != NULL) st.push(root);
+          while (!st.empty()) {
+              TreeNode* node = st.top();
+              if (node != NULL) {
+                  st.pop();
+                  st.push(node);                          // 中
+                  st.push(NULL);
+  
+                  if (node->right) st.push(node->right);  // 右
+                  if (node->left) st.push(node->left);    // 左
+  
+              } else {
+                  st.pop();
+                  node = st.top();
+                  st.pop();
+                  result.push_back(node->val);
+              }
           }
-          //左子树为空时遍历最左子树的右子树
-          node = stack.top();
-          //弹出栈
-          stack.pop();
-          //如果右子树还为空，或者右子树被访问过
-          if (node->right == nullptr || node->right == prev) {
-              //输出结点
-              std::cout << node->val << " ";
-              //标记已访问过该结点
-              prev = node;
-              node = nullptr;
-          }
-          //如果存在右节点，则再次入栈
-          else {
-              //遍历它的右子树
-              stack.emplace(node);
-              node = node->right;
-          }
+          return result;
       }
-  }
   ```
 
 #### 层序遍历
@@ -1285,7 +1276,9 @@ int minDepth(TreeNode* root) {
     + 那么应该定义一个新的节点，并把这个数组的数值赋给新的节点，然后返回这个节点。这表示一个数组大小是1的时候，构造了一个新的节点，并返回。
 
     ```c++
-    TreeNode* node = new TreeNode(0);if (nums.size() == 1) {    node->val = nums[0];    return node;}
+    TreeNode* root = new TreeNode(*rootVal);
+    if(nums.size() == 1)
+      	return root;
     ```
 
   + **确定单层递归的逻辑**
@@ -1295,37 +1288,58 @@ int minDepth(TreeNode* root) {
     + **先要找到数组中最大的值和对应的下表， 最大的值构造根节点，下表用来下一步分割数组。**
 
       ```c++
-      int maxValue = 0;int maxValueIndex = 0;for (int i = 0; i < nums.size(); i++) {    if (nums[i] > maxValue) {        maxValue = nums[i];        maxValueIndex = i;    }}TreeNode* node = new TreeNode(0);node->val = maxValue;
+      auto rootVal = max_element(nums.begin(), nums.end());
+      int delimit = 0;
+      for(delimit = 0; delimit < nums.size() - 1; ++delimit) {
+        	if(nums[delimit] == *rootVal)
+         		 break;
+      }
       ```
-
+    
     + **最大值所在的下表左区间 构造左子树**
-
-      > 这里要判断maxValueIndex > 0，因为要保证左区间至少有一个数值。
-
+    
       ```c++
-      if (maxValueIndex > 0) {    vector<int> newVec(nums.begin(), nums.begin() + maxValueIndex);    node->left = constructMaximumBinaryTree(newVec);}
+      vector<int> leftTree(nums.begin(), nums.begin() + delimit);
+      root->left = traversal(leftTree);
       ```
 
     + **最大值所在的下表右区间 构造右子树**
-
-      >  判断maxValueIndex < (nums.size() - 1)，确保右区间至少有一个数值。
-
+    
       ```c++
-      if (maxValueIndex < (nums.size() - 1)) {    vector<int> newVec(nums.begin() + maxValueIndex + 1, nums.end());    node->right = constructMaximumBinaryTree(newVec);}
+      vector<int> rightTree(nums.begin() + delimit + 1, nums.end());
+      root->right = traversal(rightTree);
       ```
 
 + **实现代码：**
 
   ```c++
-  class Solution {public:    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {        //结束条件        TreeNode* node = new TreeNode(0);        if(nums.size() == 1){            node->val = nums[0];            return node;        }        //单层递归        /*找到最大值与最大值的索引*/        int maxValue = 0;        int maxValueIndex = 0;        for(int i = 0; i < nums.size(); ++i) {            if(maxValue < nums[i]) {                maxValue = nums[i];                maxValueIndex = i;            }        }        /*进行分割*/        node->val = maxValue;        //如果maxValue不是表中第一个元素        if(maxValueIndex > 0) {            vector<int> leftNums {nums.begin(), nums.begin() + maxValueIndex};            node->left = constructMaximumBinaryTree(leftNums);        }        //如果maxValue不是表中最后一个元素        if(maxValueIndex < (nums.size() - 1)) {            vector<int> rightNums {nums.begin() + maxValueIndex + 1, nums.end()};            node->right = constructMaximumBinaryTree(rightNums);        }        return node;    }};
+  TreeNode* traversal(vector<int>& nums) {
+      //第一步：如果大小为0，直接返回空
+      if(nums.size() == 0)
+          return nullptr;
+      //第二步：找到最大值作为结点
+      auto rootVal = max_element(nums.begin(), nums.end());
+      int delimit = 0;
+    	//第三步： 找到切割点的位置
+      for(delimit = 0; delimit < nums.size() - 1; ++delimit) {
+          if(nums[delimit] == *rootVal)
+              break;
+      }
+      TreeNode* root = new TreeNode(*rootVal);
+      if(nums.size() == 1)
+          return root;
+      //第四步：切割数组，得到左数组与右数组
+      vector<int> leftTree(nums.begin(), nums.begin() + delimit);
+      vector<int> rightTree(nums.begin() + delimit + 1, nums.end());
+    	//第五步：递归处理左区间和右区间
+      root->left = traversal(leftTree);
+      root->right = traversal(rightTree);
+      return root;
+  }
+  TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+      return traversal(nums);
+  }
   ```
-
-+ **代码简化：**
-
-  ```c++
-  class Solution {private:    // 在左闭右开区间[left, right)，构造二叉树    TreeNode* traversal(vector<int>& nums, int left, int right) {        if (left >= right) return nullptr;        // 分割点下表：maxValueIndex        int maxValueIndex = left;        for (int i = left + 1; i < right; ++i) {            if (nums[i] > nums[maxValueIndex]) maxValueIndex = i;        }        TreeNode* root = new TreeNode(nums[maxValueIndex]);        // 左闭右开：[left, maxValueIndex)        root->left = traversal(nums, left, maxValueIndex);        // 左闭右开：[maxValueIndex + 1, right)        root->right = traversal(nums, maxValueIndex + 1, right);        return root;    }public:    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {        return traversal(nums, 0, nums.size());    }};
-  ```
-
 
 
 ### 17.合并二叉树
@@ -1359,7 +1373,8 @@ int minDepth(TreeNode* root) {
     + 反过来如果t2 == NULL，那么两个数合并就是t1（如果t1也为NULL也无所谓，合并之后就是NULL）。
 
       ```C++
-      if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1
+      if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2
+      if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1
       ```
 
   + **确定单层递归的逻辑：**
@@ -1375,13 +1390,26 @@ int minDepth(TreeNode* root) {
     + 接下来t1 的左子树是：合并 t1左子树 t2左子树之后的左子树。t1 的右子树：是 合并 t1右子树 t2右子树之后的右子树。最终t1就是合并之后的根节点。
 
       ```C++
-      t1->left = mergeTrees(t1->left, t2->left);t1->right = mergeTrees(t1->right, t2->right);return t1
+      t1->left = mergeTrees(t1->left, t2->left);
+      t1->right = mergeTrees(t1->right, t2->right);
+      return t1
       ```
 
 + **实现代码：**
 
   ```c++
-  class Solution {public:    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {        if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2        if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1        // 修改了t1的数值和结构        t1->val += t2->val;                             // 中        t1->left = mergeTrees(t1->left, t2->left);      // 左        t1->right = mergeTrees(t1->right, t2->right);   // 右        return t1;    }};
+  class Solution {
+  public:    
+    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {        
+      if (t1 == NULL) return t2; // 如果t1为空，合并之后就应该是t2        
+      if (t2 == NULL) return t1; // 如果t2为空，合并之后就应该是t1        
+      // 修改了t1的数值和结构        
+      t1->val += t2->val;                             // 中        
+      t1->left = mergeTrees(t1->left, t2->left);      // 左        
+      t1->right = mergeTrees(t1->right, t2->right);   // 右        
+      return t1;    
+    }
+  };
   ```
 
 
@@ -1433,35 +1461,29 @@ int minDepth(TreeNode* root) {
 + **实现代码：**
 
   ```c++
-  class Solution {   
-  private:
-      void traversal (TreeNode* node, vector<int>&nums) {
-          //结束条件
-          if(node->left == nullptr && node->right == nullptr)  {
-              nums.push_back(node->val);
-              return;
-          }
-          //单层递归
-          if(node->left) 
-              traversal(node->left, nums);
-          if(node->right)
-              traversal(node->right, nums);
-          return; 
+  void traversal (TreeNode* node, vector<int>&nums) {
+      //结束条件
+      if(node->left == nullptr && node->right == nullptr)  {
+          nums.push_back(node->val);
+          return;
       }
-  public:
-      bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-          vector<int> root1num;  
-          vector<int> root2num;
-          traversal(root1,root1num);
-          traversal(root2,root2num);
-  
-          bool flag = true;
-          if(root1num != root2num)
-              flag = false;
-          return flag;
-          
-      }
-  };
+      //单层递归
+      if(node->left) 
+        	traversal(node->left, nums);
+      if(node->right)
+        	traversal(node->right, nums);
+      return; 
+  }
+  bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+      vector<int> root1num;  
+      vector<int> root2num;
+      traversal(root1,root1num);
+      traversal(root2,root2num);
+      bool flag = true;
+      if(root1num != root2num)
+        	flag = false;
+      return flag;
+  }
   ```
 
 ### 19.公共祖先问题
@@ -1531,17 +1553,15 @@ int minDepth(TreeNode* root) {
           TreeNode* left = lowestCommonAncestor(root->left, p, q);
           TreeNode* right = lowestCommonAncestor(root->right, p, q);
           if (left != NULL && right != NULL) return root;
-  
           if (left == NULL && right != NULL) return right;
           else if (left != NULL && right == NULL) return left;
           else  { //  (left == NULL && right == NULL)
               return NULL;
           }
-  
       }
   };
   ```
-
+  
   
 
 ### 树的递归总结
@@ -1582,7 +1602,37 @@ int minDepth(TreeNode* root) {
 ### 1.二叉搜索树的创建
 
 ```c++
-void CreatBSTree(BSTreeNode* &root) {    int value;    while(std::cin >> value) {        //声明临时节点并把数据放进去，注意不能delete        auto newNode = new BSTreeNode(value);        //树没有根结点的情况        if (root == nullptr)            root = newNode;        //树存在根节点        else        {            //声明移动指针            BSTreeNode* pTemp = root;            //找到插入的位置才退出            while (true)            {                //输入的数小于该节点的值                if (value < pTemp->val) {                    //左孩子为空，则新的节点为左孩子                    if (pTemp->left == nullptr)                    {                        pTemp->left = newNode;                        break;                    }                        //左孩子不为空，p指针移动为左孩子                    else                    {                        pTemp = pTemp->left;                    }                }                //输入的数不小于该节点的值                else                {                    //右孩子为空，则新的节点为右孩子                    if (pTemp->right == nullptr)                    {                        pTemp->right = newNode;                        break;                    }                        //右孩子不为空，p指针移动为右孩子                    else                    {                        pTemp = pTemp->right;                    }                }            }        }        //判断是否输入结束        if (std::cin.get() == '\n')            break;    }}
+void CreatBSTree(BSTreeNode* &root) {    
+  int value;    
+  while(std::cin >> value) {        //声明临时节点并把数据放进去，注意不能delete        
+    auto newNode = new BSTreeNode(value);        //树没有根结点的情况        
+    if (root == nullptr)            
+      root = newNode;        //树存在根节点        
+    else        {            //声明移动指针            
+      BSTreeNode* pTemp = root;            //找到插入的位置才退出            
+      while (true)            {                //输入的数小于该节点的值                
+        if (value < pTemp->val) {                    //左孩子为空，则新的节点为左孩子                    
+          if (pTemp->left == nullptr){                        
+            pTemp->left = newNode;                       
+            break;                    
+          } else { //左孩子不为空，p指针移动为左孩子                               
+            	pTemp = pTemp->left;                   
+          	}                
+        } else {//右孩子为空，则新的节点为右孩子                    
+          if (pTemp->right == nullptr){                        
+            pTemp->right = newNode;                        
+            break;                    
+          } else {  //右孩子不为空，p指针移动为右孩子                      
+            pTemp = pTemp->right;                    
+          }                
+        }            
+      }        
+    }        
+    //判断是否输入结束        
+    if (std::cin.get() == '\n')           
+      break;    
+  }
+}
 ```
 
 ### 2.二插搜索树的遍历
@@ -1590,22 +1640,38 @@ void CreatBSTree(BSTreeNode* &root) {    int value;    while(std::cin >> value) 
 #### 递归进行先序遍历
 
 ```c++
-void PreOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {        std::cout << (root->val) << " ";        PreOrderTraversalBSTree(root->left);        PreOrderTraversalBSTree(root->right);    }}
+void PreOrderTraversalBSTree(BSTreeNode* root) {    
+  if(root != nullptr) {        
+    std::cout << (root->val) << " ";        
+    PreOrderTraversalBSTree(root->left);        
+    PreOrderTraversalBSTree(root->right);    
+  }
+}
 ```
 
 #### 递归进行中序遍历
 
 ```c++
-void InOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {        InOrderTraversalBSTree(root->left);        std::cout << (root->val) << " ";        InOrderTraversalBSTree(root->right);    }}
+void InOrderTraversalBSTree(BSTreeNode* root) {    
+  if(root != nullptr) {        
+    InOrderTraversalBSTree(root->left);        
+    std::cout << (root->val) << " ";        
+    InOrderTraversalBSTree(root->right);    
+  }
+}
 ```
 
 #### 递归进行后序遍历
 
 ```c++
-void PostOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {        PostOrderTraversalBSTree(root->left);        PostOrderTraversalBSTree(root->right);        std::cout << (root->val) << " ";    }}
+void PostOrderTraversalBSTree(BSTreeNode* root) {    
+  if(root != nullptr) {        
+    PostOrderTraversalBSTree(root->left);        
+    PostOrderTraversalBSTree(root->right);        
+    std::cout << (root->val) << " ";    
+  }
+}
 ```
-
-
 
 ### 3.二叉搜索树中的搜索
 
@@ -1645,13 +1711,22 @@ void PostOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {      
     + 如果root->val > val，搜索左子树，如果root->val < val，就搜索右子树，最后如果都没有搜索到，就返回NULL。
 
     ```c++
-    if (root->val > val) return searchBST(root->left, val); // 注意这里加了return if (root->val < val) return searchBST(root->right, val);return NULL;
+    if (root->val > val) 
+      	return searchBST(root->left, val); // 注意这里加了return 
+    if (root->val < val) 
+    		return searchBST(root->right, val);
+    return NULL;
     ```
 
 + **代码实现**
 
   ```c++
-  TreeNode* searchBST(TreeNode* root, int val) {    if (root == NULL || root->val == val) return root;    if (root->val > val) return searchBST(root->left, val);    if (root->val < val) return searchBST(root->right, val);    return NULL;}
+  TreeNode* searchBST(TreeNode* root, int val) {
+      if (root == NULL || root->val == val) return root;
+      if (root->val > val) return searchBST(root->left, val);
+      if (root->val < val) return searchBST(root->right, val);
+      return NULL;
+  }
   ```
 
 #### 迭代方案
@@ -1669,7 +1744,14 @@ void PostOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {      
 + **实现代码：**
 
   ```c++
-  class Solution {public:    TreeNode* searchBST(TreeNode* root, int val) {        while (root != NULL) {            if (root->val > val) root = root->left;            else if (root->val < val) root = root->right;            else return root;        }        return NULL;    }};
+  TreeNode* searchBST(TreeNode* root, int val) {
+      while (root != NULL) {
+          if (root->val > val) root = root->left;
+          else if (root->val < val) root = root->right;
+          else return root;
+      }
+      return NULL;
+  }
   ```
 
 
@@ -1688,80 +1770,49 @@ void PostOrderTraversalBSTree(BSTreeNode* root) {    if(root != nullptr) {      
 
 #### 递归方案
 
-+ **递归三步曲：**
-
-  + **确定递归函数，返回值以及参数**
-
-    + 要定义一个longlong的全局变量，用来比较遍历的节点是否有序，因为后台测试数据中有int最小值，所以定义为longlong的类型，初始化为longlong最小值。
-    + 注意递归函数要有bool类型的返回值， 只有寻找某一条边（或者一个节点）的时候，递归函数会有bool类型的返回值。本题是同样的道理，在寻找一个不符合条件的节点，如果没有找到这个节点就遍历了整个树，如果找到不符合的节点了，立刻返回。
-
-    ```c++
-    long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值bool isValidBST(TreeNode* root) 
-    ```
-
-  + **确定终止条件**
-
-    + 如果是空节点也是二叉搜索树
-
-    ```c++
-    if (root == NULL) return true;
-    ```
-
-  + **确定单层递归的逻辑**
-
-    + 中序遍历，一直更新maxVal，一旦发现maxVal >= root->val，就返回false，注意元素相同时候也要返回false。
-
-    ```c++
-    bool left = isValidBST(root->left);         // 左// 中序遍历，验证遍历的元素是不是从小到大if (maxVal < root->val) maxVal = root->val; // 中else return false;bool right = isValidBST(root->right);       // 右return left && right;
-    ```
-
-+ **实现代码：**
-
-  ```c++
-  class Solution {public:    long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值    bool isValidBST(TreeNode* root) {        if (root == NULL) return true;        bool left = isValidBST(root->left);        // 中序遍历，验证遍历的元素是不是从小到大        if (maxVal < root->val) maxVal = root->val;        else return false;        bool right = isValidBST(root->right);        return left && right;    }};
-  ```
-
-+ 这道题目比较容易陷入两个陷阱：
-
-  - 陷阱1: **「不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了」**。
-
-    + 写出了类似这样的代码：
-
-    ```
-    if (root->val > root->left->val && root->val < root->right->val) {    return true;} else {    return false;}
-    ```
-
-    + **我们要比较的是 左子树所有节点小于中间节点，右子树所有节点大于中间节点**。所以以上代码的判断逻辑是错误的。
-
-    + 例如：[10,5,15,null,null,6,20] 这个case：
-
-      <div align = center><img src="../images/Tree27.png" width="300px" /></div>
-
-      >  节点10小于左节点5，大于右节点15，但右子树里出现了一个6 这就不符合了！
-
-  - 陷阱2
-
-    + 样例中最小节点 可能是int的最小值，如果这样使用最小的int来比较也是不行的。
-    + 此时可以初始化比较元素为longlong的最小值。
-
-#### 递归方案2
-
 可以递归中序遍历将二叉搜索树转变成一个数组，代码如下：
 
 ```c++
-vector<int> vec;void traversal(TreeNode* root) {    if (root == NULL) return;    traversal(root->left);    vec.push_back(root->val); // 将二叉搜索树转换为有序数组    traversal(root->right);}
+vector<int> vec;
+void traversal(TreeNode* root) {
+    if (root == NULL) return;
+    traversal(root->left);
+    vec.push_back(root->val); // 将二叉搜索树转换为有序数组
+    traversal(root->right);
+}
 ```
 
 然后只要比较一下，这个数组是否是有序的，**「注意二叉搜索树中不能有重复元素」**。
 
 ```c++
-traversal(root);for (int i = 1; i < vec.size(); i++) {    // 注意要小于等于，搜索树里不能有相同元素    if (vec[i] <= vec[i - 1]) return false;}return true;
+traversal(root);
+for (int i = 1; i < vec.size(); i++) {
+    // 注意要小于等于，搜索树里不能有相同元素
+    if (vec[i] <= vec[i - 1]) return false;
+}
+return true;
 ```
 
 整体代码如下：
 
 ```c++
-class Solution {private:    vector<int> vec;    void traversal(TreeNode* root) {        if (root == NULL) return;        traversal(root->left);        vec.push_back(root->val); // 将二叉搜索树转换为有序数组        traversal(root->right);    }public:    bool isValidBST(TreeNode* root) {        vec.clear(); // 不加这句在leetcode上也可以过，但最好加上        traversal(root);        for (int i = 1; i < vec.size(); i++) {            // 注意要小于等于，搜索树里不能有相同元素            if (vec[i] <= vec[i - 1]) return false;        }        return true;    }};
+vector<int> vec;
+void traversal(TreeNode* root) {
+    if (root == NULL) return;
+    traversal(root->left);
+    vec.push_back(root->val); // 将二叉搜索树转换为有序数组
+    traversal(root->right);
+}
+
+bool isValidBST(TreeNode* root) {
+    vec.clear(); // 不加这句在leetcode上也可以过，但最好加上
+    traversal(root);
+    for (int i = 1; i < vec.size(); i++) {
+        // 注意要小于等于，搜索树里不能有相同元素
+        if (vec[i] <= vec[i - 1]) return false;
+    }
+    return true;
+}
 ```
 
 #### 迭代方案
@@ -1769,7 +1820,26 @@ class Solution {private:    vector<int> vec;    void traversal(TreeNode* root) {
 可以用迭代法模拟二叉树中序遍历，迭代法中序遍历稍加改动就可以了，代码如下：
 
 ```c++
-class Solution {public:    bool isValidBST(TreeNode* root) {        stack<TreeNode*> st;        TreeNode* cur = root;        TreeNode* pre = NULL; // 记录前一个节点        while (cur != NULL || !st.empty()) {            if (cur != NULL) {                st.push(cur);                cur = cur->left;                // 左            } else {                cur = st.top();                 // 中                st.pop();                if (pre != NULL && cur->val <= pre->val)                return false;                pre = cur; //保存前一个访问的结点                cur = cur->right;               // 右            }        }        return true;    }};
+bool isValidBST(TreeNode* root) {
+    stack<TreeNode*> st;
+    TreeNode* cur = root;
+    TreeNode* pre = NULL; // 记录前一个节点
+    while (cur != NULL || !st.empty()) {
+      if (cur != NULL) {
+        st.push(cur);
+        cur = cur->left;                // 左
+      } else {
+        cur = st.top();                 // 中
+        st.pop();
+        if (pre != NULL && cur->val <= pre->val)
+          return false;
+        pre = cur; //保存前一个访问的结点
+
+        cur = cur->right;               // 右
+      }
+    }
+    return true;
+}
 ```
 
 ### 5.二叉搜索树中的众数
@@ -1790,13 +1860,79 @@ class Solution {public:    bool isValidBST(TreeNode* root) {        stack<TreeNo
 + **递归遍历实现：**
 
   ```c++
-  class Solution {private:    int maxCount; // 最大频率    int count; // 统计频率    TreeNode* pre;    vector<int> result;    void searchBST(TreeNode* cur) {        if (cur == NULL) return ;        searchBST(cur->left);       // 左                                    // 中        if (pre == NULL) { // 第一个节点            count = 1;        } else if (pre->val == cur->val) { // 与前一个节点数值相同            count++;        } else { // 与前一个节点数值不同            count = 1;        }        pre = cur; // 更新上一个节点        if (count == maxCount) { // 如果和最大值相同，放进result中            result.push_back(cur->val);        }        if (count > maxCount) { // 如果计数大于最大值频率            maxCount = count;   // 更新最大频率            result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了            result.push_back(cur->val);        }        searchBST(cur->right);      // 右        return ;    }public:    vector<int> findMode(TreeNode* root) {        count = 0;         maxCount = 0;        TreeNode* pre = NULL; // 记录前一个节点        result.clear();        searchBST(root);        return result;    }};
+  int maxCount;
+  int count;
+  TreeNode* pre;
+  vector<int> result;
+  void traversal(TreeNode* cur) {
+      if(cur == nullptr) return;
+      traversal(cur->left);//左；
+      //中间逻辑
+      if(pre == nullptr)  // 第一个节点
+          count = 1;
+      else if(pre->val == cur->val) //与上一个结点相同
+          ++ count;
+      else    //与上一个结点不同
+          count = 1;
+      pre = cur;//更新结点
+      if(count == maxCount) //如果数目和最大数相同，则进入数组
+          result.push_back(cur->val);
+      if(count > maxCount) {//如果大于最大数，则进行更新
+          maxCount = count;   // 更新最大频率
+          result.clear();     //清空原来的数组
+          result.push_back(cur->val);
+      }
+      traversal(cur->right);//右
+  }
+  vector<int> findMode(TreeNode* root) {
+      maxCount = 0;
+      count = 0;
+      pre = nullptr;
+      result.clear();
+      traversal(root);
+      return result;
+  }
   ```
 
 + **迭代遍历代码实现：**
 
   ```c++
-  class Solution {public:    vector<int> findMode(TreeNode* root) {        stack<TreeNode*> st;        TreeNode* cur = root;        TreeNode* pre = NULL;        int maxCount = 0; // 最大频率        int count = 0; // 统计频率        vector<int> result;        while (cur != NULL || !st.empty()) {            if (cur != NULL) { // 指针来访问节点，访问到最底层                st.push(cur); // 将访问的节点放进栈                cur = cur->left;                // 左            } else {                cur = st.top();                st.pop();                       // 中                if (pre == NULL) { // 第一个节点                    count = 1;                } else if (pre->val == cur->val) { // 与前一个节点数值相同                    count++;                } else { // 与前一个节点数值不同                    count = 1;                }                if (count == maxCount) { // 如果和最大值相同，放进result中                    result.push_back(cur->val);                }                if (count > maxCount) { // 如果计数大于最大值频率                    maxCount = count;   // 更新最大频率                    result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了                    result.push_back(cur->val);                }                pre = cur;                cur = cur->right;               // 右            }        }        return result;    }};
+  vector<int> findMode(TreeNode* root) {
+    stack<TreeNode*> st;
+    TreeNode* cur = root;
+    TreeNode* pre = NULL;
+    int maxCount = 0; // 最大频率
+    int count = 0; // 统计频率
+    vector<int> result;
+    while (cur != NULL || !st.empty()) {
+      if (cur != NULL) { // 指针来访问节点，访问到最底层
+        st.push(cur); // 将访问的节点放进栈
+        cur = cur->left;                // 左
+      } else {
+        cur = st.top();
+        st.pop();                       // 中
+        if (pre == NULL) { // 第一个节点
+          count = 1;
+        } else if (pre->val == cur->val) { // 与前一个节点数值相同
+          count++;
+        } else { // 与前一个节点数值不同
+          count = 1;
+        }
+        if (count == maxCount) { // 如果和最大值相同，放进result中
+          result.push_back(cur->val);
+        }
+  
+        if (count > maxCount) { // 如果计数大于最大值频率
+          maxCount = count;   // 更新最大频率
+          result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+          result.push_back(cur->val);
+        }
+        pre = cur;
+        cur = cur->right;               // 右
+      }
+    }
+    return result;
+  }
   ```
 
 
@@ -1840,37 +1976,66 @@ class Solution {public:    bool isValidBST(TreeNode* root) {        stack<TreeNo
     + 在遍历二叉搜索树的时候就是寻找区间[p->val, q->val]（注意这里是左闭又闭）。那么如果 cur->val 大于 p->val，同时 cur->val 大于q->val，那么就应该向左遍历（说明目标区间在左子树上）。**「需要注意的是此时不知道p和q谁大，所以两个都要判断」**
 
       ```c++
-      if (cur->val > p->val && cur->val > q->val) {    TreeNode* left = traversal(cur->left, p, q);    if (left != NULL) {        return left;    }}
+      if (cur->val > p->val && cur->val > q->val) {    
+        TreeNode* left = traversal(cur->left, p, q);    
+        if (left != NULL) {        
+          return left;    
+        }
+      }
       ```
-
+    
     + 在二叉树：公共祖先问题中，如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树。
-
+    
       搜索一条边的写法：
-
+    
       ```c++
-      if (递归函数(root->left)) return ;if (递归函数(root->right)) return ;
+      if (递归函数(root->left)) return ;
+      if (递归函数(root->right)) return ;
       ```
-
+      
       搜索整个树写法：
-
+      
       ```c++
-      left = 递归函数(root->left);right = 递归函数(root->right);left与right的逻辑处理;
+      left = 递归函数(root->left);
+      right = 递归函数(root->right);
+      left与right的逻辑处理;
       ```
-
+      
       本题就是标准的搜索一条边的写法，遇到递归函数的返回值，如果不为空，立刻返回。
-
+      
       如果 cur->val 小于 p->val，同时 cur->val 小于 q->val，那么就应该向右遍历（目标区间在右子树）。
-
+      
       ```c++
-      if (cur->val < p->val && cur->val < q->val) {    TreeNode* right = traversal(cur->right, p, q);    if (right != NULL) {        return right;    }}
+      if (cur->val < p->val && cur->val < q->val) {
+        TreeNode* right = traversal(cur->right, p, q);    
+        if (right != NULL) { 
+          return right;    
+        }
+      }
       ```
-
+      
       剩下的情况，就是cur节点在区间（p->val <=  cur->val && cur->val <= q->val）或者 （q->val <=  cur->val && cur->val <= p->val）中，那么cur就是最近公共祖先了，直接返回cur。
 
 + 代码实现：
 
   ```c++
-  class Solution {private:    TreeNode* traversal(TreeNode* cur, TreeNode* p, TreeNode* q) {        if (cur == NULL) return cur;                                                        // 中        if (cur->val > p->val && cur->val > q->val) {   // 左            TreeNode* left = traversal(cur->left, p, q);            if (left != NULL) {                return left;            }        }        if (cur->val < p->val && cur->val < q->val) {   // 右            TreeNode* right = traversal(cur->right, p, q);            if (right != NULL) {                return right;            }        }        return cur;    }public:    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {        return traversal(root, p, q);    }};
+  TreeNode* lowestCommonAncestor(TreeNode* cur, TreeNode* p, TreeNode* q) {
+      if (cur == NULL) return cur;
+      // 中
+      if (cur->val > p->val && cur->val > q->val) {   // 左
+          TreeNode* left = lowestCommonAncestor(cur->left, p, q);
+          if (left != NULL) {
+            	return left;
+          }
+      }
+      if (cur->val < p->val && cur->val < q->val) {   // 右
+          TreeNode* right = lowestCommonAncestor(cur->right, p, q);
+          if (right != NULL) {
+            	return right;
+          }
+      }
+      return cur;
+  }
   ```
 
 #### 迭代方案
@@ -1878,9 +2043,16 @@ class Solution {public:    bool isValidBST(TreeNode* root) {        stack<TreeNo
 + 实现代码：
 
   ```c++
-  class Solution {public:    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {        while(root) {            if (root->val > p->val && root->val > q->val) {                root = root->left;            } else if (root->val < p->val && root->val < q->val) {                root = root->right;            } else return root;        }        return NULL;    }};
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+      if (root->val > p->val && root->val > q->val) 
+          return lowestCommonAncestor(root->left, p, q);
+      else if (root->val < p->val && root->val < q->val) 
+          return lowestCommonAncestor(root->right, p, q);
+      else 
+          return root;
+  }   
   ```
-
+  
   
 
 ### 7.二叉搜索树中的插入操作

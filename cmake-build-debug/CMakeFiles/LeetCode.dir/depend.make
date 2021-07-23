@@ -12,6 +12,8 @@ CMakeFiles/LeetCode.dir/main.cpp.o: ../Backtracking/Test_Backtracking.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Binary\ Search/SearchNum.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Binary\ Search/Test_BinarySearch.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../List/List.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Monotonic\ Stack/Test_MonotonicStack.h
+CMakeFiles/LeetCode.dir/main.cpp.o: ../Monotonic\ Stack/nextGreaterElement.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/BubbleSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/BucketSort.h
 CMakeFiles/LeetCode.dir/main.cpp.o: ../Sort/CountSort.h
