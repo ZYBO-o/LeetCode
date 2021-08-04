@@ -2089,7 +2089,10 @@ bool isValidBST(TreeNode* root) {
     + 终止条件就是找到遍历的节点为null的时候，就是要插入节点的位置了，并把插入的节点返回。
 
     ```c++
-    if (root == NULL) {    TreeNode* node = new TreeNode(val);    return node;}
+    if (root == NULL) {    
+        TreeNode* node = new TreeNode(val);    
+        return node;
+    }
     ```
 
     + 这里把添加的节点返回给上一层，就完成了父子节点的赋值操作了，详细再往下看。
@@ -2101,18 +2104,30 @@ bool isValidBST(TreeNode* root) {
       代码如下：
 
       ```c++
-      if (root->val > val) root->left = insertIntoBST(root->left, val);if (root->val < val) root->right = insertIntoBST(root->right, val);return root;
+      if (root->val > val) 
+        	root->left = insertIntoBST(root->left, val);
+      if (root->val < val) 
+        	root->right = insertIntoBST(root->right, val);
+      return root;
       ```
-
+      
       **「到这里，大家应该能感受到，如何通过递归函数返回值完成了新加入节点的父子关系赋值操作了，下一层将加入节点返回，本层用root->left或者root->right将其接住」**。
 
 + **代码实现：**
 
   ```c++
-  class Solution {public:    TreeNode* insertIntoBST(TreeNode* root, int val) {        if (root == NULL) {            TreeNode* node = new TreeNode(val);            return node;        }        if (root->val > val) root->left = insertIntoBST(root->left, val);        if (root->val < val) root->right = insertIntoBST(root->right, val);        return root;    }};
+  TreeNode* insertIntoBST(TreeNode* root, int val) {        
+      if (root == NULL) {            
+          TreeNode* node = new TreeNode(val);           
+          return node;        
+      }        
+      if (root->val > val) 
+        	root->left = insertIntoBST(root->left, val);        
+      if (root->val < val) 
+       	 	root->right = insertIntoBST(root->right, val);        
+      return root;    
+  }
   ```
-
-
 
 #### 迭代方案
 
@@ -2121,7 +2136,27 @@ bool isValidBST(TreeNode* root) {
 + **实现代码：**
 
   ```c++
-  class Solution {public:    TreeNode* insertIntoBST(TreeNode* root, int val) {        if (root == NULL) {            TreeNode* node = new TreeNode(val);            return node;        }        TreeNode* cur = root;        TreeNode* parent = root; // 这个很重要，需要记录上一个节点，否则无法赋值新节点        while (cur != NULL) {            parent = cur;            if (cur->val > val) cur = cur->left;            else cur = cur->right;        }        TreeNode* node = new TreeNode(val);        if (val < parent->val) parent->left = node;// 此时是用parent节点的进行赋值        else parent->right = node;        return root;    }};
+  TreeNode* insertIntoBST(TreeNode* root, int val) {        
+      if (root == NULL) {            
+          TreeNode* node = new TreeNode(val);            
+          return node;        
+      }        
+      TreeNode* cur = root;        
+      TreeNode* parent = root; // 这个很重要，需要记录上一个节点，否则无法赋值新节点        
+      while (cur != NULL) {            
+          parent = cur;            
+          if (cur->val > val) 
+            	cur = cur->left;            
+          else 
+            	cur = cur->right;        
+      }        
+      TreeNode* node = new TreeNode(val);        
+      if (val < parent->val) 
+        	parent->left = node;// 此时是用parent节点的进行赋值        
+      else 
+        	parent->right = node;        
+      return root;    
+  }
   ```
 
 
@@ -2171,18 +2206,22 @@ bool isValidBST(TreeNode* root) {
       - 找到删除的节点
 
       - - 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+        
         - 第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点
+        
         - 第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
-        - 第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
-
-      - <div align = center><img src="../images/Tree33.png" width="300px" /> <img src="../images/Tree34.png" width="245px" /></div>
-
+        
+        - 第五种情况：左右孩子节点都不为空，则将   **删除节点的左子树头结点（左孩子）** 放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
+        
+          <div align = center><img src="../images/Tree33.png" width="300px" /> <img src="../images/Tree34.png" width="245px" /></div>
+        
+      
       > 删除元素7， 那么删除节点（元素7）的左孩子就是5，删除节点（元素7）的右子树的最左面节点是元素8。
       >
       > 将删除节点（元素7）的左孩子放到删除节点（元素7）的右子树的最左面节点（元素8）的左孩子上，就是把5为根节点的子树移到了8的左孩子的位置。
       >
       > 要删除的节点（元素7）的右孩子（元素9）为新的根节点。.
-
+    
     ```c++
     if (root->val == key) {
         // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
@@ -2205,7 +2244,7 @@ bool isValidBST(TreeNode* root) {
         }
     }
     ```
-
+    
     > 这里相当于把新的节点返回给上一层，上一层就要用 root->left 或者 root->right接住，代码如下：
     >
     > ```c++
@@ -2213,53 +2252,37 @@ bool isValidBST(TreeNode* root) {
     > if (root->val < key) root->right = deleteNode(root->right, key);
     > return root;
     > ```
-
+    
     + **实现代码：**
-
+    
       ```c++
-      class Solution {
-      public:
-          TreeNode* deleteNode(TreeNode* root, int key) {
-              if (root == nullptr) return root; // 第一种情况：没找到删除的节点，遍历到空节点直接返回了
-              if (root->val == key) {
-                  // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
-                  // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
-                  if (root->left == nullptr) return root->right; 
-                  // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
-                  else if (root->right == nullptr) return root->left; 
-                  // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
-                  // 并返回删除节点右孩子为新的根节点。
-                  else {  
-                      TreeNode* cur = root->right; // 找右子树最左面的节点
-                      while(cur->left != nullptr) { 
-                          cur = cur->left;
-                      }
-                      cur->left = root->left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
-                      TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
-                      root = root->right;     // 返回旧root的右孩子作为新root
-                      delete tmp;             // 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）
-                      return root;
-                  }
-              }
-              if (root->val > key) root->left = deleteNode(root->left, key);
-              if (root->val < key) root->right = deleteNode(root->right, key);
-              return root;
+      TreeNode* deleteNode(TreeNode* root, int key) {
+        	/***** 5种结束条件 ****/
+          if (root == nullptr) return root; // 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+          if (root->val == key) {
+              // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+              // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
+              if (root->left == nullptr) return root->right; 
+              // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+              else if (root->right == nullptr) return root->left; 
+              // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
+              // 并返回删除节点右孩子为新的根节点。
+              else {  
+                  TreeNode* cur = root->right; // 找右子树最左面的节点
+                  while(cur->left != nullptr) 
+                    	cur = cur->left;
+                  cur->left = root->left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
+                  TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+                  root = root->right;     // 返回旧root的右孩子作为新root
+                  delete tmp;             // 释放节点内存
+                  return root;
+            	}
           }
-      };
+          if (root->val > key) root->left = deleteNode(root->left, key);
+          if (root->val < key) root->right = deleteNode(root->right, key);
+          return root;
+      }
       ```
-
-
-#### 迭代实现
-
-+ 删除节点的迭代法还是复杂一些的，但其本质我在递归法里都介绍了，最关键就是删除节点的操作
-
-+ **代码实现：**
-
-```c++
-class Solution {private:    // 将目标节点（删除节点）的左子树放到 目标节点的右子树的最左面节点的左孩子位置上    // 并返回目标节点右孩子为新的根节点    // 是动画里模拟的过程    TreeNode* deleteOneNode(TreeNode* target) {        if (target == nullptr) return target;        if (target->right == nullptr) return target->left;        TreeNode* cur = target->right;        while (cur->left) {            cur = cur->left;        }        cur->left = target->left;        return target->right;    }public:    TreeNode* deleteNode(TreeNode* root, int key) {        if (root == nullptr) return root;        TreeNode* cur = root;        TreeNode* pre = nullptr; // 记录cur的父节点，用来删除cur        while (cur) {            if (cur->val == key) break;            pre = cur;            if (cur->val > key) cur = cur->left;            else cur = cur->right;        }        if (pre == nullptr) { // 如果搜索树只有头结点            return deleteOneNode(cur);        }        // pre 要知道是删左孩子还是右孩子        if (pre->left && pre->left->val == key) {            pre->left = deleteOneNode(cur);        }        if (pre->right && pre->right->val == key) {            pre->right = deleteOneNode(cur);        }        return root;    }};
-```
-
-
 
 ### 9.将有序数组转换为二叉搜索树
 
@@ -2329,54 +2352,6 @@ class Solution {private:    // 将目标节点（删除节点）的左子树放�
   public:
       TreeNode* sortedArrayToBST(vector<int>& nums) {
           TreeNode* root = traversal(nums, 0, nums.size() - 1);
-          return root;
-      }
-  };
-  ```
-
-#### 迭代方案
-
-+ 迭代法可以通过三个队列来模拟，一个队列放遍历的节点，一个队列放左区间下表，一个队列放右区间下表。模拟的就是不断分割的过程。
-
-+ 实现代码：
-
-  ```c++
-  class Solution {
-  public:
-      TreeNode* sortedArrayToBST(vector<int>& nums) {
-          if (nums.size() == 0) return nullptr;
-  
-          TreeNode* root = new TreeNode(0);   // 初始根节点
-          queue<TreeNode*> nodeQue;           // 放遍历的节点
-          queue<int> leftQue;                 // 保存左区间下表
-          queue<int> rightQue;                // 保存右区间下表
-          nodeQue.push(root);                 // 根节点入队列
-          leftQue.push(0);                    // 0为左区间下表初始位置
-          rightQue.push(nums.size() - 1);     // nums.size() - 1为右区间下表初始位置
-  
-          while (!nodeQue.empty()) {
-              TreeNode* curNode = nodeQue.front();
-              nodeQue.pop();
-              int left = leftQue.front(); leftQue.pop();
-              int right = rightQue.front(); rightQue.pop();
-              int mid = left + ((right - left) / 2);
-  
-              curNode->val = nums[mid];       // 将mid对应的元素给中间节点
-  
-              if (left <= mid - 1) {          // 处理左区间
-                  curNode->left = new TreeNode(0);
-                  nodeQue.push(curNode->left);
-                  leftQue.push(left);
-                  rightQue.push(mid - 1);
-              }
-  
-              if (right >= mid + 1) {         // 处理右区间
-                  curNode->right = new TreeNode(0);
-                  nodeQue.push(curNode->right);
-                  leftQue.push(mid + 1);
-                  rightQue.push(right);
-              }
-          }
           return root;
       }
   };
@@ -2471,7 +2446,7 @@ class Solution {private:    // 将目标节点（删除节点）的左子树放�
       TreeNode* trimBST(TreeNode* root, int low, int high) {
           if (root == nullptr ) return nullptr;
           if (root->val < low) {
-              TreeNode* right = trimBST(root->right, low, high); // 寻找符合区间[low, high]的节点
+              TreeNode* right = trimBST(root->right, low, high); //寻找符合区间[low, high]的节点
               return right;
           }
           if (root->val > high) {
@@ -2504,9 +2479,11 @@ class Solution {private:    // 将目标节点（删除节点）的左子树放�
           if (!root) return nullptr;
   
           // 处理头结点，让root移动到[L, R] 范围内，注意是左闭右闭
-          while (root->val < L || root->val > R) {
-              if (root->val < L) root = root->right; // 小于L往右走
-              else root = root->left; // 大于R往左走
+          while (root != nullptr && (root->val < low || root->val > high)) {
+              if (root->val < L) 
+                root = root->right; // 小于L往右走
+              else 
+                root = root->left; // 大于R往左走
           }
           TreeNode *cur = root;
           // 此时root已经在[L, R] 范围内，处理左孩子元素小于L的情况

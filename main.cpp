@@ -14,6 +14,11 @@
 #include <forward_list>
 
 #include <unordered_map>
+
+
+#include <ratio>
+#include <chrono>
+#include <ctime>
 using namespace std;
 
 
@@ -22,7 +27,7 @@ using namespace std;
 int main() {
 
 
-    Test_MonotonicStack();
+    //Test_MonotonicStack();
 
     //Test_Backtracking();
     //Test_BTree_LeetCode();
@@ -31,6 +36,20 @@ int main() {
     //Test_Binary_Search();
     //Test_String();
 
+    using namespace std::chrono;
 
+    steady_clock::time_point t1 = steady_clock::now();
+
+    std::cout << "printing out 1000 stars...\n";
+    for (int i=0; i<1000; ++i) std::cout << "*";
+    std::cout << std::endl;
+
+    steady_clock::time_point t2 = steady_clock::now();
+
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+
+    std::cout << "It took me " << time_span.count() << " seconds.";
+    std::cout << std::endl;
+    return 0;
 
 }
