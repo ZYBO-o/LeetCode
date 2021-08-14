@@ -38,9 +38,19 @@ vector
 iostream
 -
 
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/FirstSmallerNumOnLeft  .h
+iostream
+-
+vector
+-
+stack
+-
+
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/Test_MonotonicStack.h
 nextGreaterElement.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/nextGreaterElement.h
+FirstSmallerNumOnLeft  .h
+/Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/FirstSmallerNumOnLeft  .h
 
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/nextGreaterElement.h
 iostream
@@ -149,6 +159,10 @@ numeric
 -
 Monotonic Stack/Test_MonotonicStack.h
 /Users/zhangyongbin/Desktop/Github Projects/LeetCode/Monotonic Stack/Test_MonotonicStack.h
+string
+-
+regex
+-
 list
 -
 forward_list

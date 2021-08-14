@@ -6,13 +6,12 @@
 #define LEETCODE_TEST_MONOTONICSTACK_H
 
 #include "nextGreaterElement.h"
+#include "FirstSmallerNumOnLeft  .h"
 
 void Test_MonotonicStack() {
-    std::vector<int> nums {2,1,2,4,3};
-    std::vector<int>  ans = nextGreaterElement(nums);
-    for(auto num : ans)
-        std::cout << num << " ";
-    std::cout << std::endl;
+
+    //Test_nextGreaterElement();
+    Test_First_SmallerNum_On_Left();
 }
 
 #endif //LEETCODE_TEST_MONOTONICSTACK_H

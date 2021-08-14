@@ -24,4 +24,12 @@ std::vector<int> nextGreaterElement (std::vector<int> &nums) {
     return ans;
 }
 
+
+void Test_nextGreaterElement() {
+    std::vector<int> nums {2,1,2,4,3};
+    std::vector<int>  ans = nextGreaterElement(nums);
+    for(auto num : ans)
+        std::cout << num << " ";
+}
+
 #endif //LEETCODE_NEXTGREATERELEMENT_H

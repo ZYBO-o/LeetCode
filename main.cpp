@@ -10,6 +10,8 @@
 #include <numeric>
 #include "Monotonic Stack/Test_MonotonicStack.h"
 
+#include <string>
+#include <regex>
 #include <list>
 #include <forward_list>
 
@@ -36,20 +38,22 @@ int main() {
     //Test_Binary_Search();
     //Test_String();
 
-    using namespace std::chrono;
+    regex patten("^([^:]*): ?(.*)$");
+    smatch subMatch;
+    string line = "Accept: image/gif HOST: image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*";
+    string method_ ;
+    string path_;
+    string version_;
 
-    steady_clock::time_point t1 = steady_clock::now();
+    if(regex_match(line, subMatch, patten)) {
+         method_ = subMatch[1];
+         path_ = subMatch[2];
 
-    std::cout << "printing out 1000 stars...\n";
-    for (int i=0; i<1000; ++i) std::cout << "*";
-    std::cout << std::endl;
+    }
 
-    steady_clock::time_point t2 = steady_clock::now();
+    cout << "method_ = " << method_ << endl;
+    cout << "path_ = " <<  path_ << endl;
 
-    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-
-    std::cout << "It took me " << time_span.count() << " seconds.";
-    std::cout << std::endl;
     return 0;
 
 }

@@ -62,6 +62,8 @@ if (终止条件) {
 
 ####  回溯搜索的遍历过程
 
+**==最重要的就是把遍历过程的树状图画出来==**
+
 在上面提到了，回溯法一般是在集合中递归搜索，集合的大小构成了树的宽度，递归的深度构成的树的深度。
 
 <div align = center><img src="../images/Tree38.png" width="650px"/></div>
@@ -255,7 +257,7 @@ for (int i = startIndex; i <= n; i++) {
 for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜索的起始位置
 ```
 
-### 2.电话号码的字母组合(17)
+### :diamond_shape_with_a_dot_inside: 2.电话号码的字母组合(17)
 
 > 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
 >
@@ -556,7 +558,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   };
   ```
 
-### 5.组合总和II (40)
+### :diamond_shape_with_a_dot_inside: 5.组合总和II (40)
 
 > 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
 >
@@ -618,8 +620,8 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
 
     + 在图中将used的变化用橘黄色标注上，可以看出在candidates[i] == candidates[i - 1]相同的情况下：
 
-      - used[i - 1] == true，说明同一树支candidates[i - 1]使用过
-      - used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+      - **used[i - 1] == true，说明同一树支candidates[i - 1]使用过，**
+      - **used[i - 1] == false，说明同一树层candidates[i - 1]使用过，从上一个函数返回而来。**
 
     ```c++
     for (int i = startIndex; i < candidates.size() && sum + candidates[i] <= target; i++) {
@@ -681,7 +683,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   };
   ```
 
-### 6.分割回文串(131)
+### :diamond_shape_with_a_dot_inside: 6.分割回文串(131)
 
 > 给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
 >
@@ -783,7 +785,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   };
   ```
 
-### 7.复原IP地址(93)
+### :diamond_shape_with_a_dot_inside: 7.复原IP地址(93)
 
 > 给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。
 >
@@ -871,7 +873,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
       }
       // 判断字符串s在左闭又闭区间[start, end]所组成的数字是否合法
       bool isValid(const string& s, int start, int end) {
-          if (start > end) {
+          if (start > end) {//这是最后一次的判断，防止start到达end()
               return false;
           }
           if (s[start] == '0' && start != end) { // 0开头的数字不合法
@@ -963,7 +965,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   ```
 
 
-### 9.子集II(90)
+### :diamond_shape_with_a_dot_inside: 9.子集II(90)
 
 > 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
 >
@@ -1021,7 +1023,7 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
 
 
 
-### 10.递增子序列(491)
+### :diamond_shape_with_a_dot_inside: 10.递增子序列(491)
 
 > 给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。
 
@@ -1396,3 +1398,49 @@ for (int i = startIndex; i <= n - (k - path.size()) + 1; i++) // i为本次搜�
   
 
 ### 15.解数独(37)
+
+```c++
+bool backtraversal(vector<vector<char>>& board) {
+  	for (int i = 0; i < board.size(); i++) {        // 遍历行
+        for (int j = 0; j < board[0].size(); j++) { // 遍历列
+            if (board[i][j] != '.') continue;
+            for (char k = '1'; k <= '9'; k++) {     // (i, j) 这个位置放k是否合适
+                if (isValid(i, j, k, board)) { 
+                    board[i][j] = k;                // 放置k
+                    if (backtraversal(board)) return true; // 如果找到合适一组立刻返回
+                    board[i][j] = '.';              // 回溯，撤销k
+                }
+            }
+            return false;                           // 9个数都试完了，都不行，那么就返回false
+        }
+   }
+  return true; // 遍历完没有返回false，说明找到了合适棋盘位置了
+}
+
+bool isValid(int row, int col, char val, vector<vector<char>>& board) {
+    for (int i = 0; i < 9; i++) { // 判断行里是否重复
+        if (board[row][i] == val) {
+          	return false;
+        }
+    }
+    for (int j = 0; j < 9; j++) { // 判断列里是否重复
+        if (board[j][col] == val) {
+          	return false;
+        }
+    }
+    int startRow = (row / 3) * 3;
+    int startCol = (col / 3) * 3;
+    for (int i = startRow; i < startRow + 3; i++) { // 判断9方格里是否重复
+        for (int j = startCol; j < startCol + 3; j++) {
+            if (board[i][j] == val ) {
+              	return false;
+            }
+        }
+    }
+    return true;
+}
+void solveSudoku(vector<vector<char>>& board) {
+  	backtraversal(board);
+}
+```
+
